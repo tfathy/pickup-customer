@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">pickup</string>
+    <string name="title_activity_main">pickup</string>
+    <string name="package_name">com.customer.pickup</string>
+    <string name="custom_url_scheme">com.customer.pickup</string>
+</resources>

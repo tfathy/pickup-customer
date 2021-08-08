@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" viewBox="0 0 50 50">
+  <defs>
+    <clipPath id="clip-vcl-white">
+      <rect width="50" height="50"/>
+    </clipPath>
+  </defs>
+  <g id="vcl-white" clip-path="url(#clip-vcl-white)">
+    <g id="vcl" transform="translate(9 7)">
+      <path id="Path_53" data-name="Path 53" d="M31,17H21V11h7Z" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+      <circle id="Ellipse_3" data-name="Ellipse 3" cx="3" cy="3" r="3" transform="translate(4 21)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+      <circle id="Ellipse_4" data-name="Ellipse 4" cx="3" cy="3" r="3" transform="translate(23 21)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+      <rect id="Rectangle_9" data-name="Rectangle 9" width="5" height="4" transform="translate(2 9)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+      <rect id="Rectangle_10" data-name="Rectangle 10" width="5" height="4" transform="translate(2 13)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+      <rect id="Rectangle_11" data-name="Rectangle 11" width="5" height="4" transform="translate(7 9)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+      <rect id="Rectangle_12" data-name="Rectangle 12" width="5" height="4" transform="translate(7 13)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+      <rect id="Rectangle_13" data-name="Rectangle 13" width="5" height="4" transform="translate(12 9)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+      <rect id="Rectangle_14" data-name="Rectangle 14" width="5" height="4" transform="translate(12 13)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+      <path id="Path_54" data-name="Path 54" d="M9.8,23H21V17H1v6H4.2" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+      <path id="Path_55" data-name="Path 55" d="M23.2,23H21V17H31v6H28.8" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    </g>
+  </g>
+</svg>
