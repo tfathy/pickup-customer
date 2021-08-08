@@ -44,10 +44,13 @@ export class RequestServicePage implements OnInit {
   }
   openModal() {
     const requestModel= new OrderModel();
+    requestModel.requestDate = new Date();
+    requestModel.ordStatus = 'NEW';
+
     this.modalCtrl
       .create({
         component: OrderLocationComponent,
-        componentProps:[{model: requestModel}]
+        componentProps:{payLoad: requestModel}
       })
       .then((modalCtrl) => {
         modalCtrl.present();

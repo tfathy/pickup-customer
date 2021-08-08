@@ -1,10 +1,25 @@
-<ion-grid>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{payLoad.ordStatus}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()">cancel</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-grid class="ion-padding">
   <ion-row >
-    <ion-col size="12" class="ion-no-padding">
-     <app-location-picker></app-location-picker>
+    <ion-col size="12"  >
+     <app-location-picker [showPreview]="true" [buttonTitle]="'Move From'" (locationPick)="onSourceLocationPicked($event)"></app-location-picker>
     </ion-col>
-    <ion-col size="12" class="ion-no-padding">
-     <app-location-picker></app-location-picker>
+    <ion-col size="12">
+     <app-location-picker [showPreview]="true" [buttonTitle]="'Move to'" (locationPick)="onDestinationLocationPicked($event)"></app-location-picker>
     </ion-col>
   </ion-row>
 </ion-grid>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button fill="outline" expand="block" (click)="nextStep()">
+        next
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
