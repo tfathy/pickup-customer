@@ -6,15 +6,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { IonicModule } from '@ionic/angular';
 import { LocationPickerComponent } from '../pickers/location-picker/location-picker.component';
 import { MapModalComponent } from '../map-modal/map-modal.component';
+import { OrderHeaderComponent } from 'src/app/tabs/request-service/order-header/order-header.component';
+import { ImagePickerComponent } from '../pickers/image-picker/image-picker.component';
 
 @NgModule({
-  declarations: [OrderLocationComponent,LocationPickerComponent,MapModalComponent],
+  declarations: [
+    OrderLocationComponent,
+    LocationPickerComponent,
+    MapModalComponent,
+    OrderHeaderComponent,
+    ImagePickerComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
     HttpClientModule,
     IonicModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [
     FormsModule,
@@ -22,7 +30,10 @@ import { MapModalComponent } from '../map-modal/map-modal.component';
     IonicModule,
     ReactiveFormsModule,
     OrderLocationComponent,
-    LocationPickerComponent,MapModalComponent
+    LocationPickerComponent,
+    MapModalComponent,
+    OrderHeaderComponent,
+    ImagePickerComponent
   ],
 })
 export class SharedModule {}

@@ -1,3 +1,100 @@
-<p>
-  order-header works!
-</p>
+<ion-header>
+<ion-toolbar color="light">
+  <ion-buttons slot="end">
+    <ion-button color="primary" (click)="back()">
+      <ion-icon  name="arrow-forward-circle"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="start">
+    <ion-button color="primary" (click)="nextStep()">
+      <ion-icon name="arrow-back-circle"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+
+</ion-toolbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="form">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-card>
+            <ion-card-header>
+              Record a voice
+            </ion-card-header>
+            <ion-card-content>
+            <ion-button (click)="startRecord()">Start</ion-button>
+            <ion-button (click)="stopRecord()" >Stop</ion-button>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-card>
+            <ion-card-header>
+              PayLoadImage
+            </ion-card-header>
+            <ion-card-content>
+              <app-image-picker
+            [showPreview]="true"
+            (imagePick)="onImagePicked($event)"
+          >
+          </app-image-picker>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-card>
+            <ion-card-header>
+              Source Location data
+            </ion-card-header>
+            <ion-card-content>
+              <ion-label position="floating">Place type</ion-label>
+              <ion-select formControlName="locationType">
+                <ion-select-option>Building</ion-select-option>
+                <ion-select-option>Vila</ion-select-option>
+                <ion-select-option>Mall</ion-select-option>
+                <ion-select-option>other</ion-select-option>
+              </ion-select>
+              <ion-label position="floating"></ion-label>
+              <ion-input></ion-input>
+              <ion-label>Is there elevator</ion-label>
+              <ion-toggle></ion-toggle>
+            </ion-card-content>
+          </ion-card>
+
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-card>
+            <ion-card-header>
+              Destination Location data
+            </ion-card-header>
+            <ion-card-content>
+              <ion-label position="floating">Place type</ion-label>
+              <ion-select formControlName="sourceLocationType">
+                <ion-select-option>Building</ion-select-option>
+                <ion-select-option>Vila</ion-select-option>
+                <ion-select-option>Mall</ion-select-option>
+                <ion-select-option>other</ion-select-option>
+              </ion-select>
+              <ion-label position="floating"></ion-label>
+              <ion-input></ion-input>
+              <ion-label>Is there elevator</ion-label>
+              <ion-toggle></ion-toggle>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+
+
+</ion-content>
+<ion-footer>
+
+</ion-footer>

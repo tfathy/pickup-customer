@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header *ngIf="showToolbar">
   <ion-toolbar>
     <ion-title> Pick a location</ion-title>
     <ion-buttons slot="primary">
@@ -8,6 +8,5 @@
 </ion-header>
 <ion-content>
   <div class="map" #map>
-
   </div>
 </ion-content>

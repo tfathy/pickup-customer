@@ -1,0 +1,6 @@
+{
+	"appId": "com.customer.pickup",
+	"appName": "pickup-customer",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

@@ -23,6 +23,7 @@ export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() selectable = true;
   @Input() closeButtonText = 'Cancel';
   @Input() title = 'Pick Location';
+  @Input() showToolbar = true;
   clickListener: any;
   googleMaps: any;
   constructor(

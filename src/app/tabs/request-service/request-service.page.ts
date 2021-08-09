@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ActionSheetController, ModalController } from '@ionic/angular';
+import { Geolocation } from '@capacitor/geolocation';
+import {
+  ActionSheetController,
+  LoadingController,
+  ModalController,
+} from '@ionic/angular';
 import { OrderModel } from 'src/app/models/order-model';
 import { OrderLocationComponent } from './order-location/order-location.component';
 
@@ -10,13 +14,33 @@ import { OrderLocationComponent } from './order-location/order-location.componen
   styleUrls: ['./request-service.page.scss'],
 })
 export class RequestServicePage implements OnInit {
+  currentLocation ={lat:null,lng:null};
   constructor(
     private actionSheet: ActionSheetController,
-    private router: Router,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private loadingCtrl: LoadingController
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loadingCtrl
+      .create({
+        message: 'Picking current location... please wait',
+      })
+      .then((loadingElmnt) => {
+        loadingElmnt.present();
+        Geolocation.getCurrentPosition().then((coordinates) => {
+          console.log('Current latitude:', coordinates.coords.latitude);
+          console.log('Current longitude:', coordinates.coords.longitude);
+          this.currentLocation.lat = coordinates.coords.latitude;
+          this.currentLocation.lng = coordinates.coords.longitude;
+          loadingElmnt.dismiss();
+        },rejected=>{
+          loadingElmnt.dismiss();
+          console.log(rejected);
+        });
+      });
+  }
+
   beginOrderAction() {
     this.actionSheet
       .create({
@@ -43,14 +67,14 @@ export class RequestServicePage implements OnInit {
       });
   }
   openModal() {
-    const requestModel= new OrderModel();
+    const requestModel = new OrderModel();
     requestModel.requestDate = new Date();
     requestModel.ordStatus = 'NEW';
 
     this.modalCtrl
       .create({
         component: OrderLocationComponent,
-        componentProps:{payLoad: requestModel}
+        componentProps: { payLoad: requestModel },
       })
       .then((modalCtrl) => {
         modalCtrl.present();
