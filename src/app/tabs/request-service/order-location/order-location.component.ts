@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { PlaceLocation } from 'src/app/models/location-model';
 import { OrderModel } from 'src/app/models/order-model';
+import { ModalService } from 'src/app/shared/services/modal.service';
 import { OrderHeaderComponent } from '../order-header/order-header.component';
 
 @Component({
@@ -19,7 +20,7 @@ export class OrderLocationComponent implements OnInit {
   destLat;
   destAddress;
   destStaticMapImageUrl;
-  constructor(private modalCtrl: ModalController) {}
+  constructor(private modalCtrl: ModalController, private modalService: ModalService) {}
 
   ngOnInit() {
     console.log(this.payLoad);
@@ -41,7 +42,7 @@ export class OrderLocationComponent implements OnInit {
   cancel() {
     this.modalCtrl.dismiss();
   }
-  nextStep() {
+  async nextStep() {
     if (this.locationsSelected()) {
       this.payLoad.destFormatedAddress = this.destAddress;
       this.payLoad.destLat = this.destLat;
@@ -53,12 +54,13 @@ export class OrderLocationComponent implements OnInit {
       this.payLoad.sourceLong = this.sourceLong;
       this.payLoad.sourceMapImage = this.sourceStaticMapImageUrl;
       console.log(this.payLoad);
-      this.modalCtrl.create({
-        component: OrderHeaderComponent,
-        componentProps:{hdrRow: this.payLoad}
-      }).then(modalCtrl=>{
-        modalCtrl.present();
-      });
+    const modal = await  this.modalCtrl
+        .create({
+          component: OrderHeaderComponent,
+          componentProps: { hdrRow: this.payLoad },
+        });
+       this.modalService.storeModal(modal) ;
+       return await modal.present();
     }
   }
 

@@ -1,3 +1,28 @@
-<p>
-  execute-order works!
-</p>
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="end">
+      <ion-title>Estimated Cost</ion-title>
+      <ion-button color="primary" (click)="back()">
+        Back
+        <ion-icon name="arrow-forward-circle" slot="end"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="cost ion-text-center">
+    <h1>500 SR</h1>
+  </div>
+<ion-grid>
+  <ion-row>
+    <ion-col offset="4" size="4">
+      <ion-button fill="solid" expand="block" (click)="execute()">execute</ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col offset="4" size="4">
+      <ion-button fill="solid" expand="block" (click)="cancel()">cancel</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+</ion-content>

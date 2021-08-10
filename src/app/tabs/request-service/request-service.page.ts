@@ -6,6 +6,7 @@ import {
   ModalController,
 } from '@ionic/angular';
 import { OrderModel } from 'src/app/models/order-model';
+import { ModalService } from 'src/app/shared/services/modal.service';
 import { OrderLocationComponent } from './order-location/order-location.component';
 
 @Component({
@@ -18,7 +19,8 @@ export class RequestServicePage implements OnInit {
   constructor(
     private actionSheet: ActionSheetController,
     private modalCtrl: ModalController,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private modalService: ModalService
   ) {}
 
   ngOnInit() {
@@ -54,11 +56,17 @@ export class RequestServicePage implements OnInit {
           },
           {
             text: 'Meduim Pickup',
-            icon: 'assets/icon/vcl-orange.svg',
+            icon: 'assets/icon/mid-vcl.svg',
+            handler: () => {
+              this.openModal();
+            },
           },
           {
             text: 'Big Pickup',
-            icon: 'assets/icon/vcl-orange.svg',
+            icon: 'assets/icon/big-vcl.svg',
+            handler: () => {
+              this.openModal();
+            },
           },
         ],
       })
@@ -66,19 +74,17 @@ export class RequestServicePage implements OnInit {
         actionSheetElmnt.present();
       });
   }
-  openModal() {
+  async openModal() {
     const requestModel = new OrderModel();
     requestModel.requestDate = new Date();
     requestModel.ordStatus = 'NEW';
 
-    this.modalCtrl
+   const modal = await this.modalCtrl
       .create({
         component: OrderLocationComponent,
         componentProps: { payLoad: requestModel },
-      })
-      .then((modalCtrl) => {
-        modalCtrl.present();
-        modalCtrl.onDidDismiss().then((dismissData) => {});
       });
+     this.modalService.storeModal(modal) ;
+     return await modal.present();
   }
 }

@@ -18,9 +18,5 @@
 	{
 		"pkg": "@capacitor/storage",
 		"classpath": "com.capacitorjs.plugins.storage.StoragePlugin"
-	},
-	{
-		"pkg": "capacitor-voice-recorder",
-		"classpath": "com.tchvu3.capacitorvoicerecorder.VoiceRecorder"
 	}
 ]
