@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 import {
   Component,
   ElementRef,
@@ -7,9 +9,16 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { Platform } from '@ionic/angular';
-import { Camera, CameraResultType } from '@capacitor/camera';
-import { PhotoService } from '../../services/photo.service';
+import { Directory, Filesystem } from '@capacitor/filesystem';
+import { Storage } from '@capacitor/storage';
+import { ActionSheetController, Platform } from '@ionic/angular';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+
+
+export interface UserPhoto {
+  filepath: string;
+  webviewPath: string;
+}
 
 @Component({
   selector: 'app-image-picker',
@@ -23,9 +32,13 @@ export class ImagePickerComponent implements OnInit {
   @Input() showPreview = false;
   @Input() selectedImage: string;
   usePicker = false;
-  constructor(private platform: Platform, public photoService: PhotoService) {}
+  PHOTO_STORAGE: string = 'photos';
+  public photos: UserPhoto[] = [];
 
-  ngOnInit() {
+
+  constructor( public actionSheetController: ActionSheetController, private platform: Platform) {}
+
+  async ngOnInit() {
     if (
       (this.platform.is('mobile') && !this.platform.is('hybrid')) ||
       this.platform.is('desktop')
@@ -35,31 +48,51 @@ export class ImagePickerComponent implements OnInit {
     Camera.requestPermissions().then((res) => {
       console.log(res);
     });
+
   }
-  onPickImage() {
-    this.photoService.takePhoto().then((photoTaken) => {
-      console.log('photo taken');
-      console.log(photoTaken);
-            // this.selectedImage = photoTaken.dataUrl;
-      // this.imagePick.emit(photoTaken.dataUrl);
+
+  public async showActionSheet(photo: UserPhoto, position: number) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Photos',
+      buttons: [{
+        text: 'Delete',
+        role: 'destructive',
+        icon: 'trash',
+        handler: () => {
+          this.deletePicture(photo, position);
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          // Nothing to do, action sheet is automatically closed
+         }
+      }]
+    });
+    await actionSheet.present();
+  }
+
+  onPickImage(){
+  }
+
+  public async deletePicture(photo: UserPhoto, position: number) {
+    // Remove this photo from the Photos reference data array
+    this.photos.splice(position, 1);
+
+    // Update photos array cache by overwriting the existing photo array
+    Storage.set({
+      key: this.PHOTO_STORAGE,
+      value: JSON.stringify(this.photos),
+    });
+
+    // delete photo file from filesystem
+    const filename = photo.filepath.substr(photo.filepath.lastIndexOf('/') + 1);
+    await Filesystem.deleteFile({
+      path: filename,
+      directory: Directory.Data,
     });
   }
 
-  onFileChoosen(event: Event){
-
-  }
 }
-/* onFileChoosen(event: Event) {
-    console.log('It is File chooser');
-    const pickedFile = (event.target as HTMLInputElement).files[0];
-    if (!pickedFile) {
-      return;
-    }
-    const fr = new FileReader();
-    fr.onload = () => {
-      const dataUrl = fr.result.toString();
-      this.selectedImage = dataUrl;
-      this.imagePick.emit(pickedFile);
-    };
-    fr.readAsDataURL(pickedFile);
-  }*/
+

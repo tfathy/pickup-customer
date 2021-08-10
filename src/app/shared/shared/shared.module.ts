@@ -8,6 +8,7 @@ import { LocationPickerComponent } from '../pickers/location-picker/location-pic
 import { MapModalComponent } from '../map-modal/map-modal.component';
 import { OrderHeaderComponent } from 'src/app/tabs/request-service/order-header/order-header.component';
 import { ImagePickerComponent } from '../pickers/image-picker/image-picker.component';
+import { ExecuteOrderComponent } from 'src/app/tabs/request-service/execute-order/execute-order.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ImagePickerComponent } from '../pickers/image-picker/image-picker.compo
     LocationPickerComponent,
     MapModalComponent,
     OrderHeaderComponent,
-    ImagePickerComponent
+    ImagePickerComponent,
+    ExecuteOrderComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,8 @@ import { ImagePickerComponent } from '../pickers/image-picker/image-picker.compo
     LocationPickerComponent,
     MapModalComponent,
     OrderHeaderComponent,
-    ImagePickerComponent
+    ImagePickerComponent,
+    ExecuteOrderComponent
   ],
 })
 export class SharedModule {}

@@ -1,27 +1,22 @@
-<div class="picker">
+
+<ion-content>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Photo Gallery</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
   <ion-grid>
     <ion-row>
-      <ion-col *ngFor="let photo of photoService.photos; index as position">
-  <ion-img
-    role="button"
-    class="image"
-    (click)="onPickImage()"
-    [src]="photo.webviewPath"
-    *ngIf="selectedImage && showPreview"
-  ></ion-img>
-      </ion-col>
+    <ion-col size="6" *ngFor="let photo of photos; index as position">
+      <ion-img [src]="photo.webviewPath" (click)="showActionSheet(photo, position)"></ion-img>
+    </ion-col>
     </ion-row>
   </ion-grid>
 
-  <ion-button color="primary" (click)="onPickImage()" *ngIf="!selectedImage || !showPreview">
-    <ion-icon name="camera" slot="start"></ion-icon>
-    <ion-label>Take Picture</ion-label>
-  </ion-button>
-</div>
-<input
-  type="file"
-  accept="image/jpeg"
-  *ngIf="usePicker"
-  #filePicker
-  (change)="onFileChoosen($event)"
-/>
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button (click)="onPickImage()">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -1,37 +1,55 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar >
+  <ion-toolbar color="light">
     <ion-buttons slot="end">
-      <ion-title>Location</ion-title>
-      <ion-button (click)="cancel()" color="primary">
-        <ion-icon  name="arrow-forward-circle"></ion-icon>
+      <ion-title>Movables Details</ion-title>
+      <ion-button color="primary" (click)="cancel()">
+        Back
+        <ion-icon name="arrow-forward-circle" slot="end"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="start">
-      <ion-button (click)="nextStep()" color="primary">
-        <ion-icon name="arrow-back-circle"></ion-icon>
-    </ion-button>
+      <ion-button color="primary" (click)="nextStep()">
+        Next
+        <ion-icon name="arrow-back-circle" slot="start"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 
 </ion-header>
-<ion-content >
-  <ion-grid class="ion-padding">
-  <ion-row >
-    <ion-col size="12" class="ion-padding" >
-      <ion-title class="ion-margin-bottom">Source Locations</ion-title>
-     <app-location-picker [showPreview]="true" [buttonTitle]="'Move From'" (locationPick)="onSourceLocationPicked($event)"></app-location-picker>
-     <ion-text color="secondary">
-        <p> {{sourceAddress}}</p>
-     </ion-text>
-    </ion-col>
-    <ion-col size="12" class="ion-padding">
-      <ion-title class="ion-margin-bottom">Destination Locations</ion-title>
-     <app-location-picker [showPreview]="true" [buttonTitle]="'Move to'" (locationPick)="onDestinationLocationPicked($event)"></app-location-picker>
-     <ion-text color="secondary">
-       <p>{{destAddress}}</p>
-    </ion-text>
-    </ion-col>
-  </ion-row>
-</ion-grid>
-</ion-content>
+<ion-content>
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col size="12" class="ion-no-padding">
 
+        <ion-card>
+          <ion-card-header>
+            <app-location-picker [showPreview]="true" [buttonTitle]="'Move From'"
+              (locationPick)="onSourceLocationPicked($event)"></app-location-picker>
+            <ion-text color="secondary" class="ion-text-start">
+              <p> {{sourceAddress}}</p>
+            </ion-text>
+          </ion-card-header>
+          <ion-card-content class="ion-text-center">
+            <ion-label class="strong_text">Source Locations</ion-label>
+          </ion-card-content>
+        </ion-card>
+
+
+      </ion-col>
+      <ion-col size="12" class="ion-no-padding">
+        <ion-card>
+          <ion-card-header>
+            <app-location-picker [showPreview]="true" [buttonTitle]="'Move to'"
+            (locationPick)="onDestinationLocationPicked($event)"></app-location-picker>
+          <ion-text color="secondary" class="ion-text-start">
+            <p>{{destAddress}}</p>
+          </ion-text>
+          </ion-card-header>
+          <ion-card-content class="ion-text-center">
+            <ion-label class="strong_text">Destination Locations</ion-label>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
