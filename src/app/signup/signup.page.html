@@ -1,0 +1,48 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="back()"> Back
+        <ion-icon name="arrow-forward-circle" slot="end"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-text-center">
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-margin-top ion-margin-bottom"  >
+         <ion-title>Sign Up</ion-title>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col  class="ion-margin-bottom">
+        <ion-button expand="full" fill="outline" color="primary" shape="round" strong="true" id="fb"> Sign up with facebook
+          <ion-icon name="logo-facebook" slot="start" color="primary"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-margin-bottom ion-margin-top">
+        <ion-title> OR</ion-title>
+      </ion-col>
+    </ion-row>
+    <ion-row >
+      <ion-col class="ion-margin-top" >
+        <div  class="div1">
+          <ion-input placeholder="Enter your email address"></ion-input>
+        </div>
+
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+         <ion-button expand="full" fill="outline" color="dark" shape="round" strong="true" id="emailbtn"> Sign up with email address
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+      </ion-button>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

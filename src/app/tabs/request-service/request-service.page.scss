@@ -1,3 +1,5 @@
-.trans_bg{
-  background: transparent;
+
+ion-toolbar {
+  --background-color: transparent;
+  --ion-color-base: transparent !important;
 }

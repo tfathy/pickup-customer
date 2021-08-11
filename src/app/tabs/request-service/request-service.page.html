@@ -1,9 +1,18 @@
-<ion-header class="ion-no-border trans_bg">
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button expand="block" fill="solid" (click)="beginOrderAction()" color="danger">{{"BEGIN_ORDER"|translate}}</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
 
-    <ion-button expand="block" fill="outline" (click)="beginOrderAction()">Begin Order</ion-button>
+  </ion-toolbar>
+
 
 </ion-header>
 
 <ion-content>
-  <app-map-modal *ngIf="currentLocation.lat && currentLocation.lng" [selectable]="false" [title]='' [closeButtonText]='' [center]="currentLocation" [showToolbar]="false"></app-map-modal>
+  <app-map-modal *ngIf="currentLocation.lat && currentLocation.lng" [selectable]="false" [title]='' [closeButtonText]=''
+    [center]="currentLocation" [showToolbar]="false"></app-map-modal>
 </ion-content>

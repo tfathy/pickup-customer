@@ -1,36 +1,21 @@
 <ion-header>
   <ion-toolbar color="light">
-    <ion-buttons slot="end">
-      <ion-title>Movables Details</ion-title>
-      <ion-button color="primary" (click)="back()">
-        Back
-        <ion-icon name="arrow-forward-circle" slot="end"></ion-icon>
-      </ion-button>
-    </ion-buttons>
     <ion-buttons slot="start">
+      <ion-button color="primary" (click)="back()">
+        {{"BACK"|translate}}
+        <ion-icon name="arrow-forward-circle" slot="start"></ion-icon>
+      </ion-button>
+      <ion-title>{{"MOVABLES_DETAILS"|translate}}</ion-title>
+    </ion-buttons>
+    <ion-buttons slot="end">
       <ion-button color="primary" (click)="nextStep()">
-        Next
-        <ion-icon name="arrow-back-circle" slot="start"></ion-icon>
+        {{"NEXT"|translate}}
+        <ion-icon name="arrow-back-circle" slot="end"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-card>
-    <ion-card-header>
-      <ion-title>Movables' Images</ion-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-grid>
-        <ion-row>
-          <ion-col size="6" *ngFor="let photo of photoService.photos; index as position">
-            <ion-img [src]="photo.webviewPath" (click)="showActionSheet(photo, position)"></ion-img>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
-
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button (click)="photoService.addNewToGallery()">
       <ion-icon name="camera"></ion-icon>
@@ -45,7 +30,7 @@
             </ion-card-header>
             <ion-card-content>
               <ion-item>
-                <ion-textarea placeholder="Enter more information here..."></ion-textarea>
+                <ion-textarea placeholder='more details'></ion-textarea>
               </ion-item>
             </ion-card-content>
           </ion-card>
@@ -55,11 +40,11 @@
         <ion-col>
           <ion-card>
             <ion-card-header>
-              <ion-title> Source Location data</ion-title>
+              <ion-title>{{"SOURCE_LOCATION_DATA"|translate}}</ion-title>
             </ion-card-header>
             <ion-card-content>
               <ion-item>
-                <ion-label position="floating">Place type</ion-label>
+                <ion-label position="floating">{{"PLACE_TYPE"|translate}}</ion-label>
               <ion-select formControlName="locationType">
                 <ion-select-option>Building</ion-select-option>
                 <ion-select-option>Vila</ion-select-option>
@@ -69,12 +54,12 @@
               </ion-item>
 
               <ion-item>
-                 <ion-label position="floating">Floor number</ion-label>
+                 <ion-label position="floating">{{"FLOOR_NUMBER"|translate}}</ion-label>
               <ion-input type="number"></ion-input>
               </ion-item>
 
               <ion-item>
-                <ion-label>There is Elevator</ion-label>
+                <ion-label>{{"THERE_IS_ELV"|translate}}</ion-label>
                 <ion-toggle></ion-toggle>
               </ion-item>
             </ion-card-content>
@@ -115,6 +100,20 @@
       </ion-row>
     </ion-grid>
   </form>
+  <ion-card>
+    <ion-card-header>
+      <ion-title>{{"MOVABLES_IMAGES"|translate}}</ion-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" *ngFor="let photo of photoService.photos; index as position">
+            <ion-img [src]="photo.webviewPath" (click)="showActionSheet(photo, position)"></ion-img>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
 <ion-footer>
 

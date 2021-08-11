@@ -1,0 +1,21 @@
+{
+  "LOGIN": "تسجيل دخول",
+  "SETTINGS": "إعدادات",
+  "EMAIL": "البريد الاكتروني",
+  "MY_ORDERS":"طلباتي",
+  "LANGUAGE":"اللغة",
+  "BEGIN_ORDER":"إبدا الطلب",
+  "MOVABLES_DETAILS":"بيانات المنقولات",
+  "LOCATION":"الموقع",
+  "BACK":"السابق",
+  "NEXT":"التالي",
+  "MOVE_FROM":"الإنتقال من",
+  "MOVE_TO":"الانتقال الى",
+  "SOURCE_LOCATION":"عنوان المكان الذى سيتم النقل منه",
+  "DESTINATION_LOCATION":"عنوان المكان الذي سيتم النقل اليه",
+  "MOVABLES_IMAGES":"صور المنقولات",
+  "SOURCE_LOCATION_DATA":"بيانات المكان المنقول منه",
+  "PLACE_TYPE":"نوع المكان",
+  "FLOOR_NUMBER":"رقم الطابق",
+  "THERE_IS_ELV":"يوجد مصعد"
+}

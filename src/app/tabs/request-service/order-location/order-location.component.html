@@ -1,16 +1,16 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="light">
-    <ion-buttons slot="end">
-      <ion-title>Movables Details</ion-title>
-      <ion-button color="primary" (click)="cancel()">
-        Back
-        <ion-icon name="arrow-forward-circle" slot="end"></ion-icon>
-      </ion-button>
-    </ion-buttons>
     <ion-buttons slot="start">
+      <ion-button color="primary" (click)="cancel()">
+        {{"BACK"|translate}}
+        <ion-icon name="arrow-forward-circle" slot="start"></ion-icon>
+      </ion-button>
+      <ion-title>{{"LOCATION"|translate}}</ion-title>
+    </ion-buttons>
+    <ion-buttons slot="end">
       <ion-button color="primary" (click)="nextStep()">
-        Next
-        <ion-icon name="arrow-back-circle" slot="start"></ion-icon>
+        {{"NEXT"|translate}}
+        <ion-icon name="arrow-back-circle" slot="end"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -23,14 +23,14 @@
 
         <ion-card>
           <ion-card-header>
-            <app-location-picker [showPreview]="true" [buttonTitle]="'Move From'"
+            <app-location-picker [showPreview]="true" [buttonTitle]="'MOVE_FROM'"
               (locationPick)="onSourceLocationPicked($event)"></app-location-picker>
             <ion-text color="secondary" class="ion-text-start">
               <p> {{sourceAddress}}</p>
             </ion-text>
           </ion-card-header>
           <ion-card-content class="ion-text-center">
-            <ion-label class="strong_text">Source Locations</ion-label>
+            <ion-label class="strong_text">{{"SOURCE_LOCATION"|translate}}</ion-label>
           </ion-card-content>
         </ion-card>
 
@@ -39,14 +39,14 @@
       <ion-col size="12" class="ion-no-padding">
         <ion-card>
           <ion-card-header>
-            <app-location-picker [showPreview]="true" [buttonTitle]="'Move to'"
+            <app-location-picker [showPreview]="true" [buttonTitle]="'MOVE_TO'"
             (locationPick)="onDestinationLocationPicked($event)"></app-location-picker>
           <ion-text color="secondary" class="ion-text-start">
             <p>{{destAddress}}</p>
           </ion-text>
           </ion-card-header>
           <ion-card-content class="ion-text-center">
-            <ion-label class="strong_text">Destination Locations</ion-label>
+            <ion-label class="strong_text">{{"DESTINATION_LOCATION"|translate}}</ion-label>
           </ion-card-content>
         </ion-card>
       </ion-col>

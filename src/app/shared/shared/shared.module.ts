@@ -9,6 +9,7 @@ import { MapModalComponent } from '../map-modal/map-modal.component';
 import { OrderHeaderComponent } from 'src/app/tabs/request-service/order-header/order-header.component';
 import { ImagePickerComponent } from '../pickers/image-picker/image-picker.component';
 import { ExecuteOrderComponent } from 'src/app/tabs/request-service/execute-order/execute-order.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -25,12 +26,14 @@ import { ExecuteOrderComponent } from 'src/app/tabs/request-service/execute-orde
     HttpClientModule,
     IonicModule,
     ReactiveFormsModule,
+    TranslateModule
   ],
   exports: [
     FormsModule,
     HttpClientModule,
     IonicModule,
     ReactiveFormsModule,
+    TranslateModule,
     OrderLocationComponent,
     LocationPickerComponent,
     MapModalComponent,
