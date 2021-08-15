@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  backEndApiRoot:'',
   googleMapsAPIKey: 'AIzaSyBifcwaKgvMIfLesKQBEvW_81vrqXewUMc'
 };
 

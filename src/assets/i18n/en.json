@@ -17,5 +17,15 @@
   "SOURCE_LOCATION_DATA":"Source Location Data",
   "PLACE_TYPE":"Place Type",
   "FLOOR_NUMBER":"Flooe Number",
-  "THERE_IS_ELV":"There is an elevator"
+  "THERE_IS_ELV":"There is an elevator",
+  "LOG_OUT":"Log Out",
+  "ABOUT_APP": "About",
+  "COMPLAINS":"Complains",
+  "USER_PROFILE":"Profile",
+  "START_MENU":"Menu",
+  "EXECUTE":"Execute",
+  "CANCEL":"Cancel",
+  "OPEN_ORDERS":"Pending Orders",
+  "CLOSED_ORDERS":"Closed Orders",
+  "PICK_UP_ORDER":"Pick up"
 }

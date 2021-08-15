@@ -30,12 +30,12 @@ export class ExecuteOrderComponent implements OnInit {
   }
   execute(){
     this.closeAllModal();
+    this.showAlert('Your request is sent to all avaliable vehicles.You will get a notification as sson as the request is picked.Thank you');
   }
   private closeAllModal() {
     for (let i = 0; i < this.modalService.modalInst.length; i++) {
       this.modalService.modalInst[i].dismiss();
     }
-    this.showAlert('Your request is sent to all avaliable vehicles.You will get a notification as sson as the request is picked.Thank you');
   }
   private showAlert(msg: string){
     this.alert.create({
@@ -50,7 +50,8 @@ export class ExecuteOrderComponent implements OnInit {
   private showToast(msg: string){
     this.toast.create({
       message: msg,
-      duration: 1000
+      duration: 1000,
+      position:'middle'
     }).then(toastElmnt=>{
       toastElmnt.present();
     });

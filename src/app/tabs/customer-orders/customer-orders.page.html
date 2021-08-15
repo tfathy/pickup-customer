@@ -8,5 +8,19 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-segment
+  (ionChange)="onSegmentChanged($event)"
+  color="secondary"
+  scrollable="true"
+  value="new"
+>
+<ion-segment-button value="new">
+  <ion-label>{{"OPEN_ORDERS"|translate}}</ion-label>
+  <ion-icon name="newspaper-sharp"></ion-icon>
+</ion-segment-button>
+<ion-segment-button value="old" color="secondary">
+  <ion-label>{{"CLOSED_ORDERS"|translate}}</ion-label>
+  <ion-icon name="lock-closed-outline"></ion-icon>
+</ion-segment-button>
+</ion-segment>
 </ion-content>

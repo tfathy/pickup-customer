@@ -4,4 +4,7 @@
     <string name="title_activity_main">pickup</string>
     <string name="package_name">com.customer.pickup</string>
     <string name="custom_url_scheme">com.customer.pickup</string>
+    <string name="facebook_app_id">1179346292570266</string>
+    <string name="facebook_client_token">b030c15a949848dfdfc8c183a5ef1e87</string>
+
 </resources>

@@ -17,5 +17,15 @@
   "SOURCE_LOCATION_DATA":"بيانات المكان المنقول منه",
   "PLACE_TYPE":"نوع المكان",
   "FLOOR_NUMBER":"رقم الطابق",
-  "THERE_IS_ELV":"يوجد مصعد"
+  "THERE_IS_ELV":"يوجد مصعد",
+  "LOG_OUT":"خروج",
+  "ABOUT_APP": "عن التطبيق",
+  "COMPLAINS":"شكاوي",
+  "USER_PROFILE":"الملف الشخصي",
+  "START_MENU":"القائمة",
+  "EXECUTE":"تنفيذ",
+  "CANCEL":"إلغاء",
+  "OPEN_ORDERS":"طلبات قيد لتنفيذ",
+  "CLOSED_ORDERS":"طلبات مغلقة",
+  "PICK_UP_ORDER":"طلب نقل"
 }

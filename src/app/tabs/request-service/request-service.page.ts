@@ -15,7 +15,7 @@ import { OrderLocationComponent } from './order-location/order-location.componen
   styleUrls: ['./request-service.page.scss'],
 })
 export class RequestServicePage implements OnInit {
-  currentLocation ={lat:null,lng:null};
+  currentLocation = { lat: null, lng: null };
   constructor(
     private actionSheet: ActionSheetController,
     private modalCtrl: ModalController,
@@ -30,16 +30,17 @@ export class RequestServicePage implements OnInit {
       })
       .then((loadingElmnt) => {
         loadingElmnt.present();
-        Geolocation.getCurrentPosition().then((coordinates) => {
-          console.log('Current latitude:', coordinates.coords.latitude);
-          console.log('Current longitude:', coordinates.coords.longitude);
-          this.currentLocation.lat = coordinates.coords.latitude;
-          this.currentLocation.lng = coordinates.coords.longitude;
-          loadingElmnt.dismiss();
-        },rejected=>{
-          loadingElmnt.dismiss();
-          console.log(rejected);
-        });
+        Geolocation.getCurrentPosition().then(
+          (coordinates) => {
+            this.currentLocation.lat = coordinates.coords.latitude;
+            this.currentLocation.lng = coordinates.coords.longitude;
+            loadingElmnt.dismiss();
+          },
+          (rejected) => {
+            loadingElmnt.dismiss();
+            console.log(rejected);
+          }
+        );
       });
   }
 
@@ -79,12 +80,11 @@ export class RequestServicePage implements OnInit {
     requestModel.requestDate = new Date();
     requestModel.ordStatus = 'NEW';
 
-   const modal = await this.modalCtrl
-      .create({
-        component: OrderLocationComponent,
-        componentProps: { payLoad: requestModel },
-      });
-     this.modalService.storeModal(modal) ;
-     return await modal.present();
+    const modal = await this.modalCtrl.create({
+      component: OrderLocationComponent,
+      componentProps: { payLoad: requestModel },
+    });
+    this.modalService.storeModal(modal);
+    return await modal.present();
   }
 }

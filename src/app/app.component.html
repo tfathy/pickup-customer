@@ -1,29 +1,3 @@
 <ion-app [dir]="appDirection">
-  <ion-menu side="end" menuId="first" contentId="main">
-    <ion-header>
-      <ion-toolbar color="primary">
-        <ion-title>{{"START_MENU"|translate}}</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      <ion-list>
-        <ion-list-header>
-          <ion-title>{{"LANGUAGE"|translate}}</ion-title>
-        </ion-list-header>
-        <ion-menu-toggle autoHide="false">
-          <ion-item button detail="false"(click)="change2English()">
-            <ion-icon slot="start" name="checkmark-outline" *ngIf="lang=== 'en'"></ion-icon>
-            <ion-label> English </ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-        <ion-menu-toggle autoHide="false">
-          <ion-item button detail="false" (click)="change2Arabic()">
-            <ion-icon slot="start" name="checkmark-outline"  *ngIf="lang=== 'ar'"></ion-icon>
-            <ion-label> العربية </ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-      </ion-list>
-    </ion-content>
-  </ion-menu>
-  <ion-router-outlet id="main"></ion-router-outlet>
+  <ion-router-outlet ></ion-router-outlet>
 </ion-app>

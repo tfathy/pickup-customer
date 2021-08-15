@@ -10,11 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+       <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+       <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
+
         <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
             android:name="com.customer.pickup.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBarLaunch"
+            android:theme="@android:style/Theme.Translucent"
             android:launchMode="singleTask">
 
             <intent-filter>
