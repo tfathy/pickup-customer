@@ -30,13 +30,15 @@
     <ion-row >
       <ion-col class="ion-margin-top" >
         <div  class="div1">
-          <ion-input placeholder="Enter your email address"></ion-input>
+          <ion-input placeholder="Enter your email address" [(ngModel)]="email"></ion-input>
         </div>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-         <ion-button expand="full" fill="outline" color="dark" shape="round" strong="true" id="emailbtn"> Sign up with email address
+         <ion-button
+         (click)="signUpWithEmail()"
+          expand="full" fill="outline" color="dark" shape="round" strong="true" id="emailbtn"> Sign up with email address
         <ion-icon name="mail-outline" slot="end"></ion-icon>
       </ion-button>
       </ion-col>

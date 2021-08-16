@@ -3,12 +3,21 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { generatedRandomString } from '../shared/common-utils';
+import { CreateCustomerRequestModel } from '../shared/model/create-customer-request-model';
+import { CreateCustomerResponseModel } from '../shared/model/create-customer-response-model';
+import { CreateUserRequestModel } from '../shared/model/create-user-request-model';
+import { CreateUserResponseModel } from '../shared/model/create-user-response-model';
+
+
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  customerApiUrl = '';
+  customerApiUrl = 'customer-app/customer';
+  securityApi = 'sys-owner-security/owner-auth/customer';
   customer = {
     email: '',
     fullNameAr: '',
@@ -24,7 +33,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  saveCustomer(fbToken: any): Promise<any> {
+  createUserUsingFb(fbToken: any): Promise<any> {
     return this.loadFacebookFeed(fbToken).then((result) => {
       this.http
         .post<any>(
@@ -36,6 +45,24 @@ export class AuthService {
         });
     });
   }
+
+  createCustomerUsingEmail(body: CreateCustomerRequestModel): Observable<CreateCustomerResponseModel> {
+    // create customer
+    return this.http
+      .post<CreateCustomerResponseModel>(
+        `${environment.backEndApiRoot}/${this.customerApiUrl}`,
+        body
+      );
+  }
+
+
+  createUserUsingEmail(createUserRequestModel: CreateUserRequestModel): Observable<CreateUserResponseModel>{
+    return  this.http.post<CreateUserResponseModel>(
+      `${environment.backEndApiRoot}/${this.securityApi}`,
+      createUserRequestModel
+    );
+  }
+
 
   private async loadFacebookFeed(fbToken: any) {
     const url = `https://graph.facebook.com/me?fields=id,name,picture.width(720),link,hometown,location,accounts,likes,email,gender,birthday&access_token=${fbToken.token}`;
