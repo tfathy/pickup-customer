@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: '/tabs/request-service',
     pathMatch: 'full'
   },
   {

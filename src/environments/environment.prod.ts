@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
   backEndApiRoot:'http://161.97.164.43:802',
+  facebookGraphQl: 'https://graph.facebook.com/me?fields=id,name,picture.width(720),email,gender,link&access_token=',
   googleMapsAPIKey: 'AIzaSyBifcwaKgvMIfLesKQBEvW_81vrqXewUMc'
 };

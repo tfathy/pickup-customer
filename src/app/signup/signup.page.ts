@@ -28,9 +28,7 @@ export class SignupPage implements OnInit {
     const FACEBOOK_PERMISSIONS = ['email', 'user_link'];
     await FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS }).then(
       async (result) => {
-        console.log('3');
         if (result.accessToken) {
-          console.log('4');
           await this.loadFacebookFeed(result.accessToken);
         }
       }
@@ -126,17 +124,9 @@ export class SignupPage implements OnInit {
             null
           );
           console.log('customer object info****');
-          console.log(customer.email);
-          console.log(customer.facebookLink);
-          console.log(customer.fbId);
-          console.log(customer.fullNameAr);
-          console.log(customer.fullNameEn);
-          console.log(customer.gender);
           this.authService.createCustomer(customer).subscribe(
             (customerResponse) => {
               console.log('customer created');
-              console.log(customerResponse);
-              console.log('6');
               createUserRequestModel = new CreateUserRequestModel(
                 customerResponse,
                 customerResponse.email,

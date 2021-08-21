@@ -1,36 +1,34 @@
-<ion-header [translucent]="true" class="ion-no-border">
-  <ion-toolbar>
-    <ion-title>
-      Pick Up
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true" class="ion-text-center">
-  <ion-grid id="bg">
-    <ion-row>
-      <ion-col>
+<div id="bg">
 
+</div>
+  <ion-grid class="ion-text-center" id="grid">
+    <ion-row>
+      <ion-col size="12" class="ion-margin-bottom">
+        <div id="menu_button" class="ion-text-center">
+          <ion-button id="visitor" fill="outline" expand="full" shape="round" [routerLink]="'/tabs'" expand="block" color="light"
+            strong="true">{{"VISITOR"|translate}}
+          </ion-button>
+        </div>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col>
-
-
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-grid class="ion-text-center">
-    <ion-row>
-      <ion-col size="12">
-        <div id="menu_button"  class="ion-text-center">
-          <ion-button fill="outline" [routerLink]="'/tabs'" expand="block">{{"VISITOR"|translate}}</ion-button>
-          <ion-button fill="outline" [routerLink]="'/login'" expand="block">{{"LOG_IN"|translate}}</ion-button>
-          <ion-button fill="outline" [routerLink]="'/signup'" expand="block">{{"CREATE_ACCOUNT"|translate}}</ion-button>
+      <ion-col class="ion-margin-bottom ion-margin-top">
+        <div id="menu_button" class="ion-text-center">
+          <ion-button id="login" fill="outline" expand="full" shape="round" [routerLink]="'/login'" expand="block" color="light">
+            {{"LOG_IN"|translate}}
+          </ion-button>
         </div>
       </ion-col>
     </ion-row>
   </ion-grid>
-
-
 </ion-content>
+
+
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-button fill="clear" strong="true" expand="full" [routerLink]="'/signup'" expand="block" color="light">
+      {{"CREATE_ACCOUNT"|translate}}
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

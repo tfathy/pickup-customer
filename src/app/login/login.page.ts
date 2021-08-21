@@ -1,7 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FacebookLogin } from '@capacitor-community/facebook-login';
 import { LoadingController, ToastController } from '@ionic/angular';
+
+import { environment } from 'src/environments/environment';
 import { AuthService } from '../shared/services/auth.service';
 import { readStorage } from '../shared/shared/common-utils';
 
@@ -16,7 +20,8 @@ export class LoginPage implements OnInit {
     private router: Router,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
-    private authService: AuthService
+    private authService: AuthService,
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -36,7 +41,7 @@ export class LoginPage implements OnInit {
         this.authService
           .authLogin(this.username.value, this.password.value)
           .subscribe(
-            (loginResponse) => {
+            () => {
               readStorage('CustomerAuthData').then((storageData) => {
                 const status = storageData.accountStatus;
                 if (status === 'NOT-VERIFIED') {
@@ -63,6 +68,17 @@ export class LoginPage implements OnInit {
           );
       });
   }
+
+  async fbLogin() {
+    const FACEBOOK_PERMISSIONS = ['email', 'user_link'];
+    await FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS }).then(
+      async (result) => {
+        if (result.accessToken) {
+          await this.loadFacebookFeed(result.accessToken);
+        }
+      }
+    );
+  }
   back() {
     this.router.navigate(['/', 'home']);
   }
@@ -82,6 +98,34 @@ export class LoginPage implements OnInit {
       })
       .then((toastElmnt) => {
         toastElmnt.present();
+      });
+  }
+
+  private async loadFacebookFeed(fbToken: any) {
+    const url = `${environment.facebookGraphQl}${fbToken.token}`;
+    this.loadingCtrl
+      .create({
+        message: 'Login...please wait',
+      })
+      .then((loadinElmnt) => {
+        loadinElmnt.present();
+        this.http.get(url).subscribe((res: any) => {
+          console.log(res.email, res.id);
+          this.authService
+            .authLogin(res.email, res.id)
+            .subscribe(() => {
+              loadinElmnt.dismiss();
+              this.router.navigate(['/', 'tabs', 'request-service']);
+            },loginError=>{
+              loadinElmnt.dismiss();
+              console.log(loginError);
+              this.showToast('Login Error',3000);
+            });
+        },fbloginError=>{
+          loadinElmnt.dismiss();
+          console.log(fbloginError);
+          this.showToast('fblogin Error',3000);
+        });
       });
   }
 }
