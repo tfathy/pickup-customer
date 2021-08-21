@@ -1,4 +1,5 @@
 /* eslint-disable max-len */
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FacebookLogin } from '@capacitor-community/facebook-login';
@@ -14,43 +15,23 @@ import { CreateUserRequestModel } from '../shared/shared/model/create-user-reque
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage implements OnInit {
-  token = null;
   email: string;
   constructor(
     private router: Router,
     private loadingCtrl: LoadingController,
     private authService: AuthService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private http: HttpClient
   ) {}
 
-  facebookSignUp() {
-    /*const FACEBOOK_PERMISSIONS = [
-      'email',
-      'user_birthday',
-      'user_photos',
-      'user_gender',
-      'user_hometown',
-      'user_location',
-      'user_likes',
-      'user_link',
-    ];*/
+  async facebookSignUp() {
     const FACEBOOK_PERMISSIONS = ['email', 'user_link'];
-    FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS }).then(
-      (result) => {
+    await FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS }).then(
+      async (result) => {
+        console.log('3');
         if (result.accessToken) {
-          this.token = result.accessToken;
-          this.loadingCtrl
-            .create({
-              message: 'creating account... please wait',
-            })
-            .then((loadingElmnt) => {
-              loadingElmnt.present();
-              this.authService.createUserUsingFb(this.token).then((data) => {
-                loadingElmnt.dismiss();
-                console.log('Customer created', data);
-                console.log('next step create user');
-              });
-            });
+          console.log('4');
+          await this.loadFacebookFeed(result.accessToken);
         }
       }
     );
@@ -70,7 +51,7 @@ export class SignupPage implements OnInit {
         })
         .then((loadingElmnt) => {
           loadingElmnt.present();
-          this.authService.createCustomerUsingEmail(model).subscribe(
+          this.authService.createCustomer(model).subscribe(
             (resData) => {
               console.log(
                 'responnse returnd from createUserUsingEmail is',
@@ -119,6 +100,75 @@ export class SignupPage implements OnInit {
       })
       .then((alertElmnt) => {
         alertElmnt.present();
+      });
+  }
+
+  private async loadFacebookFeed(fbToken: any) {
+    const url = `https://graph.facebook.com/me?fields=id,name,picture.width(720),email,gender,link&access_token=${fbToken.token}`;
+    let createUserRequestModel: CreateUserRequestModel;
+    this.loadingCtrl
+      .create({ message: 'Reading facebook feeds.. please wait' })
+      .then((loadingElmnt) => {
+        loadingElmnt.present();
+        this.http.get(url).subscribe((res: any) => {
+          const customer = new CreateCustomerRequestModel(
+            res.email,
+            null,
+            res.name,
+            res.name,
+            res.gender,
+            null,
+            null,
+            null,
+            res.link,
+            null,
+            res.id,
+            null
+          );
+          console.log('customer object info****');
+          console.log(customer.email);
+          console.log(customer.facebookLink);
+          console.log(customer.fbId);
+          console.log(customer.fullNameAr);
+          console.log(customer.fullNameEn);
+          console.log(customer.gender);
+          this.authService.createCustomer(customer).subscribe(
+            (customerResponse) => {
+              console.log('customer created');
+              console.log(customerResponse);
+              console.log('6');
+              createUserRequestModel = new CreateUserRequestModel(
+                customerResponse,
+                customerResponse.email,
+                customerResponse.fbId,
+                'CUSTOMER',
+                'VERIFIED'
+              );
+              this.authService
+                .createUserUsingEmail(createUserRequestModel)
+                .subscribe(
+                  (userData) => {
+                    this.authService
+                      .authLogin(customerResponse.email, customerResponse.fbId)
+                      .subscribe((authData) => {
+                        loadingElmnt.dismiss();
+                        this.router.navigate(['/', 'tabs', 'request-service']);
+                      });
+                  },
+                  (error) => {
+                    loadingElmnt.dismiss();
+                    console.log(error);
+                    this.showAlert(error.status);
+                  }
+                );
+            },
+            (error) => {
+              console.error('error in authService.createCustomer');
+              console.log('7');
+              loadingElmnt.dismiss();
+            }
+          );
+        });
       });
   }
 }

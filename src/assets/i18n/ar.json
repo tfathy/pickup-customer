@@ -27,5 +27,16 @@
   "CANCEL":"إلغاء",
   "OPEN_ORDERS":"طلبات قيد لتنفيذ",
   "CLOSED_ORDERS":"طلبات مغلقة",
-  "PICK_UP_ORDER":"طلب نقل"
+  "PICK_UP_ORDER":"طلب نقل",
+  "LOG_IN":"تسجيل دخول",
+  "FACEBOOK":"من خلال فيسبوك",
+  "OR":"أو",
+  "MY_PROFILE":"الملف الشخصي",
+  "CREATE_ACCOUNT":"إنشاء حساب",
+  "VISITOR":"الدخول كذائر",
+  "SIGN_UP":"إنشاء حســـاب",
+  "SIGN_UP_WITH_FB":"إنشاء حساب باستخدام فيسبوك",
+  "SIGN_UP_WITH_EMAIL":"إنشاء حساب باستخدام البريد الاكتروني",
+  "FORGET_PASSWORD":"نسيت كلمة السر",
+  "ESTEMATED_COST":"التكلفة التقديرية"
 }

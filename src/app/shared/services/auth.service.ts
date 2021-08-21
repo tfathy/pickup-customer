@@ -1,96 +1,228 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, from, Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { generatedRandomString } from '../shared/common-utils';
 import { CreateCustomerRequestModel } from '../shared/model/create-customer-request-model';
 import { CreateCustomerResponseModel } from '../shared/model/create-customer-response-model';
 import { CreateUserRequestModel } from '../shared/model/create-user-request-model';
 import { CreateUserResponseModel } from '../shared/model/create-user-response-model';
+import { UserModel } from '../shared/model/user-model';
+import { Storage } from '@capacitor/storage';
+import { Router } from '@angular/router';
 
-
-
+interface AuthResponseData {
+  token: string;
+  email: string;
+  refreshToken: string;
+  expires: string;
+  userId: string;
+  accountStatus: string;
+  userType?: string;
+  registered?: boolean;
+}
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
-  customerApiUrl = 'customer-app/customer';
-  securityApi = 'sys-owner-security/owner-auth/customer';
-  customer = {
-    email: '',
-    fullNameAr: '',
-    fullNameEn: '',
-    phoneNumber: '',
-    facebookLink: '',
-    birthDate: null,
-    gender: '',
-    homeCity: '',
-    fbPhotoLink: '',
-    fbId: '',
-  };
+export class AuthService implements OnDestroy {
+  private _user = new BehaviorSubject<UserModel>(null);
+  private activeLogoutTimer: any;
 
-  constructor(private http: HttpClient) {}
+  private customerApiUrl = 'customer-app/customer';
+  private securityApi = 'sys-owner-security/owner-auth/customer';
 
-  createUserUsingFb(fbToken: any): Promise<any> {
-    return this.loadFacebookFeed(fbToken).then((result) => {
-      this.http
-        .post<any>(
-          `${environment.backEndApiRoot}/${this.customerApiUrl}`,
-          this.customer
-        )
-        .subscribe((data) => {
-          console.log('customer data saved');
-        });
-    });
+  constructor(private http: HttpClient, private router: Router) {}
+  ngOnDestroy(): void {
+    if (this.activeLogoutTimer) {
+      clearTimeout(this.activeLogoutTimer);
+    }
   }
 
-  createCustomerUsingEmail(body: CreateCustomerRequestModel): Observable<CreateCustomerResponseModel> {
-    // create customer
+  authLogin(loginEmail: string, loginPassword: string) {
     return this.http
-      .post<CreateCustomerResponseModel>(
-        `${environment.backEndApiRoot}/${this.customerApiUrl}`,
-        body
+      .post<any>(
+        `${environment.backEndApiRoot}/sys-owner-security/owner-auth/login`,
+        {
+          email: loginEmail,
+          password: loginPassword,
+        },
+        { observe: 'response' }
+      )
+      .pipe(
+        tap((res) => {
+          console.log(res);
+          this.setUserData(res);
+        })
       );
   }
 
+  get userIsAuthenticated() {
+    return this._user.asObservable().pipe(
+      map((user) => {
+        if (user) {
+          return !!user.token;
+        } else {
+          return false;
+        }
+      })
+    );
+  }
 
-  createUserUsingEmail(createUserRequestModel: CreateUserRequestModel): Observable<CreateUserResponseModel>{
-    return  this.http.post<CreateUserResponseModel>(
+  get userId() {
+    return this._user.asObservable().pipe(
+      map((user) => {
+        if (user) {
+          return user.userId;
+        } else {
+          return null;
+        }
+      })
+    );
+  }
+  get token() {
+    return this._user.asObservable().pipe(
+      map((user) => {
+        if (user) {
+          return user.token;
+        } else {
+          return null;
+        }
+      })
+    );
+  }
+  logout() {
+    if (this.activeLogoutTimer) {
+      clearTimeout(this.activeLogoutTimer);
+    }
+    this._user.next(null);
+    Storage.remove({ key: 'CustomerAuthData' });
+    this.router.navigate(['/']);
+  }
+
+  autoLogin() {
+    return from(Storage.get({ key: 'CustomerAuthData' })).pipe(
+      map((storedDate) => {
+        if (!storedDate || !storedDate.value) {
+          console.log('******** cannot find storage authData***** ');
+          return null;
+        }
+        const parsData = JSON.parse(storedDate.value) as {
+          token: string;
+          tokenExpirationDate: string;
+          userId: string;
+          email: string;
+          fullNameEn: string;
+          fullNameAr: string;
+          userType: string;
+          accountStatus: string;
+        };
+        const tokenExpirationTime = new Date(parsData.tokenExpirationDate);
+        if (tokenExpirationTime <= new Date()) {
+          return null;
+        }
+        const user = new UserModel(
+          parsData.email,
+          parsData.userId,
+          parsData.fullNameEn,
+          parsData.fullNameAr,
+          parsData.userType,
+          parsData.accountStatus,
+          parsData.token,
+          tokenExpirationTime
+        );
+        console.log('User stored is:' + user);
+        return user;
+      }),
+      tap((user) => {
+        if (user) {
+          this._user.next(user);
+          this.autoLogout(user.tokenDuration);
+        }
+      }),
+      map(
+        (user) => !!user // return true if there is a value in the user object
+      )
+    );
+  }
+
+  createCustomer( body: CreateCustomerRequestModel ): Observable<CreateCustomerResponseModel> {
+    console.log('***************in createCustomer service method: URL= *****');
+    console.log(`${environment.backEndApiRoot}/${this.customerApiUrl}`);
+    console.log(body.email);
+    return this.http.post<CreateCustomerResponseModel>(`${environment.backEndApiRoot}/${this.customerApiUrl}`,body);
+  }
+
+  createUserUsingEmail(
+    createUserRequestModel: CreateUserRequestModel
+  ): Observable<CreateUserResponseModel> {
+    return this.http.post<CreateUserResponseModel>(
       `${environment.backEndApiRoot}/${this.securityApi}`,
       createUserRequestModel
     );
   }
 
+  private setUserData(userData: HttpResponse<AuthResponseData>) {
+    console.log(userData);
+    const currentime = new Date().getTime();
+    const ms = currentime + +userData.headers.get('expires') * 1000;
 
-  private async loadFacebookFeed(fbToken: any) {
-    const url = `https://graph.facebook.com/me?fields=id,name,picture.width(720),link,hometown,location,accounts,likes,email,gender,birthday&access_token=${fbToken.token}`;
-    this.http.get(url).subscribe((res: any) => {
-      this.customer = res;
-      console.log(this.customer);
-      console.log(this.customer.email);
-      console.log(this.customer.fullNameEn);
-      console.log(this.customer.fbId);
-      console.log(this.customer.birthDate);
-      console.log(this.customer.gender);
-      console.log(this.customer.homeCity);
-      /* this.creds.userEmail = this.user.email;
-      this.creds.password = this.user.id;
-      this.newUser = new SignUpRequestModel(
-        null,
-        'PUBLIC',
-        this.user.email,
-        this.user.id,
-        this.user.name,
-        this.user.name,
-        this.user.email,
-        null,
-        this.user.gender.toUpperCase(),
-        new Date(this.user.birthday),
-        null,
-        null
-      );*/
+    const expirationTime = new Date(currentime + +ms);
+    const user = new UserModel(
+      userData.headers.get('email'),
+      userData.headers.get('userId'),
+      userData.headers.get('fullNameEn'),
+      userData.headers.get('fullNameAr'),
+      userData.headers.get('userType'),
+      userData.headers.get('accountStatus'),
+      userData.headers.get('token'),
+      expirationTime
+    );
+    this.storeAuthData(
+      userData.headers.get('userId'),
+      userData.headers.get('token'),
+      expirationTime.toISOString(),
+      userData.headers.get('email'),
+      userData.headers.get('fullNameEn'),
+      userData.headers.get('fullNameAr'),
+      userData.headers.get('userType'),
+      userData.headers.get('accountStatus')
+    );
+    this._user.next(user);
+    this.autoLogout(user.tokenDuration);
+  }
+  private storeAuthData(
+    userId: string,
+    token: string,
+    tokenExpirationDate: string,
+    email: string,
+    fullnameEn: string,
+    fullnameAr: string,
+    userType: string,
+    accountStatus: string
+  ) {
+    const data = JSON.stringify({
+      userId,
+      token,
+      tokenExpirationDate,
+      email,
+      fullnameEn,
+      fullnameAr,
+      userType,
+      accountStatus,
     });
+    Storage.set({ key: 'CustomerAuthData', value: data });
+  }
+
+  private autoLogout(duration: number) {
+    console.log('*******autoLogout executed********');
+    if (this.activeLogoutTimer) {
+      clearTimeout(this.activeLogoutTimer);
+    }
+    this.activeLogoutTimer = setTimeout(() => {
+      this.logout();
+    }, duration);
   }
 }

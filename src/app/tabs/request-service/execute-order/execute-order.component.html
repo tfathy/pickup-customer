@@ -1,12 +1,7 @@
 <ion-header>
   <ion-toolbar color="light">
-    <ion-buttons slot="end">
-      <ion-title>Estimated Cost</ion-title>
-      <ion-button color="primary" (click)="back()">
-        Back
-        <ion-icon name="arrow-forward-circle" slot="end"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+      <ion-title>{{"ESTEMATED_COST"|translate}}</ion-title>
+
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-text-center">
@@ -26,3 +21,14 @@
   </ion-row>
 </ion-grid>
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+     <ion-buttons slot="start">
+    <ion-button color="primary" (click)="back()" fill="solid">
+      {{"BACK"|translate}}
+      <ion-icon name="arrow-forward-circle" slot="start"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  </ion-toolbar>
+
+</ion-footer>

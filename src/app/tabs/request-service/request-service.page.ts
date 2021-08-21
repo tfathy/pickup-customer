@@ -6,6 +6,7 @@ import {
   ModalController,
 } from '@ionic/angular';
 import { OrderModel } from 'src/app/models/order-model';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { OrderLocationComponent } from './order-location/order-location.component';
 
@@ -20,6 +21,7 @@ export class RequestServicePage implements OnInit {
     private actionSheet: ActionSheetController,
     private modalCtrl: ModalController,
     private loadingCtrl: LoadingController,
+    private authService: AuthService,
     private modalService: ModalService
   ) {}
 
@@ -86,5 +88,8 @@ export class RequestServicePage implements OnInit {
     });
     this.modalService.storeModal(modal);
     return await modal.present();
+  }
+  logout(){
+    this.authService.logout();
   }
 }

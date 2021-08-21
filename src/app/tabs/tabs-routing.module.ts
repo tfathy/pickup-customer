@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from '../shared/auth.guard';
 
 import { TabsPage } from './tabs.page';
 
@@ -27,7 +28,7 @@ const routes: Routes = [
         loadChildren: () =>
           import('./customer-orders/customer-orders.module').then(
             (m) => m.CustomerOrdersPageModule
-          ),
+          ), canLoad:[AuthGuard]
       },
       {
         path: 'settings',

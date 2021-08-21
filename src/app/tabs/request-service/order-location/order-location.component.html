@@ -1,18 +1,6 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="light">
-    <ion-buttons slot="start">
-      <ion-button color="primary" (click)="cancel()">
-        {{"BACK"|translate}}
-        <ion-icon name="arrow-forward-circle" slot="start"></ion-icon>
-      </ion-button>
       <ion-title>{{"LOCATION"|translate}}</ion-title>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button color="primary" (click)="nextStep()">
-        {{"NEXT"|translate}}
-        <ion-icon name="arrow-back-circle" slot="end"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 
 </ion-header>
@@ -53,3 +41,19 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+<ion-footer>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-button color="primary" (click)="cancel()" fill="solid">
+        {{"BACK"|translate}}
+        <ion-icon name="arrow-forward-circle" slot="start"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="nextStep()"  fill="solid">
+        {{"NEXT"|translate}}
+        <ion-icon name="arrow-back-circle" slot="end"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

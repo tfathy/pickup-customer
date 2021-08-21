@@ -27,5 +27,16 @@
   "CANCEL":"Cancel",
   "OPEN_ORDERS":"Pending Orders",
   "CLOSED_ORDERS":"Closed Orders",
-  "PICK_UP_ORDER":"Pick up"
+  "PICK_UP_ORDER":"Pick up",
+  "LOG_IN":"Log In",
+  "FACEBOOK":"Using Facebook",
+  "OR":"OR",
+  "MY_PROFILE":"My Profile",
+  "CREATE_ACCOUNT":"Sign Up",
+  "VISITOR":"Visitor",
+  "SIGN_UP":"Sign Up",
+  "SIGN_UP_WITH_FB":"Sign Up Using Facebook",
+  "SIGN_UP_WITH_EMAIL":"Sign Up Using email address",
+  "FORGET_PASSWORD":"Forget password",
+  "ESTEMATED_COST":"Estemated Cost"
 }

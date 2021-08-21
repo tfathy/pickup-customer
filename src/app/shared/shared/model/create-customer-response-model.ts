@@ -1,6 +1,16 @@
 export class CreateCustomerResponseModel{
   constructor(
-    public id: number,
-    public email: string
+    public email: string,
+    public id?: number,
+    public fullNameAr?: string,
+    public fullNameEn?: string,
+    public gender?: string,
+    public phoneNumber?: string,
+    public birthDate?: Date,
+    public homeCity?: string,
+    public facebookLink?: string,
+    public fbPhotoLink?: string,
+    public fbId?: string,
+    public payCardType?: string
   ){}
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-customer-orders',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CustomerOrdersPage implements OnInit {
   segmentModel ='new';
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
   }
@@ -15,5 +16,8 @@ export class CustomerOrdersPage implements OnInit {
   onSegmentChanged(event) {
     console.log('Segment changed', event.detail);
     this.segmentModel = event.detail.value;
+  }
+  logout(){
+    this.authService.logout();
   }
 }

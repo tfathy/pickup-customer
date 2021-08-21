@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { LangService } from 'src/app/shared/services/lang.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { LangService } from 'src/app/shared/services/lang.service';
 })
 export class SettingsPage implements OnInit {
 
-  constructor( private router: Router,public langService: LangService) { }
+  constructor( private router: Router,public langService: LangService, private authService: AuthService) { }
 
   ngOnInit() {
   }
@@ -21,7 +22,7 @@ export class SettingsPage implements OnInit {
   change2English() {
   this.langService.change2English();
   }
-  onLogOut() {
-    this.router.navigate(['/', 'home']);
+  logout(){
+    this.authService.logout();
   }
 }

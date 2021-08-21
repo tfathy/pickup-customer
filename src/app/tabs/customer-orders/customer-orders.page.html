@@ -4,6 +4,11 @@
     <ion-buttons slot="end">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button color="primary"  (click)="logout()" >{{"LOG_OUT"|translate}}
+        <ion-icon  name="log-out-outline" slot="start"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
