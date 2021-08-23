@@ -21,7 +21,7 @@ const routes: Routes = [
         loadChildren: () =>
           import('./request-service/request-service.module').then(
             (m) => m.RequestServicePageModule
-          ),
+          ), canLoad:[AuthGuard]
       },
       {
         path: 'customer-orders',
@@ -32,7 +32,7 @@ const routes: Routes = [
       },
       {
         path: 'settings',
-        loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
+        loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule), canLoad:[AuthGuard]
       },
     ],
   },

@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, from, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
@@ -12,6 +13,7 @@ import { CreateUserResponseModel } from '../shared/model/create-user-response-mo
 import { UserModel } from '../shared/model/user-model';
 import { Storage } from '@capacitor/storage';
 import { Router } from '@angular/router';
+import { UserResponseData } from '../shared/model/user-response-data';
 
 interface AuthResponseData {
   token: string;
@@ -148,11 +150,16 @@ export class AuthService implements OnDestroy {
     );
   }
 
-  createCustomer( body: CreateCustomerRequestModel ): Observable<CreateCustomerResponseModel> {
+  createCustomer(
+    body: CreateCustomerRequestModel
+  ): Observable<CreateCustomerResponseModel> {
     console.log('***************in createCustomer service method: URL= *****');
     console.log(`${environment.backEndApiRoot}/${this.customerApiUrl}`);
     console.log(body.email);
-    return this.http.post<CreateCustomerResponseModel>(`${environment.backEndApiRoot}/${this.customerApiUrl}`,body);
+    return this.http.post<CreateCustomerResponseModel>(
+      `${environment.backEndApiRoot}/${this.customerApiUrl}`,
+      body
+    );
   }
 
   createUserUsingEmail(
@@ -164,6 +171,16 @@ export class AuthService implements OnDestroy {
     );
   }
 
+  loadUserInfo(token: string, userId: string): Observable<UserResponseData> {
+    const headerInfo = new HttpHeaders({
+      Authorization: token,
+    });
+    console.log(`${environment.backEndApiRoot}/sys-owner-security/owner-auth/${userId}`);
+    return this.http.get<UserResponseData>(
+      `${environment.backEndApiRoot}/sys-owner-security/owner-auth/${userId}`,
+      { headers: headerInfo }
+    );
+  }
   private setUserData(userData: HttpResponse<AuthResponseData>) {
     console.log(userData);
     const currentime = new Date().getTime();

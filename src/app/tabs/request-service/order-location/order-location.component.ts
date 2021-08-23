@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { PlaceLocation } from 'src/app/models/location-model';
 import { OrderModel } from 'src/app/models/order-model';
 import { ModalService } from 'src/app/shared/services/modal.service';
+import { customerAuthToken } from 'src/app/shared/shared/common-utils';
 import { OrderHeaderComponent } from '../order-header/order-header.component';
 
 @Component({
@@ -12,15 +13,11 @@ import { OrderHeaderComponent } from '../order-header/order-header.component';
 })
 export class OrderLocationComponent implements OnInit {
   @Input() payLoad: OrderModel;
-  sourceLong;
-  sourceLat;
-  sourceAddress;
-  sourceStaticMapImageUrl;
-  destLong;
-  destLat;
-  destAddress;
-  destStaticMapImageUrl;
-  constructor(private modalCtrl: ModalController, private modalService: ModalService) {}
+  @Input() customerToken: customerAuthToken;
+  constructor(
+    private modalCtrl: ModalController,
+    private modalService: ModalService
+  ) {}
 
   ngOnInit() {
     console.log(this.payLoad);
@@ -28,52 +25,33 @@ export class OrderLocationComponent implements OnInit {
 
   onSourceLocationPicked(event: PlaceLocation) {
     console.log(event);
-    this.sourceLong = event.lng;
-    this.sourceLat = event.lat;
-    this.sourceAddress = event.address;
-    this.sourceStaticMapImageUrl = event.staticMapImageUrl;
+    this.payLoad.sourceLong = event.lng;
+    this.payLoad.sourceLat = event.lat;
+    this.payLoad.sourceFormattedAddress = event.address;
+    this.payLoad.sourceMapImage = event.staticMapImageUrl;
   }
   onDestinationLocationPicked(event) {
-    this.destLong = event.lng;
-    this.destLat = event.lat;
-    this.destAddress = event.address;
-    this.destStaticMapImageUrl = event.staticMapImageUrl;
+    this.payLoad.destLong = event.lng;
+    this.payLoad.destLat = event.lat;
+    this.payLoad.destFormatedAddress = event.address;
+    this.payLoad.destMapImage = event.staticMapImageUrl;
   }
   cancel() {
     this.modalCtrl.dismiss();
   }
   async nextStep() {
     if (this.locationsSelected()) {
-      this.payLoad.destFormatedAddress = this.destAddress;
-      this.payLoad.destLat = this.destLat;
-      this.payLoad.destLong = this.destLong;
-      this.payLoad.destMapImage = this.destStaticMapImageUrl;
-
-      this.payLoad.sourceFormattedAddress = this.sourceAddress;
-      this.payLoad.sourceLat = this.sourceLat;
-      this.payLoad.sourceLong = this.sourceLong;
-      this.payLoad.sourceMapImage = this.sourceStaticMapImageUrl;
-      console.log(this.payLoad);
-    const modal = await  this.modalCtrl
-        .create({
-          component: OrderHeaderComponent,
-          componentProps: { hdrRow: this.payLoad },
-        });
-       this.modalService.storeModal(modal) ;
-       return await modal.present();
+      console.log('payLoad', this.payLoad);
+      const modal = await this.modalCtrl.create({
+        component: OrderHeaderComponent,
+        componentProps: { hdrRow: this.payLoad ,customerToken: this.customerToken},
+      });
+      this.modalService.storeModal(modal);
+      return await modal.present();
     }
   }
 
   private locationsSelected(): boolean {
-    return (
-      this.sourceLong &&
-      this.sourceLat &&
-      this.sourceAddress &&
-      this.sourceStaticMapImageUrl &&
-      this.destLong &&
-      this.destLat &&
-      this.destAddress &&
-      this.destStaticMapImageUrl
-    );
+    return (this.payLoad.destLong!=null && this.payLoad.destLong!=null);
   }
 }

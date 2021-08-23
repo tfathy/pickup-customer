@@ -1,5 +1,15 @@
+import { CustomerModel } from '../shared/shared/model/customer-model';
+import { LocationTypeModel } from '../shared/shared/model/location-type-model';
+import { TeamModel } from '../shared/shared/model/team-model';
+import { VclSizeModel } from '../shared/shared/model/vcl-size-model';
+
 export class OrderModel {
   constructor(
+    public customer: CustomerModel,
+    public vehicleSize: VclSizeModel,
+    public destLocationType?: LocationTypeModel,
+    public sourceLocationType?: LocationTypeModel,
+    public team?: TeamModel,
     public id?: number,
     public requestDate?: Date,
     public reservationDate?: Date,
