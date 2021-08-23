@@ -38,5 +38,12 @@
   "SIGN_UP_WITH_FB":"إنشاء حساب باستخدام فيسبوك",
   "SIGN_UP_WITH_EMAIL":"إنشاء حساب باستخدام البريد الاكتروني",
   "FORGET_PASSWORD":"نسيت كلمة السر",
-  "ESTEMATED_COST":"التكلفة التقديرية"
+  "ESTEMATED_COST":"التكلفة التقديرية",
+  "REQUEST_DATE":"تاريح الطلب",
+  "REQUEST_TIME":"الوقت ",
+  "REQUEST_STATUS":"حالة الطلب",
+  "ORDER_DETAILS":"تفاصيل الطلب",
+  "DESTINATION_LOCATION_DATA":"المكان المنقول اليه",
+  "MOVABLE_DESC":"وصف مختصر للمنقولات",
+  "THERE_IS_NO_ELV":"لا يوجد مصعد"
 }

@@ -1,11 +1,11 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-button expand="block" fill="solid" (click)="beginOrderAction()" color="danger">{{"BEGIN_ORDER"|translate}}</ion-button>
+      <ion-button strong="true" expand="block" fill="solid" (click)="beginOrderAction()" color="tertiary">{{"BEGIN_ORDER"|translate}}</ion-button>
     </ion-buttons>
 
     <ion-buttons slot="end">
-      <ion-button color="primary"  (click)="logout()" >{{"LOG_OUT"|translate}}
+      <ion-button  (click)="logout()" >{{"LOG_OUT"|translate}}
         <ion-icon  name="log-out-outline" slot="start"></ion-icon>
       </ion-button>
     </ion-buttons>

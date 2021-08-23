@@ -38,5 +38,12 @@
   "SIGN_UP_WITH_FB":"Sign Up Using Facebook",
   "SIGN_UP_WITH_EMAIL":"Sign Up Using email address",
   "FORGET_PASSWORD":"Forget password",
-  "ESTEMATED_COST":"Estemated Cost"
+  "ESTEMATED_COST":"Estemated Cost",
+  "REQUEST_DATE":"Request Date",
+  "REQUEST_TIME":"Request Time",
+  "REQUEST_STATUS":"Request Status",
+  "ORDER_DETAILS":"Order Details",
+  "DESTINATION_LOCATION_DATA":"Destination",
+  "MOVABLE_DESC":"brief Description about the movables",
+  "THERE_IS_NO_ELV":"There is no elevator"
 }

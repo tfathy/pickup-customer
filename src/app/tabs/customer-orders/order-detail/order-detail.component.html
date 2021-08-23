@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="close()">
+        {{"BACK"|translate}}
+        <ion-icon name="arrow-forward-circle" slot="start"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-title>{{"ORDER_DETAILS"|translate}}</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-header>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-item>
+              <ion-textarea placeholder='more details' [(ngModel)]="order.customerNotes"></ion-textarea>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-header>
+            <ion-title>{{"SOURCE_LOCATION_DATA"|translate}}</ion-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-item>
+              <ion-label position="floating">{{"PLACE_TYPE"|translate}}</ion-label>
+              <ion-input readonly="true" [(ngModel)]="order.sourceLocationType.descAr">
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">{{"FLOOR_NUMBER"|translate}}</ion-label>
+              <ion-input readonly="true" [(ngModel)]="order.sourceFloorNum" type="number"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">{{"THERE_IS_ELV"|translate}}</ion-label>
+              <ion-input [(ngModel)]="order.sourceElvFlag"></ion-input>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-header>
+            <ion-title> Destination Location data</ion-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-item>
+              <ion-label position="floating">Place type</ion-label>
+              <ion-input readonly="true" [(ngModel)]="order.destLocationType.descAr">
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Floor number</ion-label>
+              <ion-input [(ngModel)]="order.destFloorNum" readonly="true"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">There is Elevator</ion-label>
+              <ion-input readonly="true" [(ngModel)]="order.destElvFlag"></ion-input>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+</ion-content>

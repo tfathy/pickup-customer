@@ -10,6 +10,7 @@ import { OrderHeaderComponent } from 'src/app/tabs/request-service/order-header/
 import { ImagePickerComponent } from '../pickers/image-picker/image-picker.component';
 import { ExecuteOrderComponent } from 'src/app/tabs/request-service/execute-order/execute-order.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { OrderDetailComponent } from 'src/app/tabs/customer-orders/order-detail/order-detail.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { TranslateModule } from '@ngx-translate/core';
     MapModalComponent,
     OrderHeaderComponent,
     ImagePickerComponent,
-    ExecuteOrderComponent
+    ExecuteOrderComponent,
+    OrderDetailComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { TranslateModule } from '@ngx-translate/core';
     MapModalComponent,
     OrderHeaderComponent,
     ImagePickerComponent,
-    ExecuteOrderComponent
+    ExecuteOrderComponent,
+    OrderDetailComponent
   ],
 })
 export class SharedModule {}

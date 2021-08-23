@@ -66,7 +66,6 @@ export class RequestServicePage implements OnInit {
       )
       .subscribe((data) => {
         this.customer = data.customer;
-        console.log('this.customer',this.customer);
       },error=>{
         console.log('error in authService',error);
       });
@@ -113,7 +112,7 @@ export class RequestServicePage implements OnInit {
   async openModal(vcl: VclSizeModel) {
     const requestModel = new OrderModel(this.customer, vcl);
     requestModel.requestDate = new Date();
-    requestModel.ordStatus = 'NEW';
+    requestModel.ordStatus = 'REQUEST';
     const modal = await this.modalCtrl.create({
       component: OrderLocationComponent,
       componentProps: { payLoad: requestModel,customerToken: this.customerToken },

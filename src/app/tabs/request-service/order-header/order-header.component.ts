@@ -26,6 +26,8 @@ export class OrderHeaderComponent implements OnInit {
   videoPlayer: any;
   destElvFlag = 'N';
   sourceElvFlag = 'N';
+  destElvFlagBoolean = false;
+  sourceElvFlagBoolean = false;
   loactionTypes: LocationTypeModel[] = [];
 
   constructor(
@@ -64,6 +66,8 @@ export class OrderHeaderComponent implements OnInit {
       sourceFloorNum: new FormControl(null, []),
       destLocationType: new FormControl(null, []),
       destFloorNum: new FormControl(null, []),
+      destElvFlagBoolean: new FormControl(null,[]),
+      sourceElvFlagBoolean: new FormControl(null,[])
     });
 
     /* VoiceRecorder.requestAudioRecordingPermission().then(
@@ -107,10 +111,14 @@ export class OrderHeaderComponent implements OnInit {
     this.hdrRow.customerNotes = this.customerNotes.value;
     this.hdrRow.destElvFlag = this.destElvFlag;
     this.hdrRow.destFloorNum = this.destFloorNum.value;
-    this.hdrRow.destLocationType = new LocationTypeModel(this.destLocationType.value);
+    this.hdrRow.destLocationType = new LocationTypeModel(
+      this.destLocationType.value
+    );
     this.hdrRow.sourceFloorNum = this.sourceFloorNum.value;
     this.hdrRow.sourceElvFlag = this.sourceElvFlag;
-    this.hdrRow.sourceLocationType = new LocationTypeModel(this.sourceLocationType.value);
+    this.hdrRow.sourceLocationType = new LocationTypeModel(
+      this.sourceLocationType.value
+    );
     const modal = await this.modalCtrl.create({
       component: ExecuteOrderComponent,
       componentProps: {
@@ -135,7 +143,17 @@ export class OrderHeaderComponent implements OnInit {
   get sourceFloorNum() {
     return this.form.get('sourceFloorNum');
   }
-  get sourceLocationType(){
+  get sourceLocationType() {
     return this.form.get('sourceLocationType');
+  }
+  sourceElvFlagChange() {
+    this.sourceElvFlagBoolean = !this.sourceElvFlagBoolean;
+    this.sourceElvFlag = this.sourceElvFlagBoolean ? 'Y' : 'N';
+  }
+  destElvFlagChange() {
+    this.destElvFlagBoolean = !this.destElvFlagBoolean;
+    this.destElvFlag = this.destElvFlagBoolean ? 'Y' : 'N';
+    console.log('this.destElvFlag=',this.destElvFlag);
+    console.log('this.destElvFlagBoolean=',this.destElvFlagBoolean);
   }
 }

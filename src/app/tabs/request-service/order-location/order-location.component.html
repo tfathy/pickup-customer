@@ -1,5 +1,5 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar color="light">
+  <ion-toolbar color="primary">
       <ion-title>{{"LOCATION"|translate}}</ion-title>
   </ion-toolbar>
 
@@ -14,7 +14,7 @@
             <app-location-picker [showPreview]="true" [buttonTitle]="'MOVE_FROM'"
               (locationPick)="onSourceLocationPicked($event)"></app-location-picker>
             <ion-text color="secondary" class="ion-text-start">
-              <p> {{sourceAddress}}</p>
+              <p> {{payLoad.sourceFormattedAddress}}</p>
             </ion-text>
           </ion-card-header>
           <ion-card-content class="ion-text-center">
@@ -30,7 +30,7 @@
             <app-location-picker [showPreview]="true" [buttonTitle]="'MOVE_TO'"
             (locationPick)="onDestinationLocationPicked($event)"></app-location-picker>
           <ion-text color="secondary" class="ion-text-start">
-            <p>{{destAddress}}</p>
+            <p>{{payLoad.destFormatedAddress}}</p>
           </ion-text>
           </ion-card-header>
           <ion-card-content class="ion-text-center">
@@ -42,15 +42,15 @@
   </ion-grid>
 </ion-content>
 <ion-footer>
-  <ion-toolbar color="light">
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-button color="primary" (click)="cancel()" fill="solid">
+      <ion-button  (click)="cancel()" fill="solid">
         {{"BACK"|translate}}
         <ion-icon name="arrow-forward-circle" slot="start"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button color="primary" (click)="nextStep()"  fill="solid">
+      <ion-button   (click)="nextStep()"  fill="solid">
         {{"NEXT"|translate}}
         <ion-icon name="arrow-back-circle" slot="end"></ion-icon>
       </ion-button>

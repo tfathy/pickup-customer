@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class CustomerService {
-  url = 'customer-app/customer/order';
+  url = 'customer-app';
   constructor(private http: HttpClient) {}
 
   createOrder(token: string, order: OrderModel): Observable<OrderModel> {
@@ -18,8 +18,36 @@ export class CustomerService {
     });
     console.log(order);
     return this.http.post<OrderModel>(
-      `${environment.backEndApiRoot}/${this.url}`,
+      `${environment.backEndApiRoot}/${this.url}/customer/order/customer`,
       order,
+      { headers: headerInfo }
+    );
+  }
+
+  findOrdersByCustomerAndStatus(
+    token: string,
+    customerId: number,
+    ordStatus: string
+  ): Observable<OrderModel[]> {
+    const headerInfo = new HttpHeaders({
+      Authorization: token,
+    });
+    return this.http.get<OrderModel[]>(
+      `${environment.backEndApiRoot}/${this.url}/customer/order/status/${customerId}/${ordStatus}`,
+      { headers: headerInfo }
+    );
+  }
+
+  findOpenCustomerOrders(
+    token: string,
+    customerId: number
+  ): Observable<OrderModel[]> {
+    const headerInfo = new HttpHeaders({
+      Authorization: token,
+    });
+    console.log('findOpernOrders=', `${environment.backEndApiRoot}/${this.url}/customer/order/${customerId}`);
+    return this.http.get<OrderModel[]>(
+      `${environment.backEndApiRoot}/${this.url}/customer/order/customer/${customerId}`,
       { headers: headerInfo }
     );
   }

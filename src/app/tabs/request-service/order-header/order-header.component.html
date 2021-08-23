@@ -1,13 +1,11 @@
 <ion-header>
-  <ion-toolbar color="light">
-
+  <ion-toolbar color="primary">
     <ion-title>{{"MOVABLES_DETAILS"|translate}}</ion-title>
-
   </ion-toolbar>
 </ion-header>
 <ion-content>
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-    <ion-fab-button (click)="photoService.addNewToGallery()">
+    <ion-fab-button (click)="photoService.addNewToGallery()" color="danger">
       <ion-icon name="camera"></ion-icon>
     </ion-fab-button>
   </ion-fab>
@@ -20,7 +18,8 @@
             </ion-card-header>
             <ion-card-content>
               <ion-item>
-                <ion-textarea placeholder='more details' formControlName="customerNotes"></ion-textarea>
+                <ion-label position="floating">{{"MOVABLE_DESC"|translate}}</ion-label>
+                <ion-textarea formControlName="customerNotes"></ion-textarea>
               </ion-item>
             </ion-card-content>
           </ion-card>
@@ -42,13 +41,14 @@
               </ion-item>
 
               <ion-item>
-                <ion-label  position="floating">{{"FLOOR_NUMBER"|translate}}</ion-label>
+                <ion-label position="floating">{{"FLOOR_NUMBER"|translate}}</ion-label>
                 <ion-input formControlName="sourceFloorNum" type="number"></ion-input>
               </ion-item>
 
               <ion-item>
-                <ion-label>{{"THERE_IS_ELV"|translate}}</ion-label>
-                <ion-toggle formControlName="sourceElvFlag"></ion-toggle>
+                <ion-label *ngIf="sourceElvFlagBoolean">{{"THERE_IS_ELV"|translate}}</ion-label>
+                <ion-label *ngIf="!sourceElvFlagBoolean">{{"THERE_IS_NO_ELV"|translate}}</ion-label>
+                <ion-toggle formControlName="sourceElvFlagBoolean" (ionChange)="sourceElvFlagChange()"></ion-toggle>
               </ion-item>
             </ion-card-content>
           </ion-card>
@@ -59,11 +59,11 @@
         <ion-col>
           <ion-card>
             <ion-card-header>
-              <ion-title> Destination Location data</ion-title>
+              <ion-title>{{"DESTINATION_LOCATION_DATA"|translate}}</ion-title>
             </ion-card-header>
             <ion-card-content>
               <ion-item>
-                <ion-label position="floating">Place type</ion-label>
+                <ion-label position="floating">{{"PLACE_TYPE"|translate}}</ion-label>
                 <ion-select formControlName="destLocationType">
                   <ion-select-option *ngFor="let loc of loactionTypes" [value]="loc.id">{{loc.descAr}}
                   </ion-select-option>
@@ -72,13 +72,14 @@
               </ion-item>
 
               <ion-item>
-                <ion-label position="floating" >Floor number</ion-label>
+                <ion-label position="floating">{{"FLOOR_NUMBER"|translate}}</ion-label>
                 <ion-input formControlName="destFloorNum" type="number"></ion-input>
               </ion-item>
 
               <ion-item>
-                <ion-label>There is Elevator</ion-label>
-                <ion-toggle formControlName="destElvFlag"></ion-toggle>
+                <ion-label *ngIf="destElvFlagBoolean">{{"THERE_IS_ELV"|translate}}</ion-label>
+                <ion-label *ngIf="!destElvFlagBoolean">{{"THERE_IS_NO_ELV"|translate}}</ion-label>
+                <ion-toggle [value]="destElvFlagBoolean" (ionChange)="destElvFlagChange()"></ion-toggle>
               </ion-item>
             </ion-card-content>
           </ion-card>
@@ -104,15 +105,15 @@
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-button color="primary" fill="solid" (click)="back()">
+      <ion-button fill="solid" (click)="back()">
         {{"BACK"|translate}}
         <ion-icon name="arrow-forward-circle" slot="start"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button color="primary" fill="solid" (click)="nextStep()">
+      <ion-button fill="solid" (click)="nextStep()">
         {{"NEXT"|translate}}
         <ion-icon name="arrow-back-circle" slot="end"></ion-icon>
       </ion-button>
