@@ -45,5 +45,22 @@
   "ORDER_DETAILS":"تفاصيل الطلب",
   "DESTINATION_LOCATION_DATA":"المكان المنقول اليه",
   "MOVABLE_DESC":"وصف مختصر للمنقولات",
-  "THERE_IS_NO_ELV":"لا يوجد مصعد"
+  "THERE_IS_NO_ELV":"لا يوجد مصعد",
+  "ARABIC_FULL_NAME":"الاسم كاملا بالعربي",
+  "ENGLISH_FULL_NAME":"الاسم كاملا انجليزي",
+  "PHONE":"رقم الهاتف",
+  "SAVE":"حفظ",
+  "HOME":"الرئيسية"
+
+
+
+
+  ,"ERROR_CANNOT_POST_REQUEST":"خطأ: لم بتمكن النظام من تمرير طلبك"
+  ,"REQUEST_POSTED":"تم ارسال طلبك لكل شركات وسائقى النقل .سيتم تنبيهك حال قبول طلبك."
+  ,"REQUEST_CANCELED":"تم إلغاء الطلب "
+  ,"ENABLE_LOCATION_ACCESS":"يجب منح التطبيق صلاحية الاتصال بالموقع الجغرافي اولا"
+  ,"USER_CREATED":"تم إرسال كلمة السر الخاصة بك الى بريدك الاكتروني.يجب تغيرها بعد الدخول للتطبيق"
+  ,"GET_CURRENT_LOCATION":"الموقع الحالي"
+  ,"PICK_FROM_MAP":"اختر من الخريطة"
+  ,"PLEASE_CHHOSE_LOCATION":"حدد الموقع"
 }

@@ -45,5 +45,22 @@
   "ORDER_DETAILS":"Order Details",
   "DESTINATION_LOCATION_DATA":"Destination",
   "MOVABLE_DESC":"brief Description about the movables",
-  "THERE_IS_NO_ELV":"There is no elevator"
+  "THERE_IS_NO_ELV":"There is no elevator",
+  "ARABIC_FULL_NAME":"Full Name In Arabic",
+  "ENGLISH_FULL_NAME":"Full Name In English",
+  "PHONE":"Phone Number",
+  "SAVE":"Save",
+  "HOME":"Home"
+
+
+
+  ,"ERROR_CANNOT_POST_REQUEST":"Error: Cannot post the request"
+  ,"REQUEST_POSTED":"Your request is sent to all avaliable vehicles.You will get a notification as sson as the request is picked.Thank you"
+  ,"REQUEST_CANCELED":"Request has been canceled by you."
+  ,"ENABLE_LOCATION_ACCESS":"Accessing current location is disabled."
+  ,"USER_CREATED":"a password is sent to your email. Please check your email inbox"
+  ,"GET_CURRENT_LOCATION":"Pick Current Location"
+  ,"PICK_FROM_MAP":"Pick from map"
+ ,"PLEASE_CHHOSE_LOCATION":"Choose location"
+
 }

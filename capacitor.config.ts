@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.customer.pickup',
-  appName: 'pickup-customer',
+  appId: 'net.customer.pickupsa',
+  appName: 'customer-pickup',
   webDir: 'www',
   bundledWebRuntime: false
 };

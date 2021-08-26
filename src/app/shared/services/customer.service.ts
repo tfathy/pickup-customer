@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OrderModel } from 'src/app/models/order-model';
 import { environment } from 'src/environments/environment';
+import { CustomerModel } from '../shared/model/customer-model';
 
 @Injectable({
   providedIn: 'root',
@@ -18,9 +19,22 @@ export class CustomerService {
     });
     console.log(order);
     return this.http.post<OrderModel>(
-      `${environment.backEndApiRoot}/${this.url}/customer/order/customer`,
+      `${environment.backEndApiRoot}/${this.url}/customer/order`,
       order,
       { headers: headerInfo }
+    );
+  }
+  updateCusstomerData(
+    token: string,
+    customer: CustomerModel,
+    id: number
+  ): Observable<CustomerModel> {
+    const headerInfo = new HttpHeaders({
+      Authorization: token,
+    });
+    return this.http.put<CustomerModel>(
+      `${environment.backEndApiRoot}/${this.url}/customer/${id}`,
+      customer,{headers: headerInfo}
     );
   }
 
@@ -45,7 +59,10 @@ export class CustomerService {
     const headerInfo = new HttpHeaders({
       Authorization: token,
     });
-    console.log('findOpernOrders=', `${environment.backEndApiRoot}/${this.url}/customer/order/${customerId}`);
+    console.log(
+      'findOpernOrders=',
+      `${environment.backEndApiRoot}/${this.url}/customer/order/${customerId}`
+    );
     return this.http.get<OrderModel[]>(
       `${environment.backEndApiRoot}/${this.url}/customer/order/customer/${customerId}`,
       { headers: headerInfo }

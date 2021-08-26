@@ -2,9 +2,10 @@
 <resources>
     <string name="app_name">pickup</string>
     <string name="title_activity_main">pickup</string>
-    <string name="package_name">com.customer.pickup</string>
-    <string name="custom_url_scheme">com.customer.pickup</string>
-    <string name="facebook_app_id">1179346292570266</string>
-    <string name="facebook_client_token">b030c15a949848dfdfc8c183a5ef1e87</string>
+    <string name="package_name">net.customer.pickupsa</string>
+    <string name="custom_url_scheme">net.customer.pickupsa</string>
+  <string name="facebook_app_id">1126957864375484</string>
+  <string name="fb_login_protocol_scheme">fb1126957864375484</string>
+
 
 </resources>

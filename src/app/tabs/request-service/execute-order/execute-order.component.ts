@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-for-of */
 /* eslint-disable no-unused-labels */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
+
 import { Component, Input, OnInit } from '@angular/core';
 
 import {
@@ -9,6 +10,7 @@ import {
   ModalController,
   ToastController,
 } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { OrderModel } from 'src/app/models/order-model';
 import { CustomerService } from 'src/app/shared/services/customer.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
@@ -29,7 +31,8 @@ export class ExecuteOrderComponent implements OnInit {
     private customerService: CustomerService,
     private alert: AlertController,
     private toast: ToastController,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit() {}
@@ -39,7 +42,7 @@ export class ExecuteOrderComponent implements OnInit {
   }
   cancel() {
     this.closeAllModal();
-    this.showToast('Order canceld');
+    this.showToast('REQUEST_CANCELED');
   }
   execute() {
     this.orderHeader.estimateCost = this.estimatedCost;
@@ -50,18 +53,19 @@ export class ExecuteOrderComponent implements OnInit {
       .then((loadingElmnt) => {
         loadingElmnt.present();
         this.customerService
-          .createOrder('Bearer '+this.customerToken.token, this.orderHeader)
-          .subscribe((resData) => {
-            loadingElmnt.dismiss();
-            this.closeAllModal();
-            this.showAlert(
-              'Your request is sent to all avaliable vehicles.You will get a notification as sson as the request is picked.Thank you'
-            );
-          },error=>{
-            console.log(error);
-            loadingElmnt.dismiss();
-            this.showAlert('Error. Cannot post order');
-          });
+          .createOrder('Bearer ' + this.customerToken.token, this.orderHeader)
+          .subscribe(
+            (resData) => {
+              loadingElmnt.dismiss();
+              this.closeAllModal();
+              this.showAlert('REQUEST_POSTED');
+            },
+            (error) => {
+              console.log(error);
+              loadingElmnt.dismiss();
+              this.showAlert('ERROR_CANNOT_POST_REQUEST');
+            }
+          );
       });
   }
   private closeAllModal() {
@@ -69,29 +73,33 @@ export class ExecuteOrderComponent implements OnInit {
       this.modalService.modalInst[i].dismiss();
     }
   }
-  private showAlert(msg: string) {
-    this.alert
-      .create({
-        message: msg,
-        buttons: [
-          {
-            text: 'OK',
-          },
-        ],
-      })
-      .then((alertElmnt) => {
-        alertElmnt.present();
-      });
+  private showAlert(msgKey: string) {
+    this.translateService.get(msgKey).subscribe((msgText) => {
+      this.alert
+        .create({
+          message: msgText,
+          buttons: [
+            {
+              text: 'OK',
+            },
+          ],
+        })
+        .then((alertElmnt) => {
+          alertElmnt.present();
+        });
+    });
   }
-  private showToast(msg: string) {
-    this.toast
-      .create({
-        message: msg,
-        duration: 1000,
-        position: 'middle',
-      })
-      .then((toastElmnt) => {
-        toastElmnt.present();
-      });
+  private showToast(msgKey: string) {
+    this.translateService.get(msgKey).subscribe((msgText) => {
+      this.toast
+        .create({
+          message: msgText,
+          duration: 1000,
+          position: 'middle',
+        })
+        .then((toastCtrl) => {
+          toastCtrl.present();
+        });
+    });
   }
 }

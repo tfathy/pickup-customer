@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FacebookLogin } from '@capacitor-community/facebook-login';
 import { AlertController, LoadingController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../shared/services/auth.service';
 import { generatedRandomString } from '../shared/shared/common-utils';
 import { CreateCustomerRequestModel } from '../shared/shared/model/create-customer-request-model';
@@ -21,7 +22,8 @@ export class SignupPage implements OnInit {
     private loadingCtrl: LoadingController,
     private authService: AuthService,
     private alertCtrl: AlertController,
-    private http: HttpClient
+    private http: HttpClient,
+    private translateService: TranslateService
   ) {}
 
   async facebookSignUp() {
@@ -66,12 +68,8 @@ export class SignupPage implements OnInit {
               this.authService
                 .createUserUsingEmail(createUserRequestModel)
                 .subscribe((userData) => {
-                  console.log('userData:', userData);
                   loadingElmnt.dismiss();
-                  console.log('user created');
-                  this.showAlert(
-                    'Username and password are sent to your email. Please check your email inbox'
-                  );
+                  this.showAlert('USER_CREATED');
                   this.router.navigate(['/', 'login']);
                 });
             },
@@ -89,16 +87,18 @@ export class SignupPage implements OnInit {
     this.router.navigate(['/', 'home']);
   }
 
-  private showAlert(msg: string) {
-    this.alertCtrl
-      .create({
-        header: ' User Created',
-        message: msg,
-        buttons: ['OK'],
-      })
-      .then((alertElmnt) => {
-        alertElmnt.present();
-      });
+  private showAlert(msgKey: string) {
+    this.translateService.get(msgKey).subscribe((msgText) => {
+      this.alertCtrl
+        .create({
+          header: ' User Created',
+          message: msgText,
+          buttons: ['OK'],
+        })
+        .then((alertElmnt) => {
+          alertElmnt.present();
+        });
+    });
   }
 
   private async loadFacebookFeed(fbToken: any) {
@@ -148,7 +148,6 @@ export class SignupPage implements OnInit {
                   (error) => {
                     loadingElmnt.dismiss();
                     console.log(error);
-                    this.showAlert(error.status);
                   }
                 );
             },

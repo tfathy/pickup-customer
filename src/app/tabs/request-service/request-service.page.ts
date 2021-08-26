@@ -5,6 +5,7 @@ import {
   LoadingController,
   ModalController,
 } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs/operators';
 import { OrderModel } from 'src/app/models/order-model';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -28,6 +29,7 @@ export class RequestServicePage implements OnInit {
   currentLocation = { lat: null, lng: null };
   customerToken: customerAuthToken;
   customer: CustomerModel;
+  currentLang: string;
   buttonsProps: CustomActionSheetButton[] = [];
   constructor(
     private actionSheet: ActionSheetController,
@@ -35,10 +37,13 @@ export class RequestServicePage implements OnInit {
     private loadingCtrl: LoadingController,
     private authService: AuthService,
     private lookUpService: LookUpService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private translateService: TranslateService
   ) {}
 
   async ngOnInit() {
+    this.currentLang = this.translateService.getDefaultLang();
+    console.log('currentLang', this.currentLang);
     this.customerToken = await readStorage('CustomerAuthData');
     this.loadingCtrl
       .create({
@@ -64,11 +69,14 @@ export class RequestServicePage implements OnInit {
         'Bearer ' + this.customerToken.token,
         this.customerToken.userId
       )
-      .subscribe((data) => {
-        this.customer = data.customer;
-      },error=>{
-        console.log('error in authService',error);
-      });
+      .subscribe(
+        (data) => {
+          this.customer = data.customer;
+        },
+        (error) => {
+          console.log('error in authService', error);
+        }
+      );
   }
 
   async loadActionSheetButtons() {
@@ -78,7 +86,13 @@ export class RequestServicePage implements OnInit {
         map((responseArray) => {
           responseArray.map((row) =>
             this.buttonsProps.push(
-              new CustomActionSheetButton(row.id, row.descAr, null, null, null)
+              new CustomActionSheetButton(
+                row.id,
+                this.currentLang === 'ar' ? row.descAr : row.descEn,
+                null,
+                null,
+                null
+              )
             )
           );
         })
@@ -115,7 +129,10 @@ export class RequestServicePage implements OnInit {
     requestModel.ordStatus = 'REQUEST';
     const modal = await this.modalCtrl.create({
       component: OrderLocationComponent,
-      componentProps: { payLoad: requestModel,customerToken: this.customerToken },
+      componentProps: {
+        payLoad: requestModel,
+        customerToken: this.customerToken,
+      },
     });
     this.modalService.storeModal(modal);
     return await modal.present();

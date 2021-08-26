@@ -13,16 +13,17 @@ import { environment } from 'src/environments/environment';
 import { MapModalComponent } from '../../map-modal/map-modal.component';
 import type { PermissionState } from '@capacitor/core';
 import { Geolocation } from '@capacitor/geolocation';
+import { TranslateService } from '@ngx-translate/core';
 export interface PermissionStatus {
-    // TODO: change 'location' to the actual name of your alias!
-    geolocation: PermissionState;
-  }
+  // TODO: change 'location' to the actual name of your alias!
+  geolocation: PermissionState;
+}
 
-  export interface EchoPlugin {
-    echo(options: { value: string }): Promise<{ value: string }>;
-   checkPermissions(): Promise<PermissionStatus>;
-   requestPermissions(): Promise<PermissionStatus>;
-  }
+export interface EchoPlugin {
+  echo(options: { value: string }): Promise<{ value: string }>;
+  checkPermissions(): Promise<PermissionStatus>;
+  requestPermissions(): Promise<PermissionStatus>;
+}
 @Component({
   selector: 'app-location-picker',
   templateUrl: './location-picker.component.html',
@@ -31,40 +32,49 @@ export interface PermissionStatus {
 export class LocationPickerComponent implements OnInit {
   @Output() locationPick = new EventEmitter<PlaceLocation>();
   @Input() showPreview = false;
-  @Input() buttonTitle ='pick a location';
+  @Input() buttonTitle = 'pick a location';
   selectedLocationImage: string;
   isLoading = false;
   constructor(
     private modalCtrl: ModalController,
     private actionSheet: ActionSheetController,
     private http: HttpClient,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit() {}
   onPickLocation() {
     this.actionSheet
       .create({
-        header: 'please choose',
+        header: this.getTranslation('PLEASE_CHHOSE_LOCATION'),
         buttons: [
           {
-            text: 'Auto locate',
+            text: this.getTranslation('GET_CURRENT_LOCATION'),
             handler: () => {
               this.locateUser();
             },
           },
           {
-            text: 'Pick on map',
+            text: this.getTranslation('PICK_FROM_MAP'),
             handler: () => {
               this.openMap();
             },
           },
-          { text: 'Cancel', role: 'cancel' },
+          { text: this.getTranslation('CANCEL'), role: 'cancel' },
         ],
       })
       .then((actionSheetElmnt) => {
         actionSheetElmnt.present();
       });
+  }
+  private getTranslation(key: string){
+    let txt: string;
+    this.translateService.get(key)
+    .subscribe(msgText=>{
+      txt = msgText;
+    });
+    return txt;
   }
 
   private openMap() {
@@ -117,7 +127,7 @@ export class LocationPickerComponent implements OnInit {
       console.log('****REQUESTING PERMISSION*****');
       console.log(result.location);
       if (result.location !== 'granted') {
-        this.showAlert();
+        this.showAlert('ENABLE_LOCATION_ACCESS');
         return;
       }
       this.isLoading = true;
@@ -134,7 +144,7 @@ export class LocationPickerComponent implements OnInit {
         .catch((err) => {
           this.isLoading = false;
           console.log(err);
-          this.showAlert();
+          this.showAlert('ENABLE_LOCATION_ACCESS');
         });
     });
   }
@@ -160,11 +170,12 @@ export class LocationPickerComponent implements OnInit {
     &key=${environment.googleMapsAPIKey}`;
   }
 
-  private showAlert() {
-    this.alertCtrl.create({
-      header: 'error',
-      message:
-        'Cannot access location services. GPS is not enabled un accessable',
+  private showAlert(msgKey: string) {
+    this.translateService.get(msgKey).subscribe((msgText) => {
+      this.alertCtrl.create({
+        header: 'error',
+        message:msgText
+      });
     });
   }
 

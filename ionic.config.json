@@ -1,5 +1,5 @@
 {
-  "name": "pickup-customer",
+  "name": "customer-pickup-sa",
   "integrations": {"capacitor": {}},
   "type": "angular"
 }
