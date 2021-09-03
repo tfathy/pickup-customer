@@ -95,13 +95,13 @@ export class AuthService implements OnDestroy {
       })
     );
   }
-  logout() {
+  async logout() {
     if (this.activeLogoutTimer) {
       clearTimeout(this.activeLogoutTimer);
     }
     this._user.next(null);
-    Storage.remove({ key: 'CustomerAuthData' });
-    this.router.navigate(['/']);
+   await Storage.remove({ key: 'CustomerAuthData' });
+    this.router.navigate(['/home']);
   }
 
   autoLogin() {
@@ -175,7 +175,9 @@ export class AuthService implements OnDestroy {
     const headerInfo = new HttpHeaders({
       Authorization: token,
     });
-    console.log(`${environment.backEndApiRoot}/sys-owner-security/owner-auth/${userId}`);
+    console.log(
+      `${environment.backEndApiRoot}/sys-owner-security/owner-auth/${userId}`
+    );
     return this.http.get<UserResponseData>(
       `${environment.backEndApiRoot}/sys-owner-security/owner-auth/${userId}`,
       { headers: headerInfo }
@@ -210,7 +212,7 @@ export class AuthService implements OnDestroy {
     this._user.next(user);
     this.autoLogout(user.tokenDuration);
   }
-  private storeAuthData(
+  private async storeAuthData(
     userId: string,
     token: string,
     tokenExpirationDate: string,
@@ -230,16 +232,16 @@ export class AuthService implements OnDestroy {
       userType,
       accountStatus,
     });
-    Storage.set({ key: 'CustomerAuthData', value: data });
+    await Storage.set({ key: 'CustomerAuthData', value: data });
   }
 
   private autoLogout(duration: number) {
     console.log('*******autoLogout executed********');
-    if (this.activeLogoutTimer) {
+  /*  if (this.activeLogoutTimer) {
       clearTimeout(this.activeLogoutTimer);
     }
     this.activeLogoutTimer = setTimeout(() => {
       this.logout();
-    }, duration);
+    }, duration);*/
   }
 }

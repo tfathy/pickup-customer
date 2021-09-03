@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Capacitor } from '@capacitor/core';
 import { Geolocation } from '@capacitor/geolocation';
 import {
   ActionSheetController,
+  AlertController,
   LoadingController,
   ModalController,
 } from '@ionic/angular';
@@ -38,7 +40,8 @@ export class RequestServicePage implements OnInit {
     private authService: AuthService,
     private lookUpService: LookUpService,
     private modalService: ModalService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private alert: AlertController
   ) {}
 
   async ngOnInit() {
@@ -51,6 +54,7 @@ export class RequestServicePage implements OnInit {
       })
       .then((loadingElmnt) => {
         loadingElmnt.present();
+       // this.isGpsPermissionEnabled()
         Geolocation.getCurrentPosition().then(
           (coordinates) => {
             this.currentLocation.lat = coordinates.coords.latitude;
@@ -59,6 +63,7 @@ export class RequestServicePage implements OnInit {
           },
           (rejected) => {
             loadingElmnt.dismiss();
+            this.showErrorAlert(rejected);
             console.log(rejected);
           }
         );
@@ -74,11 +79,30 @@ export class RequestServicePage implements OnInit {
           this.customer = data.customer;
         },
         (error) => {
-          console.log('error in authService', error);
+          this.showErrorAlert(error);
         }
       );
   }
 
+ /* async isGpsPermissionEnabled(
+    permissions: any
+  ): Promise<boolean> {
+    return await new Promise((resolve, reject) => {
+      if (Capacitor.isNativePlatform()) {
+        permissions
+          .checkPermission(permissions.PERMISSION.ACCESS_FINE_LOCATION)
+          .then(
+            (rs) => resolve(rs.hasPermission),
+            (err) => {
+              this.showErrorAlert(err);
+            }
+          );
+      } else {
+        resolve(true); // for browsers
+      }
+    });
+  }
+*/
   async loadActionSheetButtons() {
     this.lookUpService
       .findAllVclSize('Bearer ' + this.customerToken.token)
@@ -138,7 +162,34 @@ export class RequestServicePage implements OnInit {
     return await modal.present();
   }
 
-  logout() {
-    this.authService.logout();
+  async logout() {
+    await this.authService.logout();
+  }
+
+  private showAlert(msgKey: string) {
+    this.translateService.get(msgKey).subscribe((msgText) => {
+      this.alert
+        .create({
+          message: msgText,
+          buttons: [
+            {
+              text: 'OK',
+            },
+          ],
+        })
+        .then((alertElmnt) => {
+          alertElmnt.present();
+        });
+    });
+  }
+  private showErrorAlert(msg) {
+    this.alert
+      .create({
+        message: msg,
+        buttons: [{ text: 'OK' }],
+      })
+      .then((alertelmnt) => {
+        alertelmnt.present();
+      });
   }
 }

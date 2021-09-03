@@ -4,19 +4,10 @@
 </div>
   <ion-grid class="ion-text-center" id="grid">
     <ion-row>
-      <ion-col size="12" class="ion-margin-bottom">
-        <div id="menu_button" class="ion-text-center">
-          <ion-button id="visitor" fill="outline" expand="full" shape="round" [routerLink]="'/tabs'" expand="block" color="light"
-            strong="true">{{"VISITOR"|translate}}
-          </ion-button>
-        </div>
-      </ion-col>
-    </ion-row>
-    <ion-row>
       <ion-col class="ion-margin-bottom ion-margin-top">
         <div id="menu_button" class="ion-text-center">
-          <ion-button id="login" fill="outline" expand="full" shape="round" [routerLink]="'/login'" expand="block" color="light">
-            {{"LOG_IN"|translate}}
+          <ion-button id="visitor" fill="outline" strong="true" shape="round"   [routerLink]="'/signup'" expand="block" color="light">
+            {{"CREATE_ACCOUNT"|translate}}
           </ion-button>
         </div>
       </ion-col>
@@ -27,8 +18,8 @@
 
 <ion-footer>
   <ion-toolbar color="primary">
-    <ion-button fill="clear" strong="true" expand="full" [routerLink]="'/signup'" expand="block" color="light">
-      {{"CREATE_ACCOUNT"|translate}}
+    <ion-button fill="clear" expand="full" [routerLink]="'/login'" color="light">
+      {{"LOG_IN"|translate}}
     </ion-button>
   </ion-toolbar>
 </ion-footer>
