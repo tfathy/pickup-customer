@@ -50,7 +50,11 @@
   "ENGLISH_FULL_NAME":"Full Name In English",
   "PHONE":"Phone Number",
   "SAVE":"Save",
-  "HOME":"Home"
+  "HOME":"Home",
+  "CONTINUE":"Continue",
+  "SETP_1_OF_3":"Step 1 of 3",
+  "SETP_2_OF_3":"Step 2 of 3",
+  "SETP_3_OF_3":"Step 3 of 3"
 
 
 

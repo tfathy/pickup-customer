@@ -1,8 +1,13 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="primary">
-      <ion-title>{{"LOCATION"|translate}}</ion-title>
+    <ion-title slot="end">{{"SETP_1_OF_3"|translate}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()" fill="clear">
+        {{"BACK"|translate}}
+        <ion-icon name="arrow-forward-circle" slot="start"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
-
 </ion-header>
 <ion-content>
   <ion-grid class="ion-no-padding">
@@ -28,10 +33,10 @@
         <ion-card>
           <ion-card-header>
             <app-location-picker [showPreview]="true" [buttonTitle]="'MOVE_TO'"
-            (locationPick)="onDestinationLocationPicked($event)"></app-location-picker>
-          <ion-text color="secondary" class="ion-text-start">
-            <p>{{payLoad.destFormatedAddress}}</p>
-          </ion-text>
+              (locationPick)="onDestinationLocationPicked($event)"></app-location-picker>
+            <ion-text color="secondary" class="ion-text-start">
+              <p>{{payLoad.destFormatedAddress}}</p>
+            </ion-text>
           </ion-card-header>
           <ion-card-content class="ion-text-center">
             <ion-label class="strong_text">{{"DESTINATION_LOCATION"|translate}}</ion-label>
@@ -42,18 +47,11 @@
   </ion-grid>
 </ion-content>
 <ion-footer>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-button  (click)="cancel()" fill="solid">
-        {{"BACK"|translate}}
-        <ion-icon name="arrow-forward-circle" slot="start"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button   (click)="nextStep()"  fill="solid">
-        {{"NEXT"|translate}}
-        <ion-icon name="arrow-back-circle" slot="end"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+  <ion-toolbar >
+    <ion-button (click)="nextStep()" fill="solid" expand="block" >
+      {{"CONTINUE"|translate}}
+      <ion-icon name="arrow-back-circle" slot="end"></ion-icon>
+    </ion-button>
+
   </ion-toolbar>
 </ion-footer>

@@ -1,6 +1,12 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>{{"MOVABLES_DETAILS"|translate}}</ion-title>
+    <ion-title slot="end">{{"SETP_2_OF_3"|translate}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="back()">
+        {{"BACK"|translate}}
+        <ion-icon name="arrow-forward-circle" slot="start"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -105,18 +111,10 @@
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-button fill="solid" (click)="back()">
-        {{"BACK"|translate}}
-        <ion-icon name="arrow-forward-circle" slot="start"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button fill="solid" (click)="nextStep()">
-        {{"NEXT"|translate}}
+  <ion-toolbar>
+      <ion-button fill="solid" (click)="nextStep()" expand="block">
+        {{"CONTINUE"|translate}}
         <ion-icon name="arrow-back-circle" slot="end"></ion-icon>
       </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-footer>

@@ -1,7 +1,12 @@
 <ion-header>
-  <ion-toolbar color="light">
-      <ion-title>{{"ESTEMATED_COST"|translate}}</ion-title>
-
+  <ion-toolbar color="primary">
+      <ion-title slot="end">{{"SETP_3_OF_3"|translate}}</ion-title>
+      <ion-buttons slot="start">
+        <ion-button color="primary" (click)="back()" fill="clear">
+          {{"BACK"|translate}}
+          <ion-icon name="arrow-forward-circle" slot="start"></ion-icon>
+        </ion-button>
+      </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-text-center">
@@ -11,7 +16,7 @@
 <ion-grid>
   <ion-row>
     <ion-col >
-      <ion-button color="primary" fill="solid" expand="block" (click)="execute()">{{"EXECUTE"|translate}}</ion-button>
+
     </ion-col>
   </ion-row>
   <ion-row>
@@ -23,12 +28,7 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-     <ion-buttons slot="start">
-    <ion-button color="primary" (click)="back()" fill="solid">
-      {{"BACK"|translate}}
-      <ion-icon name="arrow-forward-circle" slot="start"></ion-icon>
-    </ion-button>
-  </ion-buttons>
+    <ion-button color="primary" fill="solid" expand="block" (click)="execute()">{{"EXECUTE"|translate}}</ion-button>
   </ion-toolbar>
 
 </ion-footer>
