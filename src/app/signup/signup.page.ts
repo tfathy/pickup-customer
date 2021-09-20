@@ -10,6 +10,7 @@ import { generatedRandomString } from '../shared/shared/common-utils';
 import { CreateCustomerRequestModel } from '../shared/shared/model/create-customer-request-model';
 import { CreateUserRequestModel } from '../shared/shared/model/create-user-request-model';
 
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
@@ -38,7 +39,10 @@ export class SignupPage implements OnInit {
   }
 
   ngOnInit() {}
+  gmailSignUp(){
 
+
+  }
   signUpWithEmail() {
     if (this.email) {
       const model = new CreateCustomerRequestModel(this.email);

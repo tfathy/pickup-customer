@@ -11,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs/operators';
 import { OrderModel } from 'src/app/models/order-model';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { FcmService } from 'src/app/shared/services/fcm.service';
 import { LookUpService } from 'src/app/shared/services/lookup.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import {
@@ -41,6 +42,7 @@ export class RequestServicePage implements OnInit {
     private lookUpService: LookUpService,
     private modalService: ModalService,
     private translateService: TranslateService,
+    private fcmService: FcmService,
     private alert: AlertController
   ) {}
 
@@ -82,6 +84,7 @@ export class RequestServicePage implements OnInit {
           this.showErrorAlert(error);
         }
       );
+      this.fcmService.initPush();
   }
 
  /* async isGpsPermissionEnabled(
