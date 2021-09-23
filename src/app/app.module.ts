@@ -1,5 +1,5 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -11,14 +11,24 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared/shared.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
+
 import { AppInterceptor } from './shared/shared/app-Interceptor';
 
+// import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+// import { getAuth, provideAuth } from '@angular/fire/auth';
+// import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+// import { getStorage, provideStorage } from '@angular/fire/storage';
+// import { getAnalytics, provideAnalytics } from '@angular/fire/analytics';
+
+import { environment } from 'src/environments/environment';
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
+/*export function appInitializer() {
+  return () => initializeApp(environment.firebaseConfig);
+}*/
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +37,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+  /*  provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideFirestore(() => getFirestore()),
+    provideAuth(() => getAuth()),
+    provideStorage(() => getStorage()),
+    provideAnalytics(() => getAnalytics()),*/
     TranslateModule.forRoot({
       defaultLanguage: 'en',
       loader: {
@@ -46,6 +61,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
+   // { provide: APP_INITIALIZER, useFactory: () => appInitializer, multi: true },
   ],
   bootstrap: [AppComponent],
 })

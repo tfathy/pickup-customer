@@ -1,12 +1,15 @@
+/* eslint-disable max-len */
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
   production: false,
-  backEndApiRoot:'http://localhost:802',
-  facebookGraphQl: 'https://graph.facebook.com/me?fields=id,name,picture.width(720),email,gender,link&access_token=',
-  googleMapsAPIKey: 'AIzaSyBifcwaKgvMIfLesKQBEvW_81vrqXewUMc'
+  backEndApiRoot: 'http://localhost:802',
+  facebookGraphQl:
+    'https://graph.facebook.com/me?fields=id,name,picture.width(720),email,gender,link&access_token=',
+  googleMapsAPIKey: 'AIzaSyBifcwaKgvMIfLesKQBEvW_81vrqXewUMc',
+  cloudMessageApplicationId:'key=AAAAkre9i_4:APA91bF3aHAzYcniV3cklGnXbyDGO8UE_XzDgKGyjB0jU3cAYRovFLYYEG1AELUnIkbj3mUBstcVjTnYMNL4nwBliAdtkHvJNGxQF4Y0hEc10Cw7UL4aSLpTq7u8MEFloERRwqpwyxCK'
 };
 
 /*

@@ -12,32 +12,40 @@ import { AlertController } from '@ionic/angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PushNotificationMessage } from 'src/app/models/push-notification-message';
 import { Observable } from 'rxjs';
+import { FirebaseService } from './firebase.service';
+import { customerAuthToken, readStorage } from '../shared/common-utils';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class FcmService {
-  private url = 'https://fcm.googleapis.com/v1/projects';
+  clientAppToken;
+  private authData: customerAuthToken;
+  private url = 'https://fcm.googleapis.com/fcm/send';
+
   constructor(
     private router: Router,
     private alertCtrl: AlertController,
-    private http: HttpClient
+    private http: HttpClient,
+    private firebaseService: FirebaseService
   ) {}
-  initPush() {
+  async initPush() {
     if (Capacitor.getPlatform() !== 'web') {
+      this.authData =await readStorage('CustomerAuthData');
       this.registerPush();
     }
   }
 
-  sendNotification(appId: string, project: string,msg: PushNotificationMessage): Observable<any> {
-    //POST https://fcm.googleapis.com/v1/projects/myproject-b5ae1/messages
-    //https://fcm.googleapis.com/fcm/send
-    //https://stackoverflow.com/questions/38834020/sending-push-via-postman-using-firebase-messaging
+  sendNotification(
+    msg: PushNotificationMessage
+  ): Observable<any> {
     const headerInfo = new HttpHeaders({
-      Authorization: appId,
+      Authorization: `${environment.cloudMessageApplicationId}`,
     });
     console.log('start send notification');
-    console.log(`${this.url}/${project}/messages:send`);
-    return this.http.post<any>(`${this.url}/${project}/messages:send`,msg,{headers: headerInfo});
+    return this.http.post<any>(`${this.url}`, msg, {
+      headers: headerInfo,
+    });
   }
   private registerPush() {
     PushNotifications.requestPermissions().then((permission) => {
@@ -53,6 +61,8 @@ export class FcmService {
       //  this.showAlert('My token: ' + JSON.stringify(token));
       console.log('token:', JSON.stringify(token));
       // you have to store this token with user id in the database
+      this.clientAppToken = token;
+
     });
     PushNotifications.addListener('registrationError', (error: any) => {
       this.showAlert('Error: ' + JSON.stringify(error));

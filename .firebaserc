@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "pickup-b712c"
+  },
+  "targets": {
+    "pickup-b712c": {
+      "hosting": {
+        "app": [
+          "pickup-b712c"
+        ]
+      }
+    }
+  }
+}

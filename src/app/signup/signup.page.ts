@@ -38,7 +38,9 @@ export class SignupPage implements OnInit {
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
   gmailSignUp(){
 
 

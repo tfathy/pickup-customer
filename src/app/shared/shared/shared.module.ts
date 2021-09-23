@@ -1,3 +1,4 @@
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrderLocationComponent } from 'src/app/tabs/request-service/order-location/order-location.component';
@@ -12,6 +13,9 @@ import { ExecuteOrderComponent } from 'src/app/tabs/request-service/execute-orde
 import { TranslateModule } from '@ngx-translate/core';
 import { OrderDetailComponent } from 'src/app/tabs/customer-orders/order-detail/order-detail.component';
 
+
+
+
 @NgModule({
   declarations: [
     OrderLocationComponent,
@@ -20,7 +24,7 @@ import { OrderDetailComponent } from 'src/app/tabs/customer-orders/order-detail/
     OrderHeaderComponent,
     ImagePickerComponent,
     ExecuteOrderComponent,
-    OrderDetailComponent
+    OrderDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -42,7 +46,7 @@ import { OrderDetailComponent } from 'src/app/tabs/customer-orders/order-detail/
     OrderHeaderComponent,
     ImagePickerComponent,
     ExecuteOrderComponent,
-    OrderDetailComponent
+    OrderDetailComponent,
   ],
 })
 export class SharedModule {}
