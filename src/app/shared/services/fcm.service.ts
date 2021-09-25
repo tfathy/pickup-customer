@@ -10,42 +10,42 @@ import {
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { PushNotificationMessage } from 'src/app/models/push-notification-message';
+import { FcmGoogleNotification, PushNotificationMessage } from 'src/app/models/push-notification-message';
 import { Observable } from 'rxjs';
-import { FirebaseService } from './firebase.service';
 import { customerAuthToken, readStorage } from '../shared/common-utils';
 import { environment } from 'src/environments/environment';
+import { AuthService } from './auth.service';
+import { UserService } from './user.service';
 @Injectable({
   providedIn: 'root',
 })
 export class FcmService {
-  clientAppToken;
-  private authData: customerAuthToken;
+  private customerAuthToken: customerAuthToken;
   private url = 'https://fcm.googleapis.com/fcm/send';
 
   constructor(
     private router: Router,
     private alertCtrl: AlertController,
     private http: HttpClient,
-    private firebaseService: FirebaseService
+    private authService: AuthService,
+    private userServices: UserService
   ) {}
   async initPush() {
     if (Capacitor.getPlatform() !== 'web') {
-      this.authData =await readStorage('CustomerAuthData');
+      this.customerAuthToken = await readStorage('CustomerAuthData');
       this.registerPush();
     }
   }
 
-  sendNotification(
-    msg: PushNotificationMessage
-  ): Observable<any> {
+  sendNotification(msg: FcmGoogleNotification): Observable<any> {
     const headerInfo = new HttpHeaders({
       Authorization: `${environment.cloudMessageApplicationId}`,
     });
-    console.log('start send notification');
+
     return this.http.post<any>(`${this.url}`, msg, {
       headers: headerInfo,
     });
+
   }
   private registerPush() {
     PushNotifications.requestPermissions().then((permission) => {
@@ -61,8 +61,29 @@ export class FcmService {
       //  this.showAlert('My token: ' + JSON.stringify(token));
       console.log('token:', JSON.stringify(token));
       // you have to store this token with user id in the database
-      this.clientAppToken = token;
-
+      this.authService
+        .loadUserInfo(
+          'Bearer ' + this.customerAuthToken.token,
+          this.customerAuthToken.userId
+        )
+        .subscribe((userInfoResponse) => {
+          userInfoResponse.fcmToken = token.value;
+          this.userServices
+            .updateUser(
+              'Bearer ' + this.customerAuthToken.token,
+              userInfoResponse,
+              this.customerAuthToken.userId
+            )
+            .subscribe((updatedInfoResponse) => {
+              console.log('User fcm token updated', updatedInfoResponse);
+            },updateError=>{
+              console.error('error in updating fcmtoken',updateError);
+              this.showAlert('error in updating fcmtoken');
+            });
+        },loadInfoError=>{
+          console.error('error in loading user info ',loadInfoError);
+          this.showAlert('error in loading user info ');
+        });
     });
     PushNotifications.addListener('registrationError', (error: any) => {
       this.showAlert('Error: ' + JSON.stringify(error));

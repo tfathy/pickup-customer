@@ -14,13 +14,16 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { OrderModel } from 'src/app/models/order-model';
 import {
+  FcmGoogleNotification,
   NotificationMoreInfo,
   PushNotificationMessage,
 } from 'src/app/models/push-notification-message';
 import { CustomerService } from 'src/app/shared/services/customer.service';
+import { DriverService } from 'src/app/shared/services/driver.service';
 import { FcmService } from 'src/app/shared/services/fcm.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { customerAuthToken } from 'src/app/shared/shared/common-utils';
+import { AvailabeDriver } from 'src/app/shared/shared/model/available-drivers';
 
 @Component({
   selector: 'app-execute-order',
@@ -31,11 +34,12 @@ export class ExecuteOrderComponent implements OnInit {
   @Input() orderHeader: OrderModel;
   @Input() customerToken: customerAuthToken;
   estimatedCost = 500;
-  msg: PushNotificationMessage;
+  availabeDrivers: AvailabeDriver[];
   constructor(
     private modalCtrl: ModalController,
     private modalService: ModalService,
     private customerService: CustomerService,
+    private driverService: DriverService,
     private fcmService: FcmService,
     private alert: AlertController,
     private toast: ToastController,
@@ -44,17 +48,22 @@ export class ExecuteOrderComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const notificationMoreInfo = new NotificationMoreInfo(
-      'Click for more details'
-    );
-    this.msg = new PushNotificationMessage(
-      'New Request',
-      'You got a new Request',
-      '',
-      notificationMoreInfo,
-      this.fcmService.clientAppToken
-    );
-    console.log('msg=', this.msg.to);
+    // get list of avaliable drivers with theere fcmtoken
+    //driver-app/driver/avaliable/3
+    this.driverService
+      .findAvaialbeDrivers(
+        'Bearer ' + this.customerToken.token,
+        this.orderHeader.vehicleSize.id
+      )
+      .subscribe(
+        (driverData) => {
+          this.availabeDrivers = driverData;
+        },
+        (error) => {
+          console.error(error);
+          this.showAlert('error: cannot get availabe drivers');
+        }
+      );
   }
 
   back() {
@@ -65,6 +74,9 @@ export class ExecuteOrderComponent implements OnInit {
     this.showToast('REQUEST_CANCELED');
   }
   execute() {
+    let fcmGoogleNotification: FcmGoogleNotification;
+    let msg: PushNotificationMessage;
+    let fcmToke: string;
     this.orderHeader.estimateCost = this.estimatedCost;
     this.loadingCtrl
       .create({
@@ -76,14 +88,35 @@ export class ExecuteOrderComponent implements OnInit {
           .createOrder('Bearer ' + this.customerToken.token, this.orderHeader)
           .subscribe(
             (resData) => {
+              // loop over array of availabe drivers
+              console.log('*********************1*****************');
+              console.log( this.availabeDrivers);
+              this.availabeDrivers.forEach((driver) => {
+                fcmToke = driver.sysUser.fcmToken;
+                const moreInfo = new NotificationMoreInfo(
+                  'more information goes here'
+                );
+                msg = new PushNotificationMessage(
+                  'New Request',
+                  'You got a new Request',
+                  ''
+                );
+                console.log('*********************2 fcmGoogleNotification object is:*****************');
+                fcmGoogleNotification = new FcmGoogleNotification(msg,moreInfo,fcmToke);
+                console.log(fcmGoogleNotification);
+                this.fcmService.sendNotification(fcmGoogleNotification).subscribe(
+                  (notificationResponse) => {
+                    console.log(notificationResponse);
+                    console.log('*********************3 Notification service executed*****************');
+                  },
+                  (err) => {
+                    console.log('*********************-1 error in fcmService.sendNotification *****************');
+                    console.log(err);
+                  }
+                );
+              });
               loadingElmnt.dismiss();
               this.closeAllModal();
-              this.fcmService.sendNotification(this.msg).subscribe((res) => {
-                console.log(res);
-                this.showAlert('REQUEST_POSTED');
-              },err=>{
-                console.error('error in send push notification',err);
-              });
             },
             (error) => {
               console.log(error);

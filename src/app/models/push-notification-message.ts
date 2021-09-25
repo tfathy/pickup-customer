@@ -1,11 +1,16 @@
 /* eslint-disable max-len */
+export class FcmGoogleNotification{
+  constructor(
+    public notification: PushNotificationMessage,
+    public data: NotificationMoreInfo,
+    public to: string
+  ){}
+}
 export class PushNotificationMessage {
   constructor(
     public title: string,
     public body: string,
-    public icon?: string,
-    public data?: NotificationMoreInfo,
-    public to?: string
+    public icon?: string
   ) {}
 }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LangService } from './shared/services/lang.service';
+import { customerAuthToken } from './shared/shared/common-utils';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,8 @@ import { LangService } from './shared/services/lang.service';
 export class AppComponent implements OnInit{
   appDirection ='rtl' ;
   lang = 'ar';
+
+
   constructor(private langService: LangService, private router: Router) {
   }
   ngOnInit(): void {
@@ -24,4 +27,5 @@ export class AppComponent implements OnInit{
   onLogOut() {
     this.router.navigate(['/', 'home']);
   }
+
 }

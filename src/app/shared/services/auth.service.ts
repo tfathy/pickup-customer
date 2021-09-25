@@ -14,6 +14,7 @@ import { UserModel } from '../shared/model/user-model';
 import { Storage } from '@capacitor/storage';
 import { Router } from '@angular/router';
 import { UserResponseData } from '../shared/model/user-response-data';
+import { CustomerTokenResponseModel } from '../shared/model/customer-token-response-model';
 
 interface AuthResponseData {
   token: string;
@@ -171,15 +172,15 @@ export class AuthService implements OnDestroy {
     );
   }
 
-  loadUserInfo(token: string, userId: string): Observable<UserResponseData> {
+  loadUserInfo(token: string, userId: string): Observable<CustomerTokenResponseModel> {
     const headerInfo = new HttpHeaders({
       Authorization: token,
     });
     console.log(
       `${environment.backEndApiRoot}/sys-owner-security/owner-auth/${userId}`
     );
-    return this.http.get<UserResponseData>(
-      `${environment.backEndApiRoot}/sys-owner-security/owner-auth/${userId}`,
+    return this.http.get<CustomerTokenResponseModel>(
+      `${environment.backEndApiRoot}/sys-owner-security/owner-auth/customer/${userId}`,
       { headers: headerInfo }
     );
   }
