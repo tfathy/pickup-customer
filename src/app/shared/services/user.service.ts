@@ -17,7 +17,7 @@ export class UserService {
     model: UserResponseData,
     userId: string
   ): Observable<UserResponseData> {
-    console.log('sys-owner-security/owner-auth/update model =');
+    console.log('sys-owner-security/owner-auth/update model=');
     console.log(model);
     const headerInfo = new HttpHeaders({
       Authorization: token,
