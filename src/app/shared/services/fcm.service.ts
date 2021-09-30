@@ -10,7 +10,10 @@ import {
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { FcmGoogleNotification, PushNotificationMessage } from 'src/app/models/push-notification-message';
+import {
+  FcmGoogleNotification,
+  PushNotificationMessage,
+} from 'src/app/models/push-notification-message';
 import { Observable } from 'rxjs';
 import { customerAuthToken, readStorage } from '../shared/common-utils';
 import { environment } from 'src/environments/environment';
@@ -45,7 +48,6 @@ export class FcmService {
     return this.http.post<any>(`${this.url}`, msg, {
       headers: headerInfo,
     });
-
   }
   private registerPush() {
     PushNotifications.requestPermissions().then((permission) => {
@@ -66,24 +68,30 @@ export class FcmService {
           'Bearer ' + this.customerAuthToken.token,
           this.customerAuthToken.userId
         )
-        .subscribe((userInfoResponse) => {
-          userInfoResponse.fcmToken = token.value;
-          this.userServices
-            .updateUser(
-              'Bearer ' + this.customerAuthToken.token,
-              userInfoResponse,
-              this.customerAuthToken.userId
-            )
-            .subscribe((updatedInfoResponse) => {
-              console.log('User fcm token updated', updatedInfoResponse);
-            },updateError=>{
-              console.error('error in updating fcmtoken',updateError);
-              this.showAlert('error in updating fcmtoken');
-            });
-        },loadInfoError=>{
-          console.error('error in loading user info ',loadInfoError);
-          this.showAlert('error in loading user info ');
-        });
+        .subscribe(
+          (userInfoResponse) => {
+            userInfoResponse.fcmToken = token.value;
+            this.userServices
+              .updateUser(
+                'Bearer ' + this.customerAuthToken.token,
+                userInfoResponse,
+                this.customerAuthToken.userId
+              )
+              .subscribe(
+                (updatedInfoResponse) => {
+                  console.log('User fcm token updated', updatedInfoResponse);
+                },
+                (updateError) => {
+                  console.error('error in updating fcmtoken', updateError);
+                  this.showAlert('error in updating fcmtoken');
+                }
+              );
+          },
+          (loadInfoError) => {
+            console.error('error in loading user info ', loadInfoError);
+            this.showAlert('error in loading user info ');
+          }
+        );
     });
     PushNotifications.addListener('registrationError', (error: any) => {
       this.showAlert('Error: ' + JSON.stringify(error));
@@ -100,12 +108,16 @@ export class FcmService {
       'pushNotificationActionPerformed',
       async (notification: ActionPerformed) => {
         const data = notification.notification.data; // this means retrive the parameters comming with the notification
-        this.showAlert(
-          'Action performed: ' + JSON.stringify(notification.notification)
-        );
-        if (data.detailsId) {
-          // this.router.navigateByUrl(`/home/${data.detailsId}`);
-          this.showAlert(data);
+        // this.showAlert(
+        //   'Action performed: ' + JSON.stringify(notification.notification)
+        // );
+        console.log(notification.notification);
+        const orderObj =  JSON.parse(data.info);
+        console.log('orderObj=',orderObj);
+        if (orderObj.id) {
+          this.router.navigateByUrl(
+            `/tabs/customer-orders/team-info/${orderObj.id}`
+          );
         }
       }
     );

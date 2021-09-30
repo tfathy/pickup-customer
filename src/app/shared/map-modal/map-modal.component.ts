@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
+import { SysUserLogin } from '../shared/model/sys-user-login';
 
 @Component({
   selector: 'app-map-modal',
@@ -24,6 +25,7 @@ export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() closeButtonText = 'Cancel';
   @Input() title = 'Pick Location';
   @Input() showToolbar = true;
+  @Input() avaliableCars: SysUserLogin[];
   clickListener: any;
   googleMaps: any;
   constructor(

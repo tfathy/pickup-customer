@@ -1,12 +1,12 @@
-<ion-header class="ion-no-border" >
-  <ion-toolbar class="transHeader">
-      <ion-button class="margin" strong="true"  fill="solid"(click)="beginOrderAction()" color="danger"><h3>{{"BEGIN_ORDER"|translate}}</h3></ion-button>
-  </ion-toolbar>
-
-
-</ion-header>
 
 <ion-content fullscreen>
   <app-map-modal *ngIf="currentLocation.lat && currentLocation.lng" [selectable]="false" [title]='' [closeButtonText]=''
     [center]="currentLocation" [showToolbar]="false"></app-map-modal>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="beginOrderAction()" color="primary">
+        <ion-avatar>
+          <img src="assets/icon/fast.png">
+        </ion-avatar>
+      </ion-fab-button>
+    </ion-fab>
 </ion-content>

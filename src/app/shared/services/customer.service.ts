@@ -34,7 +34,8 @@ export class CustomerService {
     });
     return this.http.put<CustomerModel>(
       `${environment.backEndApiRoot}/${this.url}/customer/${id}`,
-      customer,{headers: headerInfo}
+      customer,
+      { headers: headerInfo }
     );
   }
 
@@ -65,6 +66,15 @@ export class CustomerService {
     );
     return this.http.get<OrderModel[]>(
       `${environment.backEndApiRoot}/${this.url}/customer/order/customer/${customerId}`,
+      { headers: headerInfo }
+    );
+  }
+  findOrder(token: string, orderId): Observable<OrderModel> {
+    const headerInfo = new HttpHeaders({
+      Authorization: token,
+    });
+    return this.http.get<OrderModel>(
+      `${environment.backEndApiRoot}/${this.url}/customer/order/${orderId}`,
       { headers: headerInfo }
     );
   }

@@ -19,6 +19,7 @@ import { OrderDetailComponent } from './order-detail/order-detail.component';
 export class CustomerOrdersPage implements OnInit, AfterViewInit {
   segmentModel = 'new';
   newOrders: OrderModel[] = [];
+  acceptedOrders: OrderModel[] = [];
   closedOrders: OrderModel[] = [];
   customer: CustomerModel;
   customerToken: customerAuthToken;

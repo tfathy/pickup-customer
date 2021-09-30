@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: CustomerOrdersPage
+  },
+  {
+    path: 'team-info/:id',
+    loadChildren: () => import('./team-info/team-info.module').then( m => m.TeamInfoPageModule)
   }
 ];
 
