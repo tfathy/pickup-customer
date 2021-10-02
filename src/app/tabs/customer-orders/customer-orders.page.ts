@@ -52,45 +52,19 @@ export class CustomerOrdersPage implements OnInit, AfterViewInit {
             (customerData) => {
               this.customer = customerData.customer;
               // retrive all closed orders list
-              this.customerService
-                .findOrdersByCustomerAndStatus(
-                  'Bearer ' + this.customerToken.token,
-                  this.customer.id,
-                  'PAYMENT_SUCCESS'
-                )
-                .subscribe(
-                  (closedOrdersResponse) => {
-                    this.closedOrders = closedOrdersResponse;
-                  },
-                  (closedOrdersResponseError) => {
-                    loadingElmnt.dismiss();
-                    console.log(closedOrdersResponseError);
-                  }
-                );
+
               // retrive  all open orders
               this.customerService
-                .findOpenCustomerOrders(
+                .findAllOrdersForCustomer(
                   'Bearer ' + this.customerToken.token,
                   this.customer.id
                 )
-                .pipe(
-                  map((arrayList) =>
-                    arrayList.filter((record) =>
-                      record ? record.ordStatus !== 'PAYMENT_SUCCESS' : null
-                    )
-                  )
-                )
-                .subscribe(
-                  (openOrdersResp) => {
-                    this.newOrders = openOrdersResp;
-                    console.log('newOrders', this.newOrders);
-                    loadingElmnt.dismiss();
-                  },
-                  (openOrderRespError) => {
-                    loadingElmnt.dismiss();
-                    console.log(openOrderRespError);
-                  }
-                );
+                .subscribe((ordersList) => {
+                  this.newOrders = ordersList.filter(row=>row.ordStatus==='REQUEST');
+                  this.acceptedOrders = ordersList.filter(row=>row.ordStatus==='ACCEPTED');
+                  this.closedOrders  = ordersList.filter(row=>row.ordStatus==='PAYMENT_SUCCESS');
+                  loadingElmnt.dismiss();
+                });
             },
             (customerInfoError) => {
               console.log(customerInfoError);

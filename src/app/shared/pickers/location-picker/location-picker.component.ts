@@ -32,7 +32,7 @@ export interface EchoPlugin {
 export class LocationPickerComponent implements OnInit {
   @Output() locationPick = new EventEmitter<PlaceLocation>();
   @Input() showPreview = false;
-  @Input() buttonTitle = 'pick a location';
+  @Input() buttonTitle = 'Choose location';
   selectedLocationImage: string;
   isLoading = false;
   constructor(

@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable object-shorthand */
 import {
   AfterViewInit,
   Component,
   ElementRef,
   Input,
+  NgZone,
   OnDestroy,
   OnInit,
   Renderer2,
@@ -28,9 +30,14 @@ export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() avaliableCars: SysUserLogin[];
   clickListener: any;
   googleMaps: any;
+
+  googleAutocomplete: any;
+  autocomplete: { input: string }={ input: '' };
+  autocompleteItems: any[] =[];
   constructor(
     private modalCtrl: ModalController,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    public zone: NgZone
   ) {}
   ngOnDestroy(): void {
     if (this.clickListener) {
@@ -75,11 +82,30 @@ export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log(err);
       });
   }
-
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  UpdateSearchResults() {
+    console.log('********oninput fire');
+    if (this.autocomplete.input === '') {
+      this.autocompleteItems = [];
+      return;
+    }
+    this.googleAutocomplete = new google.maps.places.AutocompleteService();
+    this.googleAutocomplete.getPlacePredictions({ input: this.autocomplete.input },
+      (predictions, status) => {
+        this.autocompleteItems = [];
+        this.zone.run(() => {
+          predictions.forEach((prediction) => {
+            this.autocompleteItems.push(prediction);
+          });
+        });
+      });
+  }
   ngOnInit() {}
+  SelectSearchResult(item){}
   onCancel() {
     this.modalCtrl.dismiss();
   }
+  ClearAutocomplete() {}
   private getGoogleMaps(): Promise<any> {
     const win = window as any;
     const googleModule = win.google;

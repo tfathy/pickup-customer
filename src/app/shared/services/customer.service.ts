@@ -53,22 +53,19 @@ export class CustomerService {
     );
   }
 
-  findOpenCustomerOrders(
+  findAllOrdersForCustomer(
     token: string,
     customerId: number
   ): Observable<OrderModel[]> {
     const headerInfo = new HttpHeaders({
       Authorization: token,
     });
-    console.log(
-      'findOpernOrders=',
-      `${environment.backEndApiRoot}/${this.url}/customer/order/${customerId}`
-    );
     return this.http.get<OrderModel[]>(
       `${environment.backEndApiRoot}/${this.url}/customer/order/customer/${customerId}`,
       { headers: headerInfo }
     );
   }
+
   findOrder(token: string, orderId): Observable<OrderModel> {
     const headerInfo = new HttpHeaders({
       Authorization: token,
