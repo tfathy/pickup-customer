@@ -11,13 +11,14 @@ import { OrderHeaderComponent } from 'src/app/tabs/request-service/order-header/
 import { ImagePickerComponent } from '../pickers/image-picker/image-picker.component';
 import { ExecuteOrderComponent } from 'src/app/tabs/request-service/execute-order/execute-order.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { OrderDetailComponent } from 'src/app/tabs/customer-orders/order-detail/order-detail.component';
-
-
-
+import { OrderDetailComponent } from '../../../app/tabs/customer-orders/order-detail/order-detail.component';
+import { HideHeaderDirective } from '../../../app/directives/hide-header.directive';
+import { ParallaxDirective } from '../../../app/directives/parallax.directive';
 
 @NgModule({
   declarations: [
+    ParallaxDirective,
+    HideHeaderDirective,
     OrderLocationComponent,
     LocationPickerComponent,
     MapModalComponent,
@@ -32,7 +33,7 @@ import { OrderDetailComponent } from 'src/app/tabs/customer-orders/order-detail/
     HttpClientModule,
     IonicModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
   ],
   exports: [
     FormsModule,
@@ -47,6 +48,8 @@ import { OrderDetailComponent } from 'src/app/tabs/customer-orders/order-detail/
     ImagePickerComponent,
     ExecuteOrderComponent,
     OrderDetailComponent,
+    ParallaxDirective,
+    HideHeaderDirective
   ],
 })
 export class SharedModule {}

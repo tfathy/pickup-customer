@@ -29,3 +29,20 @@
 ion-content{
   --background: var(--ion-color-white);
 }
+@font-face {
+  font-family: 'Plex';
+  font-style: normal;
+  font-weight: normal;
+  src: url('/assets/fonts/IBMPlexSans-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Plex';
+  font-weight: bold;
+  src: url('/assets/fonts/IBMPlexSans-Bold.ttf');
+}
+
+:root {
+    --ion-text-color: #828585;
+    --ion-font-family: 'Plex';
+}

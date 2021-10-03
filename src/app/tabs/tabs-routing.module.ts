@@ -34,9 +34,13 @@ const routes: Routes = [
         path: 'settings',
         loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule), canLoad:[AuthGuard]
       },
+      {
+        path: 'landing',
+        loadChildren: () => import('./landing/landing.module').then( m => m.LandingPageModule)
+      },
+
     ],
   },
-
 ];
 
 @NgModule({

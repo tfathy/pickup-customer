@@ -21,6 +21,7 @@ import { AppInterceptor } from './shared/shared/app-Interceptor';
 // import { getAnalytics, provideAnalytics } from '@angular/fire/analytics';
 
 import { environment } from 'src/environments/environment';
+
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export function HttpLoaderFactory(http: HttpClient) {

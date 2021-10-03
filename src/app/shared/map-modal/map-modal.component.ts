@@ -30,10 +30,10 @@ export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() avaliableCars: SysUserLogin[];
   clickListener: any;
   googleMaps: any;
-
+/*
   googleAutocomplete: any;
   autocomplete: { input: string }={ input: '' };
-  autocompleteItems: any[] =[];
+  autocompleteItems: any[] =[];*/
   constructor(
     private modalCtrl: ModalController,
     private renderer: Renderer2,
@@ -84,13 +84,13 @@ export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   // eslint-disable-next-line @typescript-eslint/naming-convention
   UpdateSearchResults() {
-    console.log('********oninput fire');
+  /*  console.log('********oninput fire');
     if (this.autocomplete.input === '') {
       this.autocompleteItems = [];
       return;
-    }
-    this.googleAutocomplete = new google.maps.places.AutocompleteService();
-    this.googleAutocomplete.getPlacePredictions({ input: this.autocomplete.input },
+    }*/
+   // this.googleAutocomplete = new google.maps.places.AutocompleteService();
+   /* this.googleAutocomplete.getPlacePredictions({ input: this.autocomplete.input },
       (predictions, status) => {
         this.autocompleteItems = [];
         this.zone.run(() => {
@@ -98,7 +98,7 @@ export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
             this.autocompleteItems.push(prediction);
           });
         });
-      });
+      });*/
   }
   ngOnInit() {}
   SelectSearchResult(item){}
