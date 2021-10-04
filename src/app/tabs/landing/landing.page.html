@@ -15,6 +15,16 @@
     </ion-toolbar>
   </ion-header>
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing..."
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+
   <ion-slides [options]="catSlideOpts">
     <ion-slide *ngFor="let cat of top">
       <img [src]="cat.img">
@@ -27,19 +37,22 @@
     </ion-slide>
   </ion-slides>
 
-  <ion-text color="dark"><b style="padding-left: 10px;">{{"SELECT-TRANS_TYPE"|translate}}</b></ion-text>
+  <ion-text *ngIf="this.bottom" color="dark"><b style="padding-left: 10px;">{{"SELECT-TRANS_TYPE"|translate}}</b></ion-text>
 
   <ion-slides [options]="featuredSlideOpts">
-    <ion-slide *ngFor="let f of bottom" class="featured-slide" routerLink="/details">
+    <ion-slide *ngFor="let f of bottom" class="featured-slide" routerLink="/tabs/request-service">
       <img [src]="f.img">
       <div class="info">
         <ion-text color="dark"><b>{{f.name }}</b></ion-text>
         <span>
-          <ion-icon name="star" color="secondary"></ion-icon>
-          <ion-text color="secondary"> {{ f.rating }} </ion-text>{{ f.ratings }}
+          <ion-icon name="camera" color="secondary"></ion-icon>
+          <ion-text color="pin"> {{ f.rating }} </ion-text>
         </span>
         <span>
-          <ion-icon name="location-outline"></ion-icon> {{ f.distance }}
+          <ion-icon name="pin" color="danger"></ion-icon> {{ f.ratings }}
+        </span>
+        <span>
+          <ion-icon name="send" color="primary"></ion-icon> {{ f.distance }}
         </span>
       </div>
     </ion-slide>

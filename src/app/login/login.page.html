@@ -55,6 +55,19 @@
       </ion-col>
 
     </ion-row>
+    <ion-row>
+      <ion-col class="ion-margin-bottom ion-margin-top">
+        <ion-title> {{"DO_NOT_HAVE_ACCOUNT"|translate}}</ion-title>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="full" fill="outline" color="dark" shape="round" strong="true" id="emailbtn"
+          (click)="goSignUp()"> {{"SIGN_UP"|translate}}
+          <ion-icon name="mail-outline" slot="end"></ion-icon>
+        </ion-button>
+      </ion-col>
+      </ion-row>
   </ion-grid>
 </form>
 </ion-content>

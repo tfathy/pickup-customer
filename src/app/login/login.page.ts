@@ -79,8 +79,11 @@ export class LoginPage implements OnInit {
       }
     );
   }
+  goSignUp() {
+    this.router.navigate(['/', 'signup']);
+  }
   back() {
-    this.router.navigate(['/', 'home']);
+    this.router.navigate(['/', 'tabs','landing']);
   }
   get username() {
     return this.emailLoginForm.get('username');
@@ -109,23 +112,27 @@ export class LoginPage implements OnInit {
       })
       .then((loadinElmnt) => {
         loadinElmnt.present();
-        this.http.get(url).subscribe((res: any) => {
-          console.log(res.email, res.id);
-          this.authService
-            .authLogin(res.email, res.id)
-            .subscribe(() => {
-              loadinElmnt.dismiss();
-              this.router.navigate(['/', 'tabs', 'request-service']);
-            },loginError=>{
-              loadinElmnt.dismiss();
-              console.log(loginError);
-              this.showToast('Login Error',3000);
-            });
-        },fbloginError=>{
-          loadinElmnt.dismiss();
-          console.log(fbloginError);
-          this.showToast('fblogin Error',3000);
-        });
+        this.http.get(url).subscribe(
+          (res: any) => {
+            console.log(res.email, res.id);
+            this.authService.authLogin(res.email, res.id).subscribe(
+              () => {
+                loadinElmnt.dismiss();
+                this.router.navigate(['/', 'tabs', 'request-service']);
+              },
+              (loginError) => {
+                loadinElmnt.dismiss();
+                console.log(loginError);
+                this.showToast('Login Error', 3000);
+              }
+            );
+          },
+          (fbloginError) => {
+            loadinElmnt.dismiss();
+            console.log(fbloginError);
+            this.showToast('fblogin Error', 3000);
+          }
+        );
       });
   }
 }

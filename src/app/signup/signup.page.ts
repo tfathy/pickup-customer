@@ -90,7 +90,7 @@ export class SignupPage implements OnInit {
   }
 
   back() {
-    this.router.navigate(['/', 'home']);
+    this.router.navigate(['/', 'tabs','landing']);
   }
 
   private showAlert(msgKey: string) {
