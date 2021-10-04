@@ -14,6 +14,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { OrderDetailComponent } from '../../../app/tabs/customer-orders/order-detail/order-detail.component';
 import { HideHeaderDirective } from '../../../app/directives/hide-header.directive';
 import { ParallaxDirective } from '../../../app/directives/parallax.directive';
+import { OrderItemCatComponent } from '../../../app/tabs/landing/components/order-item-cat/order-item-cat.component';
+import { IonicSelectableModule } from 'ionic-selectable';
+
 
 @NgModule({
   declarations: [
@@ -26,12 +29,14 @@ import { ParallaxDirective } from '../../../app/directives/parallax.directive';
     ImagePickerComponent,
     ExecuteOrderComponent,
     OrderDetailComponent,
+    OrderItemCatComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     HttpClientModule,
     IonicModule,
+    IonicSelectableModule,
     ReactiveFormsModule,
     TranslateModule,
   ],
@@ -41,6 +46,7 @@ import { ParallaxDirective } from '../../../app/directives/parallax.directive';
     IonicModule,
     ReactiveFormsModule,
     TranslateModule,
+    IonicSelectableModule,
     OrderLocationComponent,
     LocationPickerComponent,
     MapModalComponent,
@@ -49,7 +55,8 @@ import { ParallaxDirective } from '../../../app/directives/parallax.directive';
     ExecuteOrderComponent,
     OrderDetailComponent,
     ParallaxDirective,
-    HideHeaderDirective
+    HideHeaderDirective,
+    OrderItemCatComponent
   ],
 })
 export class SharedModule {}

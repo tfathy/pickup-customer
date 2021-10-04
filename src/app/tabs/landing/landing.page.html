@@ -40,7 +40,7 @@
   <ion-text *ngIf="this.bottom" color="dark"><b style="padding-left: 10px;">{{"SELECT-TRANS_TYPE"|translate}}</b></ion-text>
 
   <ion-slides [options]="featuredSlideOpts">
-    <ion-slide *ngFor="let f of bottom" class="featured-slide" routerLink="/tabs/request-service">
+    <ion-slide *ngFor="let f of bottom" class="featured-slide" routerLink="/tabs/landing/quic-order">
       <img [src]="f.img">
       <div class="info">
         <ion-text color="dark"><b>{{f.name }}</b></ion-text>

@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { UserResponseData } from '../shared/model/user-response-data';
 import { CustomerTokenResponseModel } from '../shared/model/customer-token-response-model';
 
+
 interface AuthResponseData {
   token: string;
   email: string;

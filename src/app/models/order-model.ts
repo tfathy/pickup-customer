@@ -1,4 +1,5 @@
 import { CustomerModel } from '../shared/shared/model/customer-model';
+import { ItemCategoryModel } from '../shared/shared/model/item-category-model';
 import { LocationTypeModel } from '../shared/shared/model/location-type-model';
 import { TeamModel } from '../shared/shared/model/team-model';
 import { VclSizeModel } from '../shared/shared/model/vcl-size-model';
@@ -31,6 +32,6 @@ export class OrderModel {
     public actualCost?: number,
     public customerNotes?: string,
     public teamNotes?: string,
-
+    public itemCategory?: ItemCategoryModel
   ) {}
 }

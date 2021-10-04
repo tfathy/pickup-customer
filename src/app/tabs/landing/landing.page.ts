@@ -46,42 +46,47 @@ export class LandingPage implements OnInit {
       .then((loadingElmnt) => {
         loadingElmnt.present();
         this.capHttp
-          .doGEt('https://customer.pickup-sa.net/data/landing.json')
-          .subscribe((res: any) => {
-            this.top = res.data.top;
-            this.middle = res.data.middle;
-            this.bottom = res.data.bottom;
-            loadingElmnt.dismiss();
-          },error=>{
-            loadingElmnt.dismiss();
-            console.log(error);
-          });
+          .doGet('https://customer.pickup-sa.net/data/landing.json')
+          .subscribe(
+            (res: any) => {
+              this.top = res.data.top;
+              this.middle = res.data.middle;
+              this.bottom = res.data.bottom;
+              loadingElmnt.dismiss();
+            },
+            (error) => {
+              loadingElmnt.dismiss();
+              console.log(error);
+            }
+          );
       });
   }
   doRefresh(event) {
     this.loadingCtrl
-    .create({
-      message: 'loading ...',
-    })
-    .then((loadingElmnt) => {
-      loadingElmnt.present();
-      this.capHttp
-        .doGEt('https://customer.pickup-sa.net/data/landing.json')
-        .subscribe((res: any) => {
-          this.top = res.data.top;
-          this.middle = res.data.middle;
-          this.bottom = res.data.bottom;
-          loadingElmnt.dismiss();
-          event.target.complete();
-        },error=>{
-          loadingElmnt.dismiss();
-          console.log(error);
-        });
-    });
+      .create({
+        message: 'loading ...',
+      })
+      .then((loadingElmnt) => {
+        loadingElmnt.present();
+        this.capHttp
+          .doGet('https://customer.pickup-sa.net/data/landing.json')
+          .subscribe(
+            (res: any) => {
+              this.top = res.data.top;
+              this.middle = res.data.middle;
+              this.bottom = res.data.bottom;
+              loadingElmnt.dismiss();
+              event.target.complete();
+            },
+            (error) => {
+              loadingElmnt.dismiss();
+              console.log(error);
+            }
+          );
+      });
   }
   onScroll(ev) {
     const offset = ev.detail.scrollTop;
     this.showLocationDetail = offset > 40;
   }
-
 }

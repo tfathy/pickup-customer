@@ -1,0 +1,53 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-title slot="end">{{"SETP_1_OF_3"|translate}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()" fill="clear">
+        {{"BACK"|translate}}
+        <ion-icon name="arrow-forward-circle" slot="start"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-fab vertical="middle" horizontal="center" slot="fixed">
+    <ion-fab-button (click)="photoService.addNewToGallery()" color="danger">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating">{{"MOVABLES_TYPES"|translate}}</ion-label>
+          <ionic-selectable [(ngModel)]="orderModel.itemCategory.descAr" name="company" [items]="itemCategoryList"
+            [canSearch]="true" itemTextField="descAr" itemValueField="id">
+          </ionic-selectable>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating">{{"MOVABLE_DESC"|translate}}</ion-label>
+          <ion-input [(ngModel)]="orderModel.customerNotes"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-card>
+    <ion-card-header>
+      <ion-title>{{"MOVABLES_IMAGES"|translate}}</ion-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" *ngFor="let photo of photoService.photos; index as position">
+            <ion-img [src]="photo.webviewPath" (click)="showActionSheet(photo, position)"></ion-img>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
