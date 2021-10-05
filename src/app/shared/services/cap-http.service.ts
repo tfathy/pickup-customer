@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+
 import { Injectable } from '@angular/core';
 import { Http, HttpOptions } from '@capacitor-community/http';
 import { from } from 'rxjs';

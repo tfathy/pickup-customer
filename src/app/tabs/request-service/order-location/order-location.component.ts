@@ -4,6 +4,7 @@ import { PlaceLocation } from 'src/app/models/location-model';
 import { OrderModel } from 'src/app/models/order-model';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { customerAuthToken } from 'src/app/shared/shared/common-utils';
+import { ExecuteOrderComponent } from '../execute-order/execute-order.component';
 import { OrderHeaderComponent } from '../order-header/order-header.component';
 
 @Component({
@@ -33,8 +34,8 @@ export class OrderLocationComponent implements OnInit {
   onDestinationLocationPicked(event) {
     this.payLoad.destLong = event.lng;
     this.payLoad.destLat = event.lat;
-    this.payLoad.destFormatedAddress = event.address;
-    this.payLoad.destMapImage = event.staticMapImageUrl;
+    this.payLoad.destFormattedAddress = event.address;
+    this.payLoad.destImageMap = event.staticMapImageUrl;
   }
   cancel() {
     this.modalCtrl.dismiss();
@@ -43,8 +44,8 @@ export class OrderLocationComponent implements OnInit {
     if (this.locationsSelected()) {
       console.log('payLoad', this.payLoad);
       const modal = await this.modalCtrl.create({
-        component: OrderHeaderComponent,
-        componentProps: { hdrRow: this.payLoad ,customerToken: this.customerToken},
+        component: ExecuteOrderComponent,
+        componentProps: { orderHeader: this.payLoad ,customerToken: this.customerToken},
       });
       this.modalService.storeModal(modal);
       return await modal.present();

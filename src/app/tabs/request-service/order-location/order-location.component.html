@@ -1,6 +1,6 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="primary">
-    <ion-title slot="end">{{"SETP_1_OF_3"|translate}}</ion-title>
+    <ion-title slot="end">{{"SETP_2_OF_3"|translate}}</ion-title>
     <ion-buttons slot="start">
       <ion-button (click)="cancel()" fill="clear">
         {{"BACK"|translate}}
@@ -35,7 +35,7 @@
             <app-location-picker [showPreview]="true" [buttonTitle]="'MOVE_TO'"
               (locationPick)="onDestinationLocationPicked($event)"></app-location-picker>
             <ion-text color="secondary" class="ion-text-start">
-              <p>{{payLoad.destFormatedAddress}}</p>
+              <p>{{payLoad.destFormattedAddress}}</p>
             </ion-text>
           </ion-card-header>
           <ion-card-content class="ion-text-center">

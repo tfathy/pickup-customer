@@ -56,7 +56,7 @@ export class RequestServicePage implements OnInit {
       })
       .then((loadingElmnt) => {
         loadingElmnt.present();
-       // this.isGpsPermissionEnabled()
+        // this.isGpsPermissionEnabled()
         Geolocation.getCurrentPosition().then(
           (coordinates) => {
             this.currentLocation.lat = coordinates.coords.latitude;
@@ -84,10 +84,10 @@ export class RequestServicePage implements OnInit {
           this.showErrorAlert(error);
         }
       );
-      this.fcmService.initPush();
+    this.fcmService.initPush();
   }
 
- /* async isGpsPermissionEnabled(
+  /* async isGpsPermissionEnabled(
     permissions: any
   ): Promise<boolean> {
     return await new Promise((resolve, reject) => {

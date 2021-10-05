@@ -6,8 +6,8 @@ import { VclSizeModel } from '../shared/shared/model/vcl-size-model';
 
 export class OrderModel {
   constructor(
-    public customer: CustomerModel,
-    public vehicleSize: VclSizeModel,
+    public customer?: CustomerModel,
+    public vehicleSize?: VclSizeModel,
     public destLocationType?: LocationTypeModel,
     public sourceLocationType?: LocationTypeModel,
     public team?: TeamModel,
@@ -24,8 +24,8 @@ export class OrderModel {
     public sourceFormattedAddress?: string,
     public destElvFlag?: string,
     public destFloorNum?: number,
-    public destMapImage?: string,
-    public destFormatedAddress?: string,
+    public destImageMap?: string,
+    public destFormattedAddress?: string,
     public destLong?: number,
     public destLat?: number,
     public estimateCost?: number,

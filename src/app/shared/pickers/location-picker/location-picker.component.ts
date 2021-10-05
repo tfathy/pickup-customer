@@ -47,7 +47,6 @@ export class LocationPickerComponent implements OnInit {
   onPickLocation() {
     this.actionSheet
       .create({
-        header: this.getTranslation('PLEASE_CHHOSE_LOCATION'),
         buttons: [
           {
             text: this.getTranslation('GET_CURRENT_LOCATION'),
@@ -68,29 +67,42 @@ export class LocationPickerComponent implements OnInit {
         actionSheetElmnt.present();
       });
   }
-  private getTranslation(key: string){
+  private getTranslation(key: string) {
     let txt: string;
-    this.translateService.get(key)
-    .subscribe(msgText=>{
+    this.translateService.get(key).subscribe((msgText) => {
       txt = msgText;
     });
     return txt;
   }
 
   private openMap() {
-    this.modalCtrl.create({ component: MapModalComponent }).then((modalEl) => {
-      modalEl.onDidDismiss().then((modalData) => {
-        if (!modalData.data) {
-          return;
-        }
-        const coordinates: Coordinates = {
-          lat: modalData.data.lat,
-          lng: modalData.data.lng,
-        };
-        this.createPlace(coordinates.lat, coordinates.lng);
-      });
-      modalEl.present();
-    });
+    Geolocation.getCurrentPosition().then(
+      (currLocation) => {
+        const currLat = currLocation.coords.latitude;
+        const currLng = currLocation.coords.longitude;
+        this.modalCtrl
+          .create({
+            component: MapModalComponent,
+            componentProps: { center: { lat: currLat, lng: currLng } },
+          })
+          .then((modalEl) => {
+            modalEl.onDidDismiss().then((modalData) => {
+              if (!modalData.data) {
+                return;
+              }
+              const coordinates: Coordinates = {
+                lat: modalData.data.lat,
+                lng: modalData.data.lng,
+              };
+              this.createPlace(coordinates.lat, coordinates.lng);
+            });
+            modalEl.present();
+          });
+      },
+      (rejected) => {
+        console.log(rejected);
+      }
+    );
   }
   private createPlace(lat: number, lng: number) {
     const pickedLocation: PlaceLocation = {
@@ -152,7 +164,7 @@ export class LocationPickerComponent implements OnInit {
   private getAddress(lat: number, lng: number) {
     return this.http
       .get<any>(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${environment.googleMapsAPIKey}`
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&language=ar&key=${environment.googleMapsAPIKey}`
       )
       .pipe(
         map((geoData) => {
@@ -174,7 +186,7 @@ export class LocationPickerComponent implements OnInit {
     this.translateService.get(msgKey).subscribe((msgText) => {
       this.alertCtrl.create({
         header: 'error',
-        message:msgText
+        message: msgText,
       });
     });
   }

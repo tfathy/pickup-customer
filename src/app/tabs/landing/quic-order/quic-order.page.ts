@@ -21,6 +21,8 @@ import { LookUpService } from 'src/app/shared/services/lookup.service';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { PhotoService } from 'src/app/shared/services/photo.service';
 import { UserPhoto } from 'src/app/shared/pickers/image-picker/image-picker.component';
+import { LocationTypeModel } from 'src/app/shared/shared/model/location-type-model';
+import { OrderLocationComponent } from '../../request-service/order-location/order-location.component';
 
 @Component({
   selector: 'app-quic-order',
@@ -28,7 +30,7 @@ import { UserPhoto } from 'src/app/shared/pickers/image-picker/image-picker.comp
   styleUrls: ['./quic-order.page.scss'],
 })
 export class QuicOrderPage implements OnInit {
-  orderModel: OrderModel;
+  orderModel: OrderModel=new OrderModel() ;
   itemCategoryList: ItemCategoryModel[] = [];
   currentLang: string;
   currentLocation = { lat: null, lng: null };
@@ -49,6 +51,7 @@ export class QuicOrderPage implements OnInit {
   ) {}
 
   async ngOnInit() {
+    console.log('***********************************************test******************');
     this.customerToken = await readStorage('CustomerAuthData');
     this.loadingCtrl
       .create({
@@ -70,6 +73,9 @@ export class QuicOrderPage implements OnInit {
               .subscribe(
                 (data) => {
                   this.customer = data.customer;
+                  this.orderModel.customer = data.customer;
+                  this.orderModel.ordStatus ='REQUEST';
+                  this.orderModel.requestDate = new Date();
                   this.lookUpService
                     .findAllItemCategory('Bearer ' + this.customerToken.token)
                     .subscribe((itemCatRes) => {
@@ -91,6 +97,20 @@ export class QuicOrderPage implements OnInit {
           }
         );
       });
+  }
+  async openSourceLocationModal(){
+    const modal = await this.modalCtrl.create({
+      component: OrderLocationComponent,
+      componentProps: {
+        payLoad: this.orderModel,
+        customerToken: this.customerToken,
+      },
+      id: 'OrderHdrModal',
+    });
+    this.modalService.storeModal(modal);
+    return await modal.present().then(dismissData=>{
+      this.router.navigate(['/','tabs','landing']);
+    });
   }
 
   cancel() {
