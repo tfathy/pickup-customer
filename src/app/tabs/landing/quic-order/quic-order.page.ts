@@ -85,8 +85,8 @@ export class QuicOrderPage implements OnInit {
                     });
                 },
                 (error) => {
-                  this.showErrorAlert(error);
                   loadingElmnt.dismiss();
+                  this.showErrorAlert(error);
                 }
               );
           },

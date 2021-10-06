@@ -1,3 +1,4 @@
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable object-shorthand */
 import {
@@ -22,6 +23,7 @@ import { SysUserLogin } from '../shared/model/sys-user-login';
 })
 export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('map', { static: false }) mapElementRef: ElementRef;
+  @ViewChild('searchBoxElmnt', { static: false }) searchInput: HTMLInputElement;
   @Input() center = { lat: 21.43531801495943, lng: 39.825938147213115 }; // meca 21.43531801495943, 39.825938147213115
   @Input() selectable = true;
   @Input() closeButtonText = 'Cancel';
@@ -30,10 +32,11 @@ export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() avaliableCars: SysUserLogin[];
   clickListener: any;
   googleMaps: any;
-/*
-  googleAutocomplete: any;
-  autocomplete: { input: string }={ input: '' };
-  autocompleteItems: any[] =[];*/
+
+  googleAutocompleteService: any;
+  autocomplete: { input: string } = { input: '' };
+  autocompleteItems: any[] | null = [];
+  map;
   constructor(
     private modalCtrl: ModalController,
     private renderer: Renderer2,
@@ -49,12 +52,20 @@ export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getGoogleMaps()
       .then((googleMaps) => {
         this.googleMaps = googleMaps;
+
+        this.googleAutocompleteService =
+          new googleMaps.places.AutocompleteService(); // added by Tarek
+        console.log(
+          '******googleAutocomplete******=',
+          this.googleAutocompleteService
+        );
+
         const mapEl = this.mapElementRef.nativeElement; // the dev
         const map = new googleMaps.Map(mapEl, {
           center: this.center,
           zoom: 16,
         });
-
+        this.map = map;
         this.googleMaps.event.addListenerOnce(map, 'idle', () => {
           this.renderer.addClass(mapEl, 'visible'); // render the map after is beign ready
         });
@@ -84,13 +95,13 @@ export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   // eslint-disable-next-line @typescript-eslint/naming-convention
   UpdateSearchResults() {
-  /*  console.log('********oninput fire');
+    console.log('********oninput fire');
     if (this.autocomplete.input === '') {
       this.autocompleteItems = [];
       return;
-    }*/
-   // this.googleAutocomplete = new google.maps.places.AutocompleteService();
-   /* this.googleAutocomplete.getPlacePredictions({ input: this.autocomplete.input },
+    }
+    this.googleAutocompleteService.getPlacePredictions(
+      { input: this.autocomplete.input },
       (predictions, status) => {
         this.autocompleteItems = [];
         this.zone.run(() => {
@@ -98,14 +109,50 @@ export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
             this.autocompleteItems.push(prediction);
           });
         });
-      });*/
+      }
+    );
   }
+
   ngOnInit() {}
-  SelectSearchResult(item){}
+
+  SelectSearchResult(item) {
+    console.log(item);
+    const service = new this.googleMaps.places.PlacesService(this.map);
+    console.log('service=',service);
+    const searchBox = new this.googleMaps.places.SearchBox(this.searchInput);
+    console.log(searchBox);
+    // service.getDetails(
+    //   {
+    //     placeId: item.place_id,
+    //   },
+    //   function(result, status) {
+    //     console.log(status);
+    //     // if (status !== this.googleMaps.places.PlacesServiceStatus.OK) {
+    //     //   alert(status);
+    //     //   return;
+    //     // }
+    //     console.log('result=',result.geometry.location);
+    //     const marker = new this.googleMaps.Marker({
+    //       map: this.map,
+    //       place: {
+    //         placeId: item.place_id,
+    //         location: result.geometry.location
+    //     }
+    //     });
+    //     console.log(marker);
+    //     marker.setMap(this.map);
+    //   }
+    // );
+  }
+  ClearAutocomplete(){
+    this.autocompleteItems = [];
+    this.autocomplete.input = '';
+  }
+
   onCancel() {
     this.modalCtrl.dismiss();
   }
-  ClearAutocomplete() {}
+
   private getGoogleMaps(): Promise<any> {
     const win = window as any;
     const googleModule = win.google;
@@ -115,7 +162,7 @@ export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
     return new Promise((resolve, reject) => {
       const script = document.createElement('script');
       script.src =
-        'https://maps.googleapis.com/maps/api/js?key=' +
+        'https://maps.googleapis.com/maps/api/js?libraries=places&key=' +
         environment.googleMapsAPIKey;
       script.async = true;
       script.defer = true;

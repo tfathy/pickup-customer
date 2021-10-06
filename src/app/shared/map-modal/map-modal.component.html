@@ -1,14 +1,14 @@
 <ion-header *ngIf="showToolbar">
   <ion-toolbar>
-    <!--
-  <ion-searchbar [(ngModel)]="autocomplete.input" (ionInput)="UpdateSearchResults()" placeholder="Search for a place"
-      (ionClear)="ClearAutocomplete()"></ion-searchbar>
-  <ion-list [hidden]="autocompleteItems.length === 0">
-    <ion-item *ngFor="let item of autocompleteItems" tappable (click)="SelectSearchResult(item)">
-      {{ item.description }}
-    </ion-item>
-  </ion-list>
-    -->
+
+    <ion-searchbar [(ngModel)]="autocomplete.input" (ionInput)="UpdateSearchResults()" placeholder="Search for a place"
+      (ionClear)="ClearAutocomplete()"  id="searchBoxElmnt"></ion-searchbar>
+    <ion-list [hidden]="autocompleteItems.length === 0">
+      <ion-item *ngFor="let item of autocompleteItems" tappable (click)="SelectSearchResult(item)">
+        {{ item.description }}
+      </ion-item>
+    </ion-list>
+
 
     <ion-buttons slot="primary">
       <ion-button (click)="onCancel()"> Cancel</ion-button>
