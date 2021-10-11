@@ -86,13 +86,13 @@ export class QuicOrderPage implements OnInit {
                 },
                 (error) => {
                   loadingElmnt.dismiss();
-                  this.showErrorAlert(error);
+                //  this.showErrorAlert(error);
                 }
               );
           },
           (rejected) => {
             loadingElmnt.dismiss();
-            this.showErrorAlert(rejected);
+         //   this.showErrorAlert(rejected);
             console.log(rejected);
           }
         );

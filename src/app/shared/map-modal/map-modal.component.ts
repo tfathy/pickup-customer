@@ -23,7 +23,7 @@ import { SysUserLogin } from '../shared/model/sys-user-login';
 })
 export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('map', { static: false }) mapElementRef: ElementRef;
-  @ViewChild('searchBoxElmnt', { static: false }) searchInput: HTMLInputElement;
+  @ViewChild('searchBoxElmnt', { static: false }) searchInput: ElementRef;
   @Input() center = { lat: 21.43531801495943, lng: 39.825938147213115 }; // meca 21.43531801495943, 39.825938147213115
   @Input() selectable = true;
   @Input() closeButtonText = 'Cancel';
@@ -36,6 +36,7 @@ export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
   googleAutocompleteService: any;
   autocomplete: { input: string } = { input: '' };
   autocompleteItems: any[] | null = [];
+  searchBox;
   map;
   constructor(
     private modalCtrl: ModalController,
@@ -52,14 +53,6 @@ export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getGoogleMaps()
       .then((googleMaps) => {
         this.googleMaps = googleMaps;
-
-        this.googleAutocompleteService =
-          new googleMaps.places.AutocompleteService(); // added by Tarek
-        console.log(
-          '******googleAutocomplete******=',
-          this.googleAutocompleteService
-        );
-
         const mapEl = this.mapElementRef.nativeElement; // the dev
         const map = new googleMaps.Map(mapEl, {
           center: this.center,
@@ -69,6 +62,40 @@ export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
         this.googleMaps.event.addListenerOnce(map, 'idle', () => {
           this.renderer.addClass(mapEl, 'visible'); // render the map after is beign ready
         });
+        // edited by tarek
+
+        this.googleAutocompleteService =
+          new googleMaps.places.AutocompleteService(); // added by Tarek
+        console.log(
+          '******googleAutocomplete******=',
+          this.googleAutocompleteService
+        );
+        this.searchBox = new googleMaps.places.SearchBox(
+          this.searchInput.nativeElement
+        );
+        console.log('this.searchBox=', this.searchBox);
+        this.searchBox.addListener('places_changed', () => {
+          const places = this.searchBox.getPlaces();
+          console.log('places_changed fires', places);
+          if (places.length === 0) {
+            return;
+          }
+          const bounds = new googleMaps.LatLngBounds();
+          console.log('bounds=', bounds);
+
+          places.forEach((place) => {
+            if (!place.geometry || !place.geometry.location) {
+              return;
+            }
+            if (place.geometry.viewport) {
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+            this.map.fitBounds(bounds);
+          });
+        });
+        ////// end
 
         if (this.selectable) {
           this.clickListener = map.addListener('click', (event) => {
@@ -95,22 +122,22 @@ export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   // eslint-disable-next-line @typescript-eslint/naming-convention
   UpdateSearchResults() {
-    console.log('********oninput fire');
-    if (this.autocomplete.input === '') {
-      this.autocompleteItems = [];
-      return;
-    }
-    this.googleAutocompleteService.getPlacePredictions(
-      { input: this.autocomplete.input },
-      (predictions, status) => {
-        this.autocompleteItems = [];
-        this.zone.run(() => {
-          predictions.forEach((prediction) => {
-            this.autocompleteItems.push(prediction);
-          });
-        });
-      }
-    );
+    // console.log('********oninput fire');
+    // if (this.autocomplete.input === '') {
+    //   this.autocompleteItems = [];
+    //   return;
+    // }
+    // this.googleAutocompleteService.getPlacePredictions(
+    //   { input: this.autocomplete.input },
+    //   (predictions, status) => {
+    //     this.autocompleteItems = [];
+    //     this.zone.run(() => {
+    //       predictions.forEach((prediction) => {
+    //         this.autocompleteItems.push(prediction);
+    //       });
+    //     });
+    //   }
+    // );
   }
 
   ngOnInit() {}
@@ -118,9 +145,7 @@ export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
   SelectSearchResult(item) {
     console.log(item);
     const service = new this.googleMaps.places.PlacesService(this.map);
-    console.log('service=',service);
-    const searchBox = new this.googleMaps.places.SearchBox(this.searchInput);
-    console.log(searchBox);
+
     // service.getDetails(
     //   {
     //     placeId: item.place_id,
@@ -131,20 +156,22 @@ export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
     //     //   alert(status);
     //     //   return;
     //     // }
-    //     console.log('result=',result.geometry.location);
-    //     const marker = new this.googleMaps.Marker({
-    //       map: this.map,
-    //       place: {
-    //         placeId: item.place_id,
-    //         location: result.geometry.location
-    //     }
-    //     });
-    //     console.log(marker);
-    //     marker.setMap(this.map);
+    //     console.log('result=',result.geometry);
+    //     this.googleMaps.Map.fitBounds(result.geometry.viewport);
+
+    //     // const marker = new this.googleMaps.Marker({
+    //     //   map: this.map,
+    //     //   place: {
+    //     //     placeId: item.place_id,
+    //     //     location: result.geometry.location
+    //     // }
+    //     // });
+    //     // console.log(marker);
+    //     // marker.setMap(this.map);
     //   }
     // );
   }
-  ClearAutocomplete(){
+  ClearAutocomplete() {
     this.autocompleteItems = [];
     this.autocomplete.input = '';
   }
