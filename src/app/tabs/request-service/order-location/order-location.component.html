@@ -1,14 +1,4 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar color="primary">
-    <ion-title slot="end">{{"SETP_2_OF_3"|translate}}</ion-title>
-    <ion-buttons slot="start">
-      <ion-button (click)="cancel()" fill="clear">
-        {{"BACK"|translate}}
-        <ion-icon name="arrow-forward-circle" slot="start"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+
 <ion-content>
   <ion-grid class="ion-no-padding">
     <ion-row>
@@ -23,7 +13,6 @@
             </ion-text>
           </ion-card-header>
           <ion-card-content class="ion-text-center">
-            <ion-label class="strong_text">{{"SOURCE_LOCATION"|translate}}</ion-label>
           </ion-card-content>
         </ion-card>
 
@@ -39,19 +28,10 @@
             </ion-text>
           </ion-card-header>
           <ion-card-content class="ion-text-center">
-            <ion-label class="strong_text">{{"DESTINATION_LOCATION"|translate}}</ion-label>
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
-<ion-footer>
-  <ion-toolbar >
-    <ion-button (click)="nextStep()" fill="solid" expand="block" >
-      {{"CONTINUE"|translate}}
-      <ion-icon name="arrow-back-circle" slot="end"></ion-icon>
-    </ion-button>
 
-  </ion-toolbar>
-</ion-footer>

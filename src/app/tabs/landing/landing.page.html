@@ -1,61 +1,22 @@
-
-  <ion-header   class="ion-no-border">
-    <ion-toolbar color="light">
-      <ion-buttons slot="start">
-        <ion-button fill="clear">
-          <ion-icon name="person-outline" slot="icon-only" color="primary"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      <ion-title>{{"HOME"|translate}}</ion-title>
-      <ion-buttons slot="end">
-        <ion-button fill="solid" shape="round" color="light" routerLink="/tabs/landing/quic-order">
-          <ion-icon slot="icon-only" name="share-outline" color="primary"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+<ion-header class="ion-no-border">
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-button fill="clear">
+        <ion-icon name="person-outline" slot="icon-only" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{"SPECIFY_LOCATION"|translate}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="solid" color="light" shape="round">
+        {{"NEXT"|translate}}
+        <ion-icon slot="icon-only" name="fastforward" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content
-      pullingIcon="chevron-down-circle-outline"
-      pullingText="Pull to refresh"
-      refreshingSpinner="circles"
-      refreshingText="Refreshing..."
-    >
-    </ion-refresher-content>
-  </ion-refresher>
 
-  <ion-slides [options]="catSlideOpts">
-    <ion-slide *ngFor="let cat of top" [routerLink]="cat.routerLink">
-      <img [src]="cat.img">
-    </ion-slide>
-  </ion-slides>
+  <app-order-location *ngIf="requestModel" [payLoad]="requestModel"></app-order-location>
 
-  <ion-slides [options]="highlightSlideOpts">
-    <ion-slide *ngFor="let h of middle">
-      <img [src]="h.img">
-    </ion-slide>
-  </ion-slides>
-
-  <ion-text *ngIf="this.bottom" color="dark"><b style="padding-left: 10px;">{{"SELECT-TRANS_TYPE"|translate}}</b></ion-text>
-
-  <ion-slides [options]="featuredSlideOpts">
-    <ion-slide *ngFor="let f of bottom" class="featured-slide" [routerLink]="f.routerLink">
-      <img [src]="f.img">
-      <div class="info">
-        <ion-text color="dark"><b>{{f.name }}</b></ion-text>
-        <span>
-          <ion-icon name="camera" color="secondary"></ion-icon>
-          <ion-text color="pin"> {{ f.rating }} </ion-text>
-        </span>
-        <span>
-          <ion-icon name="pin" color="danger"></ion-icon> {{ f.ratings }}
-        </span>
-        <span>
-          <ion-icon name="send" color="primary"></ion-icon> {{ f.distance }}
-        </span>
-      </div>
-    </ion-slide>
-  </ion-slides>
 
 </ion-content>

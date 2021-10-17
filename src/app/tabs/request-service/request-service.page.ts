@@ -152,6 +152,7 @@ export class RequestServicePage implements OnInit {
   }
   async openModal(vcl: VclSizeModel) {
     const requestModel = new OrderModel(this.customer, vcl);
+
     requestModel.requestDate = new Date();
     requestModel.ordStatus = 'REQUEST';
     const modal = await this.modalCtrl.create({

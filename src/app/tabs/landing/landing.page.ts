@@ -1,7 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
+import { OrderModel } from 'src/app/models/order-model';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { CapHttpService } from 'src/app/shared/services/cap-http.service';
+import { Geolocation } from '@capacitor/geolocation';
+import { FcmService } from 'src/app/shared/services/fcm.service';
+import { LookUpService } from 'src/app/shared/services/lookup.service';
+import { ModalService } from 'src/app/shared/services/modal.service';
+import { customerAuthToken, readStorage } from 'src/app/shared/shared/common-utils';
+import { CustomerModel } from 'src/app/shared/shared/model/customer-model';
 
 @Component({
   selector: 'app-landing',
@@ -9,84 +18,63 @@ import { CapHttpService } from 'src/app/shared/services/cap-http.service';
   styleUrls: ['./landing.page.scss'],
 })
 export class LandingPage implements OnInit {
-  top = [];
-  middle = [];
-  bottom = [];
-  catSlideOpts = {
-    slidesPerView: 3.5,
-    spaceBetween: 10,
-    slidesOffsetBefore: 11,
-    freeMode: true,
-  };
-
-  highlightSlideOpts = {
-    slidesPerView: 1.05,
-    spaceBetween: 10,
-    centeredSlides: true,
-    loop: true,
-  };
-
-  featuredSlideOpts = {
-    slidesPerView: 1.2,
-    spaceBetween: 10,
-    freeMode: true,
-  };
-
-  showLocationDetail = false;
+  requestModel: OrderModel;
+customerToken: customerAuthToken;
+customer: CustomerModel;
+currentLang: string;
+currentLocation = { lat: null, lng: null };
   constructor(
-    private capHttp: CapHttpService,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private authService: AuthService,
+    private lookUpService: LookUpService,
+    private modalService: ModalService,
+    private translateService: TranslateService,
+    private fcmService: FcmService,
+    private alert: AlertController
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.currentLang = this.translateService.getDefaultLang();
+    console.log('currentLang', this.currentLang);
+    this.customerToken = await readStorage('CustomerAuthData');
     this.loadingCtrl
-      .create({
-        message: 'loading ...',
-      })
-      .then((loadingElmnt) => {
-        loadingElmnt.present();
-        this.capHttp
-          .doGet('https://customer.pickup-sa.net/data/landing.json')
-          .subscribe(
-            (res: any) => {
-              this.top = res.data.top;
-              this.middle = res.data.middle;
-              this.bottom = res.data.bottom;
-              loadingElmnt.dismiss();
-            },
-            (error) => {
-              loadingElmnt.dismiss();
-              console.log(error);
-            }
-          );
-      });
+    .create({
+      message: 'Picking current location... please wait',
+    })
+    .then((loadingElmnt) => {
+      loadingElmnt.present();
+      // this.isGpsPermissionEnabled()
+      Geolocation.getCurrentPosition().then(
+        (coordinates) => {
+          this.currentLocation.lat = coordinates.coords.latitude;
+          this.currentLocation.lng = coordinates.coords.longitude;
+          loadingElmnt.dismiss();
+          this.requestModel = new OrderModel(this.customer);
+          this.requestModel.requestDate = new Date();
+          this.requestModel.ordStatus = 'REQUEST';
+        },
+        (rejected) => {
+          loadingElmnt.dismiss();
+          this.showErrorAlert(rejected);
+          console.log(rejected);
+        }
+      );
+    });
+
+
   }
-  doRefresh(event) {
-    this.loadingCtrl
+
+
+
+
+  private showErrorAlert(msg) {
+    this.alert
       .create({
-        message: 'loading ...',
+        message: msg,
+        buttons: [{ text: 'OK' }],
       })
-      .then((loadingElmnt) => {
-        loadingElmnt.present();
-        this.capHttp
-          .doGet('https://customer.pickup-sa.net/data/landing.json')
-          .subscribe(
-            (res: any) => {
-              this.top = res.data.top;
-              this.middle = res.data.middle;
-              this.bottom = res.data.bottom;
-              loadingElmnt.dismiss();
-              event.target.complete();
-            },
-            (error) => {
-              loadingElmnt.dismiss();
-              console.log(error);
-            }
-          );
+      .then((alertelmnt) => {
+        alertelmnt.present();
       });
-  }
-  onScroll(ev) {
-    const offset = ev.detail.scrollTop;
-    this.showLocationDetail = offset > 40;
   }
 }
