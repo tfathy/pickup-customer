@@ -111,6 +111,7 @@ export class RequestServicePage implements OnInit {
       .findAllVclSize('Bearer ' + this.customerToken.token)
       .pipe(
         map((responseArray) => {
+          console.log(responseArray);
           responseArray.map((row) =>
             this.buttonsProps.push(
               new CustomActionSheetButton(
@@ -131,17 +132,16 @@ export class RequestServicePage implements OnInit {
 
   beginOrderAction() {
     const btns = [];
-    let vcl = null;
     this.buttonsProps.forEach((e) => {
-      vcl = new VclSizeModel(e.id, e.text);
       btns.push({
         text: e.text,
         icon: e.icon,
         handler: () => {
-          this.openModal(vcl);
+          this.openModal(new VclSizeModel(e.id, e.text));
         },
       });
     });
+    console.log('btns=',btns);
     this.actionSheet
       .create({
         buttons: btns,
@@ -151,6 +151,7 @@ export class RequestServicePage implements OnInit {
       });
   }
   async openModal(vcl: VclSizeModel) {
+    console.log('passing vclsize is',vcl);
     const requestModel = new OrderModel(this.customer, vcl);
     requestModel.requestDate = new Date();
     requestModel.ordStatus = 'REQUEST';
