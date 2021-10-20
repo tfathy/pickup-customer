@@ -25,9 +25,9 @@
           <ion-card-title>{{"SPECIFY_LOCATION"|translate}}</ion-card-title>
           <ion-card-header>
             <app-location-picker [showPreview]="true" [buttonTitle]="'SELECT_DROP_OFF'"
-              (locationPick)="onSourceLocationPicked($event)"></app-location-picker>
+              (locationPick)="onDestinationLocationPicked($event)"></app-location-picker>
             <ion-text color="secondary" class="ion-text-start">
-              <p *ngIf="requestModel.sourceFormattedAddress"> {{requestModel.sourceFormattedAddress}}</p>
+              <p *ngIf="destFormattedAddress"> {{destFormattedAddress?destFormattedAddress:''}}</p>
             </ion-text>
           </ion-card-header>
           <ion-card-content class="ion-text-center">
@@ -38,7 +38,7 @@
 
       <ion-col size="12">
 
-            <ion-button expand="full" shape="round">{{"START"|translate}}</ion-button>
+        <ion-button (click)="nextPage()" expand="full" shape="round">{{"START"|translate}}</ion-button>
 
       </ion-col>
     </ion-row>

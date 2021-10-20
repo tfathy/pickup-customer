@@ -1,0 +1,41 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title color="primary">{{"SELECT_SERVICE_TYPE"|translate}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-button color="primary" (click)="back()">
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-grid class="ion-padding ion-text-center">
+    <ion-row>
+      <ion-col>
+        <ion-card class="ion-text-center">
+          <ion-item button (click)="immediateOrder()">
+            <ion-title color="primary">{{"IMMEDIATE_PICKUP"|translate}}</ion-title>
+            <ion-avatar>
+              <img src="/assets/icon/order-now.png">
+            </ion-avatar>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-card class="ion-text-center" >
+          <ion-item button>
+            <ion-title color="primary">{{"LATER_PICKUP"|translate}}</ion-title>
+            <ion-avatar>
+              <img src="/assets/icon/later.png">
+            </ion-avatar>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+</ion-content>

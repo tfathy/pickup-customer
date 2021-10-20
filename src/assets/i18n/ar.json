@@ -66,9 +66,16 @@
   "SELECT_DROP_OFF":"اختر مكان الوصول",
   "SPECIFY_START_POINT":"حدد نقطة الانطلاق",
   "SELECT_START_POINT":"اختر نقطة الانطلاق",
-  "START":"إبدا"
-
-
+  "START":"إبدا",
+  "SELECT_SERVICE_TYPE":"اختر نوع الخدمة",
+  "IMMEDIATE_PICKUP":"نقل فوري",
+  "LATER_PICKUP":"نقل اجل",
+  "MY_CURRENT_LOCATION":"موقعي الحالي",
+  "OPNE_MAP":"اختر من الخريطة",
+  "SPECIFY_STARTING_POINT":"حدد نقطة الانطلاق",
+  "SELECT_VCL_TYPE":"اختر نوع السيارة",
+  "LUGGAGE_DETAILS":"تفاصيل الحمولة",
+  "SEND":"ارسال"
 
   ,"ERROR_CANNOT_POST_REQUEST":"خطأ: لم بتمكن النظام من تمرير طلبك"
   ,"REQUEST_POSTED":"تم ارسال طلبك لكل شركات وسائقى النقل .سيتم تنبيهك حال قبول طلبك."
@@ -77,5 +84,6 @@
   ,"USER_CREATED":"تم إرسال كلمة السر الخاصة بك الى بريدك الاكتروني.يجب تغيرها بعد الدخول للتطبيق"
   ,"GET_CURRENT_LOCATION":"الموقع الحالي"
   ,"PICK_FROM_MAP":"اختر من الخريطة"
-  ,"PLEASE_CHHOSE_LOCATION":"حدد الموقع"
+  ,"PLEASE_CHHOSE_LOCATION":"حدد وجهتك اولا"
+  ,"WHAT_IS_START":"ما هى نقطة الانطلاق؟"
 }

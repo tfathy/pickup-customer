@@ -66,7 +66,16 @@
   "SELECT_DROP_OFF":"Select drop off",
   "SPECIFY_START_POINT":"Specify Starting point",
   "SELECT_START_POINT":"Select Starting point",
-  "START":"Start"
+  "START":"Start",
+  "SELECT_SERVICE_TYPE":"Choose Service Type",
+  "IMMEDIATE_PICKUP":"Immediate Pickup",
+  "LATER_PICKUP":"Planned pickup",
+  "MY_CURRENT_LOCATION":"My Current Location",
+  "OPNE_MAP":"Select from map",
+  "SPECIFY_STARTING_POINT":"Specify your starting point",
+  "SELECT_VCL_TYPE":"Choose Vehcile",
+  "LUGGAGE_DETAILS":"Luggage Details",
+  "SEND":"Send"
 
 
   ,"ERROR_CANNOT_POST_REQUEST":"Error: Cannot post the request"
@@ -76,6 +85,7 @@
   ,"USER_CREATED":"a password is sent to your email. Please check your email inbox"
   ,"GET_CURRENT_LOCATION":"Pick Current Location"
   ,"PICK_FROM_MAP":"Pick from map"
- ,"PLEASE_CHHOSE_LOCATION":"Choose location"
+ ,"PLEASE_CHHOSE_LOCATION":"Choose location First",
+ "WHAT_IS_START":"What is your starting point?"
 
 }

@@ -32,7 +32,19 @@ const routes: Routes = [
   {
     path: 'complains',
     loadChildren: () => import('./complains/complains.module').then( m => m.ComplainsPageModule)
+  },  {
+    path: 'service-type',
+    loadChildren: () => import('./service-type/service-type.module').then( m => m.ServiceTypePageModule)
+  },
+  {
+    path: 'vcl-size',
+    loadChildren: () => import('./vcl-size/vcl-size.module').then( m => m.VclSizePageModule)
+  },
+  {
+    path: 'luggage',
+    loadChildren: () => import('./luggage/luggage.module').then( m => m.LuggagePageModule)
   }
+
 ];
 
 @NgModule({
