@@ -62,8 +62,11 @@
   "MOVABLES_TYPES":"نوع المنقولات",
   "VCL_SIZE":"حجم سيارة النقل",
   "SEND_REQUEST":"ارسال طلب للسائقين",
-  "SPECIFY_LOCATION":"حدد وجهتك"
-
+  "SPECIFY_LOCATION":"حدد وجهتك",
+  "SELECT_DROP_OFF":"اختر مكان الوصول",
+  "SPECIFY_START_POINT":"حدد نقطة الانطلاق",
+  "SELECT_START_POINT":"اختر نقطة الانطلاق",
+  "START":"إبدا"
 
 
 

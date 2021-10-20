@@ -62,8 +62,11 @@
   "MOVABLES_TYPES":"Types Of Movables",
   "VCL_SIZE":"Vehcile Size",
   "SEND_REQUEST":"Send the Request to all drivers",
-  "SPECIFY_LOCATION":"Specify destination"
-
+  "SPECIFY_LOCATION":"Specify destination",
+  "SELECT_DROP_OFF":"Select drop off",
+  "SPECIFY_START_POINT":"Specify Starting point",
+  "SELECT_START_POINT":"Select Starting point",
+  "START":"Start"
 
 
   ,"ERROR_CANNOT_POST_REQUEST":"Error: Cannot post the request"
