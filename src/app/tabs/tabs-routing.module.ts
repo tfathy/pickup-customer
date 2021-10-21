@@ -36,7 +36,7 @@ const routes: Routes = [
       },
       {
         path: 'landing',
-        loadChildren: () => import('./landing/landing.module').then( m => m.LandingPageModule)
+        loadChildren: () => import('./landing/landing.module').then( m => m.LandingPageModule), canLoad:[AuthGuard]
       },
 
     ],

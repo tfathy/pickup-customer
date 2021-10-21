@@ -72,13 +72,12 @@ export class LandingPage implements OnInit {
       .create({
         message: 'Picking current location... please wait',
       })
-      .then((loadingElmnt) => {
+      .then(async (loadingElmnt) => {
         loadingElmnt.present();
 
         this.currentLang = this.translateService.getDefaultLang();
-        readStorage('CustomerAuthData').then((authData) => {
-          this.customerToken = authData;
-          console.log(' this.customerToken=', this.customerToken);
+         this.customerToken = await readStorage('CustomerAuthData');
+         console.log('this.customerToken is >',this.customerToken );
           this.authService
             .loadUserInfo(
               'Bearer ' + this.customerToken.token,
@@ -130,7 +129,6 @@ export class LandingPage implements OnInit {
               }
             );
         });
-      });
     this.fcmService.initPush();
   }
 
