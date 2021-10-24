@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable } from '@angular/core';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+
 import { PlaceLocation } from 'src/app/models/location-model';
 import { OrderModel } from 'src/app/models/order-model';
 import {
@@ -9,13 +12,20 @@ import {
   NotificationMoreInfo,
   PushNotificationMessage,
 } from 'src/app/models/push-notification-message';
+import { OrderImagesModel } from 'src/app/tabs/landing/luggage/order-image-model';
 import { CustomerModel } from '../shared/model/customer-model';
 import { ItemCategoryModel } from '../shared/model/item-category-model';
 import { VclSizeModel } from '../shared/model/vcl-size-model';
+import { AttachmentService } from './attachment.service';
 import { CustomerService } from './customer.service';
 import { DriverService } from './driver.service';
 import { FcmService } from './fcm.service';
 
+interface LocalFile {
+  name: string;
+  path: string;
+  data: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -28,6 +38,7 @@ export class OrderService {
     private loadingCtrl: LoadingController,
     private customerService: CustomerService,
     private alert: AlertController,
+    private attachmentService: AttachmentService,
     private translateService: TranslateService
   ) {}
 
@@ -68,7 +79,7 @@ export class OrderService {
     return of(this.requestModel);
   }
 
-  placeRequest(token) {
+  placeRequest(token, images: LocalFile[]) {
     this.driverService
       .findAvaialbeDrivers(token, this.requestModel.vehicleSize.id)
       .subscribe(
@@ -91,6 +102,12 @@ export class OrderService {
                   .createOrder(token, this.requestModel)
                   .subscribe(
                     (resData) => {
+                      console.log('createOrder=',resData);
+                      //upload images
+                      images.forEach((image) => {
+                        console.log('uploading image',image.name);
+                        this.startUpload(image, resData.id, token);
+                      });
                       // loop over array of availabe drivers
                       console.log('*********************1*****************');
                       console.log(this.availabeDrivers);
@@ -165,5 +182,42 @@ export class OrderService {
           alertElmnt.present();
         });
     });
+  }
+  async startUpload(file: LocalFile, parentId, token) {
+    let fileInfo: OrderImagesModel;
+    const response = await fetch(file.data);
+    const blob = await response.blob();
+    const formData = new FormData();
+    formData.append('file', blob, file.name);
+    this.loadingCtrl
+      .create({
+        message: 'uploading attachments ... please wait',
+      })
+      .then((loadingElmnt) => {
+        this.attachmentService
+          .uploadFile(token, formData)
+          .pipe(
+            finalize(() => {
+              loadingElmnt.dismiss();
+            })
+          )
+          .subscribe((res) => {
+            fileInfo = new OrderImagesModel(
+              parentId,
+              res.fileName,
+              res.fileType,
+              res.size
+            );
+            console.log('fileInfo=',fileInfo);
+            this.attachmentService
+              .saveAttchmentData( token, fileInfo)
+              .subscribe((data) => {
+                console.log(data);
+                // this.deleteImage(file);
+                loadingElmnt.dismiss();
+              });
+            console.log('res=', res);
+          });
+      });
   }
 }

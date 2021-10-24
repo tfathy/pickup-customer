@@ -6,17 +6,14 @@
         <ion-icon name="arrow-forward-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-buttons slot="end" (click)="publishOrder()">
-      {{"SEND"|translate}}
-      <ion-icon color ="primary" name="arrow-undo"></ion-icon>
-    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
 
 <ion-content>
   <ion-fab vertical="center" horizontal="center">
-    <ion-fab-button (click)="photoService.addNewToGallery()">
+    <ion-fab-button (click)="selectImage()">
       <ion-icon color="light" name="camera"></ion-icon>
     </ion-fab-button>
     </ion-fab>
@@ -41,11 +38,28 @@
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col size="6"  *ngFor="let photo of photoService.photos; index as position">
-      <ion-card>
-        <ion-img [src]="photo.webviewPath" (click)="showActionSheet(photo, position)"></ion-img>
-      </ion-card>
+    <ion-col size="12"  >
+      <ion-list>
+        <ion-item *ngFor="let file of images; let i = index">
+          <ion-avatar>
+            <img [src]="file.data">
+          </ion-avatar>
+            <ion-button slot="end" fill="clear" (click)="deleteImage(file)">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
+
+        </ion-item>
+      </ion-list>
+
     </ion-col>
   </ion-row>
 </ion-grid>
 </ion-content>
+<ion-footer>
+<ion-toolbar color="primary">
+  <ion-button fill="clear" expand="full" color="light" (click)="publishOrder()">
+    {{"SEND"|translate}}
+    <ion-icon color ="primary" name="arrow-undo"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+</ion-footer>
