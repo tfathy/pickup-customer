@@ -1,9 +1,70 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Order Id={{orderId}}</ion-title>
+    <ion-title color="primary">{{"DRIVER_PROPOSAL"|translate}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-button color="primary" (click)="back()">
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-<ion-input></ion-input>
+  <ion-grid *ngIf="order">
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="stacked">{{"DRIVER_PROPOSAL"|translate}}</ion-label>
+          <ion-input readonly>{{order.estimatedCost}}</ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label position="stacked">{{"MOVABLES_TYPES"|translate}}</ion-label>
+          <ion-input readonly>{{order.itemCategory.descAr}}</ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label position="stacked">{{"REQUEST_DATE"|translate}}</ion-label>
+          <ion-input readonly>{{order.requestDate|date:'dd-MM-yyyy hh:m'}}</ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="stacked">{{"LUGGAGE_DETAILS"|translate}}</ion-label>
+          <ion-input readonly>{{order.customerNotes}}</ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label position="stacked">{{"DRIVER_NAME_AR"|translate}}</ion-label>
+          <ion-input readonly>{{order.team.manager.fullNameAr}}</ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label position="stacked">{{"DRIVER_NAME_EN"|translate}}</ion-label>
+          <ion-input readonly>{{order.team.manager.fullNameEn}}</ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label position="stacked">{{"VEHCILE_SIZE"|translate}}</ion-label>
+          <ion-input readonly>{{order.vehicleSize.descAr}}</ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label position="stacked">{{"PHONE_NUM"|translate}}</ion-label>
+          <ion-input readonly>{{order.team.manager.phoneNum}}</ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-button color="light" fill="clear" expand="full" (click)="acceptOffer()">{{"ACEPT_PROPOSAL"|translate}}</ion-button>
+  </ion-toolbar>
+</ion-footer>

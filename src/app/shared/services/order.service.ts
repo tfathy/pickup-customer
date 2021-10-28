@@ -102,10 +102,10 @@ export class OrderService {
                   .createOrder(token, this.requestModel)
                   .subscribe(
                     (resData) => {
-                      console.log('createOrder=',resData);
+                      console.log('createOrder=', resData);
                       //upload images
                       images.forEach((image) => {
-                        console.log('uploading image',image.name);
+                        console.log('uploading image', image.name);
                         this.startUpload(image, resData.id, token);
                       });
                       // loop over array of availabe drivers
@@ -208,9 +208,9 @@ export class OrderService {
               res.fileType,
               res.size
             );
-            console.log('fileInfo=',fileInfo);
+            console.log('fileInfo=', fileInfo);
             this.attachmentService
-              .saveAttchmentData( token, fileInfo)
+              .saveAttchmentData(token, fileInfo)
               .subscribe((data) => {
                 console.log(data);
                 // this.deleteImage(file);

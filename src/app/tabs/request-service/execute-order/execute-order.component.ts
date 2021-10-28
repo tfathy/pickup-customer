@@ -84,7 +84,7 @@ export class ExecuteOrderComponent implements OnInit {
             let fcmGoogleNotification: FcmGoogleNotification;
             let msg: PushNotificationMessage;
             let fcmToke: string;
-            this.orderHeader.estimateCost = this.estimatedCost;
+            this.orderHeader.estimatedCost = this.estimatedCost;
             this.loadingCtrl
               .create({
                 message: 'Sending Order... please wait',

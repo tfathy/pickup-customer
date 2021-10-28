@@ -75,4 +75,18 @@ export class CustomerService {
       { headers: headerInfo }
     );
   }
+  updateOrder(
+    token: string,
+    body: OrderModel,
+    orderId
+  ): Observable<OrderModel> {
+    const headerInfo = new HttpHeaders({
+      Authorization: token,
+    });
+    return this.http.put<OrderModel>(
+      `${environment.backEndApiRoot}/${this.url}/customer/order/${orderId}`,
+      body,
+      { headers: headerInfo }
+    );
+  }
 }

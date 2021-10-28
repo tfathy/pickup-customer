@@ -99,7 +99,8 @@ export class FcmService {
     PushNotifications.addListener(
       'pushNotificationReceived',
       async (notification: PushNotificationSchema) => {
-        this.showAlert('Push received: ' + JSON.stringify(notification));
+        console.log(JSON.stringify(notification));
+       // this.showAlert('Push received: ' + JSON.stringify(notification));
         // fires when notification received
       }
     );

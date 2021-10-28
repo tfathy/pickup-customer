@@ -75,7 +75,16 @@
   "SPECIFY_STARTING_POINT":"Specify your starting point",
   "SELECT_VCL_TYPE":"Choose Vehcile",
   "LUGGAGE_DETAILS":"Luggage Details",
-  "SEND":"Send"
+  "SEND":"Send",
+  "DRIVER_NAME_EN":"Driver name (en)",
+  "DRIVER_NAME_AR":"Driver name (ar)",
+  "DRIVER_PHONE":"Driver's phone",
+  "DRIVER_PROPOSAL":"Driver Proposal",
+  "VEHCILE_SIZE":"Vehcile Size",
+  "PHONE_NUM":"Phone Number",
+  "ACEPT_PROPOSAL":"Accept Proposal",
+  "YOUR_ACCPT_SENT":"Your acceptance has been sent to the driver"
+
 
 
   ,"ERROR_CANNOT_POST_REQUEST":"Error: Cannot post the request"
@@ -86,6 +95,8 @@
   ,"GET_CURRENT_LOCATION":"Pick Current Location"
   ,"PICK_FROM_MAP":"Pick from map"
  ,"PLEASE_CHHOSE_LOCATION":"Choose location First",
- "WHAT_IS_START":"What is your starting point?"
+ "WHAT_IS_START":"What is your starting point?",
+ "CUSTOMER_ACCEPT_OFFER_DETAIL":"The Customer has accepted your offer",
+ "CUSTOMER_ACCEPT_OFFER_HEADER":"The offer is accepted"
 
 }

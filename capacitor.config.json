@@ -1,4 +1,6 @@
 {
+  "appId": "net.customer.pickupsa",
+	"appName": "customer-pickup",
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0

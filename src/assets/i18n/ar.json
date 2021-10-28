@@ -75,7 +75,15 @@
   "SPECIFY_STARTING_POINT":"حدد نقطة الانطلاق",
   "SELECT_VCL_TYPE":"اختر نوع السيارة",
   "LUGGAGE_DETAILS":"تفاصيل الحمولة",
-  "SEND":"ارسال"
+  "SEND":"ارسال",
+  "DRIVER_NAME_EN":"Driver name (en)",
+  "DRIVER_NAME_AR":"اسم السائق",
+  "DRIVER_PHONE":"رقم الهاتف",
+  "DRIVER_PROPOSAL":"عرض السائق",
+  "VEHCILE_SIZE":"حجم السيارة",
+  "PHONE_NUM":"رقم الهاتف",
+  "ACEPT_PROPOSAL":"قبول العرض",
+  "YOUR_ACCPT_SENT":"تم اعلام السائق بقبولك العرض.سيتم اعلامك فور تحركة"
 
   ,"ERROR_CANNOT_POST_REQUEST":"خطأ: لم بتمكن النظام من تمرير طلبك"
   ,"REQUEST_POSTED":"تم ارسال طلبك لكل شركات وسائقى النقل .سيتم تنبيهك حال قبول طلبك."
@@ -85,5 +93,7 @@
   ,"GET_CURRENT_LOCATION":"الموقع الحالي"
   ,"PICK_FROM_MAP":"اختر من الخريطة"
   ,"PLEASE_CHHOSE_LOCATION":"حدد وجهتك اولا"
-  ,"WHAT_IS_START":"ما هى نقطة الانطلاق؟"
+  ,"WHAT_IS_START":"ما هى نقطة الانطلاق؟",
+  "CUSTOMER_ACCEPT_OFFER_DETAIL":"تم قبول عرض السعر من العميل-ابدا التحرك الان",
+  "CUSTOMER_ACCEPT_OFFER_HEADER":"قبول عرض السعر"
 }

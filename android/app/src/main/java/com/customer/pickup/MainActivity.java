@@ -12,6 +12,7 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(com.getcapacitor.community.facebooklogin.FacebookLogin.class);
 
 
+
 //    try {
 //      PackageInfo info;
 //      info = getPackageManager().getPackageInfo("com.customer.pickup", PackageManager.GET_SIGNATURES);

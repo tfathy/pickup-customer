@@ -28,7 +28,7 @@ export class OrderModel {
     public destFormattedAddress?: string,
     public destLong?: number,
     public destLat?: number,
-    public estimateCost?: number,
+    public estimatedCost?: number,
     public actualCost?: number,
     public customerNotes?: string,
     public teamNotes?: string,

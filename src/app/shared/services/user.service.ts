@@ -17,7 +17,6 @@ export class UserService {
     model: UserResponseData,
     userId: string
   ): Observable<UserResponseData> {
-    console.log('sys-owner-security/owner-auth/update model=');
     console.log(model);
     const headerInfo = new HttpHeaders({
       Authorization: token,
@@ -26,6 +25,15 @@ export class UserService {
       `${environment.backEndApiRoot}/${this.url}/${userId}`,
       model,
       { headers: headerInfo }
+    );
+  }
+  findBymemberId(token: string, memberId): Observable<UserResponseData> {
+    const headerInfo = new HttpHeaders({
+      Authorization: token,
+    });
+    return this.http.get<UserResponseData>(
+      `${environment.backEndApiRoot}/sys-owner-security/owner-auth/user/member/${memberId}`
+      ,{headers: headerInfo}
     );
   }
 }
