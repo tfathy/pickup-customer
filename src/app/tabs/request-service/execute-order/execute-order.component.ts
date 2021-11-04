@@ -104,7 +104,7 @@ export class ExecuteOrderComponent implements OnInit {
                       this.availabeDrivers.forEach((driver) => {
                         fcmToke = driver.sysUser.fcmToken;
                         const moreInfo = new NotificationMoreInfo(
-                          'more information goes here'
+                        this.orderHeader
                         );
                         msg = new PushNotificationMessage(
                           'New Request',

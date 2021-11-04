@@ -100,8 +100,20 @@ export class FcmService {
       'pushNotificationReceived',
       async (notification: PushNotificationSchema) => {
         console.log(JSON.stringify(notification));
-       // this.showAlert('Push received: ' + JSON.stringify(notification));
+        // this.showAlert('Push received: ' + JSON.stringify(notification));
         // fires when notification received
+        const order = JSON.parse(notification.data.info);
+        if (order.ordStatus === 'PROPOSAL') {
+          this.showAlert('You have got a new offer');
+          this.router.navigateByUrl(
+            `/tabs/customer-orders/team-info/${order.id}`
+          );
+        } else if (order.ordStatus === 'JOURNEY_STARTED') {
+          this.showAlert('Journey started. Click Ok to track the driver ');
+          this.router.navigate(['/', 'tabs', 'customer-orders', 'track-order',order.id]);
+        } else if (order.status === 'JOURNEY_ENDED') {
+          this.showAlert('Jouerney Ended');
+        }
       }
     );
     // the following listner fires when the user has clicked on the notification
@@ -109,16 +121,15 @@ export class FcmService {
       'pushNotificationActionPerformed',
       async (notification: ActionPerformed) => {
         const data = notification.notification.data; // this means retrive the parameters comming with the notification
-        // this.showAlert(
-        //   'Action performed: ' + JSON.stringify(notification.notification)
-        // );
-        console.log(notification.notification);
-        const orderObj =  JSON.parse(data.info);
-        console.log('orderObj=',orderObj);
-        if (orderObj.id) {
+        const order = JSON.parse(data.info);
+        console.log('order=', order);
+        if (order.ordStatus === 'PROPOSAL') {
           this.router.navigateByUrl(
-            `/tabs/customer-orders/team-info/${orderObj.id}`
+            `/tabs/customer-orders/team-info/${order.id}`
           );
+        } else if (order.ordStatus === 'JOURNEY_STARTED') {
+          this.router.navigate(['/', 'tabs', 'customer-orders', 'track-order',order.id]);
+        } else if (order.status === 'JOURNEY_ENDED') {
         }
       }
     );

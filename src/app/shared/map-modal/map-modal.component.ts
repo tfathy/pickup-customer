@@ -73,15 +73,12 @@ export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
         this.searchBox = new googleMaps.places.SearchBox(
           this.searchInput.nativeElement
         );
-        console.log('this.searchBox=', this.searchBox);
         this.searchBox.addListener('places_changed', () => {
           const places = this.searchBox.getPlaces();
-          console.log('places_changed fires', places);
           if (places.length === 0) {
             return;
           }
           const bounds = new googleMaps.LatLngBounds();
-          console.log('bounds=', bounds);
 
           places.forEach((place) => {
             if (!place.geometry || !place.geometry.location) {

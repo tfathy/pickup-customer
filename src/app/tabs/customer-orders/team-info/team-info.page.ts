@@ -85,6 +85,7 @@ export class TeamInfoPage implements OnInit {
         loadingElmnt.present();
         //send notification to this driver
         // read driver fcmtoken from user table
+        this.order.ordStatus = 'CUSTOMER_ACCEPT';
         console.log('order=>',this.order);
         this.userInfoService
           .findBymemberId(
@@ -105,8 +106,6 @@ export class TeamInfoPage implements OnInit {
             this.fcmService.sendNotification(fcmGoogleNotification).subscribe(
               (notificationResponse) => {
                 console.log(notificationResponse);
-                // update order status
-                this.order.ordStatus = 'CUSTOMER_ACCEPT';
                 //save order after status update
                 this.customerService
                   .updateOrder(

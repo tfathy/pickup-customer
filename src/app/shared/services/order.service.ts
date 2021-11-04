@@ -30,7 +30,7 @@ interface LocalFile {
   providedIn: 'root',
 })
 export class OrderService {
-  private requestModel: OrderModel = {};
+  private requestModel: OrderModel ;
   private availabeDrivers;
   constructor(
     private driverService: DriverService,
@@ -114,7 +114,7 @@ export class OrderService {
                       this.availabeDrivers.forEach((driver) => {
                         fcmToke = driver.sysUser.fcmToken;
                         const moreInfo = new NotificationMoreInfo(
-                          'more information goes here'
+                         this.requestModel
                         );
                         msg = new PushNotificationMessage(
                           'New Request',

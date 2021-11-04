@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'team-info/:id',
     loadChildren: () => import('./team-info/team-info.module').then( m => m.TeamInfoPageModule)
+  },
+  {
+    path: 'track-order/:orderId',
+    loadChildren: () => import('./track-order/track-order.module').then( m => m.TrackOrderPageModule)
   }
 ];
 
