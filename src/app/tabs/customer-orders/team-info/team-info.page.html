@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid *ngIf="order">
+  <ion-grid *ngIf="order && order.team">
     <ion-row>
       <ion-col size="12">
         <ion-item>
@@ -39,13 +39,13 @@
       <ion-col size="6">
         <ion-item>
           <ion-label position="stacked">{{"DRIVER_NAME_AR"|translate}}</ion-label>
-          <ion-input readonly>{{order.team.manager.fullNameAr}}</ion-input>
+          <ion-input *ngIf="order.team.manager" readonly>{{order.team.manager.fullNameAr}}</ion-input>
         </ion-item>
       </ion-col>
       <ion-col size="6">
         <ion-item>
           <ion-label position="stacked">{{"DRIVER_NAME_EN"|translate}}</ion-label>
-          <ion-input readonly>{{order.team.manager.fullNameEn}}</ion-input>
+          <ion-input *ngIf="order.team.manager" readonly>{{order.team.manager.fullNameEn}}</ion-input>
         </ion-item>
       </ion-col>
       <ion-col size="6">
@@ -65,6 +65,7 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar color="primary">
-    <ion-button color="light" fill="clear" expand="full" (click)="acceptOffer()">{{"ACEPT_PROPOSAL"|translate}}</ion-button>
+    <ion-button color="light" fill="clear" expand="full" (click)="acceptOffer()">{{"ACEPT_PROPOSAL"|translate}}
+    </ion-button>
   </ion-toolbar>
 </ion-footer>

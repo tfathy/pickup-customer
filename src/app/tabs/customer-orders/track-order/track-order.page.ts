@@ -67,33 +67,35 @@ export class TrackOrderPage implements OnInit, AfterViewInit, OnDestroy {
                   lng: +this.orderLocation.lng,
                 };
 
-                this.getGoogleMaps()
-                  .then((googleMaps) => {
-                    this.googleMaps = googleMaps;
-                    const mapEl = this.mapElementRef.nativeElement; // the dev
-                    console.log('After mapEl', mapEl);
-                    const map = new googleMaps.Map(mapEl, {
-                      center: currentLocation,
-                      zoom: 18,
-                    });
-                    console.log('map', map);
-                    this.map = map;
-                    this.googleMaps.event.addListenerOnce(map, 'idle', () => {
-                      this.renderer.addClass(mapEl, 'visible'); // render the map after is beign ready
-                    });
-                    const marker = new googleMaps.Marker({
-                      position: currentLocation,
-                      icon: 'http://maps.google.com/mapfiles/ms/icons/truck.png',
-                      map: map,
-                      title: 'Your Shipment',
-                    });
-                    marker.setMap(map);
+                if (this.orderLocation) {
+                  this.getGoogleMaps()
+                    .then((googleMaps) => {
+                      this.googleMaps = googleMaps;
+                      const mapEl = this.mapElementRef.nativeElement; // the dev
+                      console.log('After mapEl', mapEl);
+                      const map = new googleMaps.Map(mapEl, {
+                        center: currentLocation,
+                        zoom: 18,
+                      });
+                      console.log('map', map);
+                      this.map = map;
+                      this.googleMaps.event.addListenerOnce(map, 'idle', () => {
+                        this.renderer.addClass(mapEl, 'visible'); // render the map after is beign ready
+                      });
+                      const marker = new googleMaps.Marker({
+                        position: currentLocation,
+                        icon: 'assets/icon/carTop.svg',
+                        map: map,
+                        title: 'Your Shipment',
+                      });
+                      marker.setMap(map);
 
-                    this.refreshMap(this.duration);
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  });
+                      this.refreshMap(this.duration);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                }
 
                 loadingElmnt.dismiss();
               },
@@ -162,7 +164,7 @@ export class TrackOrderPage implements OnInit, AfterViewInit, OnDestroy {
     this.orderLocationService
       .findLastLocation('Bearer ' + this.customerToken.token, this.orderId)
       .subscribe((lastLocationRes) => {
-        if(this.marker){
+        if (this.marker) {
           this.marker.setMap(null);
         }
 
@@ -172,10 +174,10 @@ export class TrackOrderPage implements OnInit, AfterViewInit, OnDestroy {
         };
 
         this.map.panTo(currentLocation);
-         this.marker = new this.googleMaps.Marker({
+        this.marker = new this.googleMaps.Marker({
           position: currentLocation,
           map: this.map,
-          icon: 'http://maps.google.com/mapfiles/ms/icons/truck.png',
+          icon: 'assets/icon/carTop.svg',
           title: 'Your Shipment',
         });
         this.marker.setMap(this.map);

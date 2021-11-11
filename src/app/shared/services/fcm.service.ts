@@ -8,7 +8,7 @@ import {
   Token,
 } from '@capacitor/push-notifications';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {
   FcmGoogleNotification,
@@ -31,7 +31,8 @@ export class FcmService {
     private alertCtrl: AlertController,
     private http: HttpClient,
     private authService: AuthService,
-    private userServices: UserService
+    private userServices: UserService,
+    private toastCtrl: ToastController
   ) {}
   async initPush() {
     if (Capacitor.getPlatform() !== 'web') {
@@ -99,20 +100,30 @@ export class FcmService {
     PushNotifications.addListener(
       'pushNotificationReceived',
       async (notification: PushNotificationSchema) => {
-        console.log(JSON.stringify(notification));
-        // this.showAlert('Push received: ' + JSON.stringify(notification));
-        // fires when notification received
+        // console.log(JSON.stringify(notification));
+        //  console.log(notification.data.info);
+
         const order = JSON.parse(notification.data.info);
+        console.log('order', order);
+       // this.showAlert('Push received: ' + order.ordStatus);
         if (order.ordStatus === 'PROPOSAL') {
-          this.showAlert('You have got a new offer');
-          this.router.navigateByUrl(
-            `/tabs/customer-orders/team-info/${order.id}`
-          );
+          this.router.navigate([
+            'tabs',
+            'customer-orders',
+            'team-info',
+            order.id,
+          ]);
         } else if (order.ordStatus === 'JOURNEY_STARTED') {
-          this.showAlert('Journey started. Click Ok to track the driver ');
-          this.router.navigate(['/', 'tabs', 'customer-orders', 'track-order',order.id]);
-        } else if (order.status === 'JOURNEY_ENDED') {
-          this.showAlert('Jouerney Ended');
+          this.showToast('Journey started. Click Ok to track the driver ');
+          this.router.navigate([
+            '/',
+            'tabs',
+            'customer-orders',
+            'track-order',
+            order.id,
+          ]);
+        } else if (order.ordStatus === 'JOURNEY_ENDED') {
+          this.showToast('Jouerney Ended');
         }
       }
     );
@@ -124,11 +135,20 @@ export class FcmService {
         const order = JSON.parse(data.info);
         console.log('order=', order);
         if (order.ordStatus === 'PROPOSAL') {
-          this.router.navigateByUrl(
-            `/tabs/customer-orders/team-info/${order.id}`
-          );
+          this.router.navigate([
+            'tabs',
+            'customer-orders',
+            'team-info',
+            order.id,
+          ]);
         } else if (order.ordStatus === 'JOURNEY_STARTED') {
-          this.router.navigate(['/', 'tabs', 'customer-orders', 'track-order',order.id]);
+          this.router.navigate([
+            '/',
+            'tabs',
+            'customer-orders',
+            'track-order',
+            order.id,
+          ]);
         } else if (order.status === 'JOURNEY_ENDED') {
         }
       }
@@ -143,6 +163,17 @@ export class FcmService {
       })
       .then((alertElmnt) => {
         alertElmnt.present();
+      });
+  }
+  private showToast(msg: string) {
+    this.toastCtrl
+      .create({
+        message: msg,
+       duration:1500,
+       position: 'middle'
+      })
+      .then((toast) => {
+        toast.present();
       });
   }
 }
